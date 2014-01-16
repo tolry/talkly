@@ -1,0 +1,23 @@
+{
+    "require": {
+        "silex/silex": "dev-master",
+        "twig/twig": "dev-master",
+        "symfony/twig-bridge": "dev-master",
+        "dflydev/doctrine-orm-service-provider": "~1.0.4",
+        "symfony/yaml": "dev-master",
+        "deralex/yaml-config-service-provider": "1.0.x-dev",
+        "silex/web-profiler": "~1.0",
+        "monolog/monolog": ">=1.0.0",
+        "symfony/doctrine-bridge": "dev-master",
+        "michelf/php-markdown": "1.4.*@dev",
+        "symfony/form": "dev-master",
+        "symfony/validator": "dev-master",
+        "symfony/config": "dev-master",
+        "symfony/translation": "dev-master",
+        "salavert/time-ago-in-words": "1.*"
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "minimum-stability": "stable"
+}

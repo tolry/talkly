@@ -1,0 +1,71 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="large-12">
+        <ul class="content-orbit" data-orbit>
+            {% for i in 0..2 %}
+            {% set topic = topics[i] %}
+            <li data-orbit-slide="headline-{{ loop.index }}">
+            <div>
+                <h2>#{{ loop.index }} | {{ topic.title }}</h2>
+                <h3 class="one-line">{{ topic.description|default('n.a') }}</h3>
+                <p class="right"><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }} <i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em> <i class="fa fa-clock-o"></i> {{ topic.createdAt|date('d.m.Y H:i:s') }}</p>
+            </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 medium-8 medium-centered large-6 large-centered columns text-center">
+        <a class="button radius toggle" data-toggle-target="create-topic-form"><i class="fa fa-angle-double-down"></i> add a new suggestion <i class="fa fa-angle-double-down"></i></a>
+    </div>
+</div>
+
+<div class="bg-secondary hide" id="create-topic-form">
+    <div class="row">
+        <div class="small-12 medium-8 medium-centered large-6 large-centered columns">
+            <h5>new suggestion</h5>
+            <form action="{{ path('topic-create') }}" method="post" data-abide>
+                <div>
+                    {{ form_widget(form.title, {attr: {placeholder: 'title'}}) }}
+                    <small class="error">you need to enter a title</small>
+                </div>
+                <div>
+                    {{ form_widget(form.description, {attr: {placeholder: 'description (markdown allowed)', rows: 8}}) }}
+                    <small class="error">you need to enter some form of description</small>
+                </div>
+                <button class="button radius small right"><i class="fa fa-plus-square"></i> submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="large-4 small-12 columns">
+
+        <h4>Last Submissions</h4><hr>
+
+        {% for topic in last_submissions %}
+            {% include 'topic/display.short.html.twig' with {topic: topic} %}
+        {% endfor %}
+    </div>
+
+    <div class="large-8 small-12 columns">
+
+        <h4>Open Topics [highest ranked first]</h4><hr>
+
+        {% for topic in topics %}
+        <div id="topic-{{ topic.id }}" class="highlight-target">
+            {% include 'topic/display.long.html.twig' with {topic: topic} %}
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

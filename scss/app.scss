@@ -1,0 +1,64 @@
+@import "settings";
+@import "foundation";
+@import "font-awesome";
+@import "mixins";
+
+.content-orbit li div {
+    color: white;
+    background: darken($primary-color, 20%);
+    padding: 30px 40px;
+
+    h2, h3, p {
+        color: white;
+    }
+
+    h2 {
+        text-shadow: 2px 1px 0 rgba($secondary_color,0.6);
+    }
+}
+
+.one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+header {
+    margin:0 0 30px 0;
+    background:$secondary-color;
+}
+
+.bg-secondary {
+    background:$secondary-color;
+}
+
+.top {
+    background-color: $topbar-bg-color;
+    color: white;
+    padding: 10px 0;
+}
+
+footer {
+    background-color: $topbar-bg-color;
+    color: white;
+    padding: 10px 0 30px 0;
+}
+
+@include keyframes("highlight") {
+    0% {
+        background: yellow;
+    }
+    100% {
+        background: inherit;
+    }
+}
+
+.highlight-target:target .panel {
+    border-color: black;
+    @include animation("highlight 2s");
+}
+
+textarea {
+    height: auto;
+}
+

@@ -1,0 +1,27 @@
+
+//
+// animation mixins taken from
+// http://kau-boys.de/1766/webentwicklung/css3-animationen-mit-sass-mixins-einfach-umsetzen
+//
+
+@mixin animation($value) {
+    -webkit-animation: unquote($value);
+       -moz-animation: unquote($value);
+         -o-animation: unquote($value);
+            animation: unquote($value);
+}
+
+@mixin animation-property($property, $value) {
+    -webkit-animation-#{$property}: unquote($value);
+       -moz-animation-#{$property}: unquote($value);
+         -o-animation-#{$property}: unquote($value);
+            animation-#{$property}: unquote($value);
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} { @content; }
+       @-moz-keyframes #{$name} { @content; }
+         @-o-keyframes #{$name} { @content; }
+            @keyframes #{$name} { @content; }
+}
+

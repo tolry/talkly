@@ -1,0 +1,14 @@
+<div class="panel clearfix">
+    <div class="right">
+        {% if topic.voteCastBy(request.user) %}
+        <a class="button tiny radius" href="#"><i class="fa fa-thumbs-down"></i> retract vote</a>
+        {% else %}
+        <a class="button tiny radius" href="#"><i class="fa fa-thumbs-up"></i> vote</a>
+        {% endif %}
+    </div>
+    <h4>{{ topic.title }}</h4>
+    <div>{{ markdown_extra(topic.description) }}</div>
+    <p><strong>Votes:</strong> {{ topic.votes|join(', ') }}</p>
+    <p class="right"><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }} <i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em> <i class="fa fa-clock-o"></i> {{ topic.createdAt|date('d.m.Y H:i:s') }}</p>
+</div>
+

@@ -1,0 +1,57 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>talkly</title>
+
+
+        <meta name="description" content="" />
+
+        <meta name="author" content="Tobias Olry <tobias.olry@gmail.com>" />
+
+        <link rel="stylesheet" href="{{ app.request.baseUrl }}/css/app.css" />
+        <script src="{{ app.request.baseUrl }}/js/foundation/vendor/custom.modernizr.js"></script>
+    </head>
+    <body>
+
+        <div class="top">
+            <div class="row">
+                <div class="large-12 columns text-right">
+                    logged in <i class="fa fa-user"></i> {{ request.user }}
+                </div>
+            </div>
+        </div>
+
+        <header>
+            <div class="row">
+                <div class="large-12 columns text-center">
+                    <h1><i class="fa fa-bullhorn"></i> talkly</h1>
+                    <h2><small>request, vote &amp; deliver the talks you like to hear</small></h2>
+                </div>
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <div class="row">
+                <div class="large-12 columns">
+                    some footer content
+                </div>
+            </div>
+        </footer>
+
+        <script src="{{ app.request.baseUrl }}/js/jquery/jquery.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/foundation/foundation.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/app.js"></script>
+        <script>
+            $(document).foundation();
+
+            var doc = document.documentElement;
+            doc.setAttribute('data-useragent', navigator.userAgent);
+        </script>
+    </body>
+</html>
+
