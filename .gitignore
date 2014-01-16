@@ -2,5 +2,7 @@
 bower_components
 cache/*
 !cache/.gitkeep
+logs/*
+!logs/.gitkeep
 vendor
-
+config/config.yml
