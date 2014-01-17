@@ -36,10 +36,7 @@ $app->register(new Provider\MonologServiceProvider(), array(
 ));
 
 $app->register(new Provider\DoctrineServiceProvider, array(
-    "db.options" => array(
-        "driver" => "pdo_sqlite",
-        "path"   => __DIR__ . '/../data/data.sqlite.db',
-    ),
+    "db.options" => $app['config']['db.options']
 ));
 
 $app->register(new DoctrineOrmServiceProvider, array(

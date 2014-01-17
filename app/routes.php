@@ -20,3 +20,15 @@ $app
     ->post('/topic/create', 'topic.controller:create')
     ->bind('topic-create')
 ;
+
+$app
+    ->get('/topic/{id}/cast-vote', 'topic.controller:castVote')
+    ->bind('topic-cast-vote')
+;
+
+$app
+    ->get('/topic/{id}/retract-vote', 'topic.controller:retractVote')
+    ->bind('topic-retract-vote')
+;
+
+

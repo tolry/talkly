@@ -3,6 +3,7 @@
 namespace TobiasOlry\Talkly\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -15,12 +16,48 @@ class TopicController
     private $em;
     private $formFactory;
     private $urlGenerator;
+    private $twig;
 
-    public function __construct(EntityManager $em, $formFactory, $urlGenerator)
+    public function __construct(
+        EntityManager $em,
+        $formFactory,
+        $urlGenerator,
+        \Twig_Environment $twig
+    )
     {
         $this->em           = $em;
         $this->formFactory  = $formFactory;
         $this->urlGenerator = $urlGenerator;
+        $this->twig         = $twig;
+    }
+
+    private function getTopic($id)
+    {
+        if (empty($id)) {
+            // todo
+        }
+
+        $topic = $this->em->find('TobiasOlry\Talkly\Entity\Topic', $id);
+
+        if (! $topic) {
+            // todo
+        }
+
+        return $topic;
+    }
+
+    private function redirect($topic)
+    {
+        $url = $this->urlGenerator->generate('homepage') . '#topic-' . $topic->getId();
+
+        return new RedirectResponse($url);
+    }
+
+    private function talklyJsonResponse($statusCode, $action, array $data)
+    {
+        $data['action'] = $action;
+
+        return new JsonResponse($data, $statusCode);
     }
 
     public function create(Request $request)
@@ -37,9 +74,40 @@ class TopicController
         $this->em->persist($topic);
         $this->em->flush();
 
-        $url = $this->urlGenerator->generate('homepage') . '#topic-' . $topic->getId();
+        return $this->redirect($topic);
+    }
 
-        return new RedirectResponse($url);
+    public function castVote(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+        $voter = $request->getUser();
+
+        $topic->castVote($voter);
+        $this->em->flush();
+
+        $request->getSession()->flash->add('topic-' . $topic->getId() . '-success', 'vote cast');
+
+        return $this->redirect($topic);
+    }
+
+    public function retractVote(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+        $voter = $request->getUser();
+
+        $vote = $topic->getVote($voter);
+
+        if (! $vote) {
+
+            return $this->talklyJsonResponse(Response::HTTP_BAD_REQUEST, 'retract-vote', array('error' => 'the requested vote did not exist'));
+        }
+
+        $this->em->remove($vote);
+        $this->em->flush();
+
+        $request->getSession()->flash->add('topic-' . $topic->getId() . '-success', 'vote retracted');
+
+        return $this->redirect($topic);
     }
 }
 

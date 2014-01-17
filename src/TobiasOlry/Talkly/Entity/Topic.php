@@ -74,6 +74,21 @@ class Topic
         $this->votes->add($vote);
     }
 
+    public function getVote($user)
+    {
+        if (! $this->voteCastBy($user)) {
+            return;
+        }
+
+        foreach ($this->votes as $vote) {
+            if ($vote->getVoter() == $user) {
+                return $vote;
+            }
+        }
+
+        return;
+    }
+
     public function getId()
     {
         return $this->id;

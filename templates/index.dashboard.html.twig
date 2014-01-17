@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="row">
+    {% if topics|length > 2 %}
     <div class="large-12">
         <ul class="content-orbit" data-orbit>
             {% for i in 0..2 %}
@@ -16,6 +17,7 @@
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
 </div>
 
 <div class="row">
@@ -59,9 +61,7 @@
         <h4>Open Topics [highest ranked first]</h4><hr>
 
         {% for topic in topics %}
-        <div id="topic-{{ topic.id }}" class="highlight-target">
             {% include 'topic/display.long.html.twig' with {topic: topic} %}
-        </div>
         {% endfor %}
 
     </div>

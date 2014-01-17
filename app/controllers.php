@@ -15,6 +15,7 @@ $app['topic.controller'] = $app->share(function() use ($app) {
     return new TopicController(
         $app['orm.em'],
         $app['form.factory'],
-        $app['url_generator']
+        $app['url_generator'],
+        $app['twig']
     );
 });
