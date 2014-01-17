@@ -9949,7 +9949,7 @@ footer {
 
 /* line 56, ../../scss/app.scss */
 .highlight-target:target .panel {
-  border-color: black;
+  border-style: dotted !important;
   -webkit-animation: highlight 2s;
   -moz-animation: highlight 2s;
   -o-animation: highlight 2s;

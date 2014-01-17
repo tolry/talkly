@@ -11,9 +11,9 @@ use Salavert\Twig\Extension\TimeAgoExtension;
 
 // config
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/../config/config.yml'));
-
 $app['debug'] = $app['config']['debug'];
 
+$app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Provider\UrlGeneratorServiceProvider());
 $app->register(new Provider\ServiceControllerServiceProvider());
 $app->register(new Provider\FormServiceProvider());

@@ -6,8 +6,6 @@ $app['controllers']
         $request = $app['request'];
 
         $request->server->set('PHP_AUTH_USER', 'korgano');
-
-        $twig->addGlobal('request', $request);
     })
 ;
 

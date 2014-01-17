@@ -54,7 +54,7 @@ footer {
 }
 
 .highlight-target:target .panel {
-    border-color: black;
+    border-style: dotted !important;
     @include animation("highlight 2s");
 }
 

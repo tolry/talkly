@@ -74,6 +74,8 @@ class TopicController
         $this->em->persist($topic);
         $this->em->flush();
 
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'topic created');
+
         return $this->redirect($topic);
     }
 
@@ -85,7 +87,7 @@ class TopicController
         $topic->castVote($voter);
         $this->em->flush();
 
-        $request->getSession()->flash->add('topic-' . $topic->getId() . '-success', 'vote cast');
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote cast');
 
         return $this->redirect($topic);
     }
@@ -105,7 +107,7 @@ class TopicController
         $this->em->remove($vote);
         $this->em->flush();
 
-        $request->getSession()->flash->add('topic-' . $topic->getId() . '-success', 'vote retracted');
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote retracted');
 
         return $this->redirect($topic);
     }

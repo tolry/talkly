@@ -1,10 +1,12 @@
-<div id="topic-{{ topic.id }}">
+<div id="topic-{{ topic.id }}" class="highlight-target">
     <div class="panel clearfix">
-        {% for message in request.session.flash['topic' ~ topic.id ~ 'success'] %}
-        <div data-alert class="alert-box success">{{ message }}</div>
+
+        {% for message in app.session.getFlashBag.get('topic-' ~ topic.id ~ '-success') %}
+        <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
         {% endfor %}
+
         <div class="right">
-            {% if topic.voteCastBy(request.user) %}
+            {% if topic.voteCastBy(app.request.user) %}
             <a class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-down"></i> retract vote</a>
             {% else %}
             <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
