@@ -46,7 +46,7 @@ footer {
 
 @include keyframes("highlight") {
     0% {
-        background: yellow;
+        background: $primary-color;
     }
     100% {
         background: inherit;

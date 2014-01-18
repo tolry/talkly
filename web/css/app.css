@@ -9902,7 +9902,7 @@ footer {
 @-webkit-keyframes highlight {
   /* line 48, ../../scss/app.scss */
   0% {
-    background: yellow;
+    background: #008cba;
   }
 
   /* line 51, ../../scss/app.scss */
@@ -9914,7 +9914,7 @@ footer {
 @-moz-keyframes highlight {
   /* line 48, ../../scss/app.scss */
   0% {
-    background: yellow;
+    background: #008cba;
   }
 
   /* line 51, ../../scss/app.scss */
@@ -9926,7 +9926,7 @@ footer {
 @-o-keyframes highlight {
   /* line 48, ../../scss/app.scss */
   0% {
-    background: yellow;
+    background: #008cba;
   }
 
   /* line 51, ../../scss/app.scss */
@@ -9938,7 +9938,7 @@ footer {
 @keyframes highlight {
   /* line 48, ../../scss/app.scss */
   0% {
-    background: yellow;
+    background: #008cba;
   }
 
   /* line 51, ../../scss/app.scss */

@@ -27,6 +27,8 @@ $(document).ready(function() {
                 var json = jqXHR.responseJSON;
 
                 console.log(json);
+
+                // todo - currently not used
             }
         });
 
@@ -47,7 +49,7 @@ var app = {
             .appendTo($flash)
         ;
 
-        $message.foundation();
+        // todo - events are not applied
 
     }
 }

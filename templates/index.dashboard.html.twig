@@ -11,7 +11,7 @@
             <div>
                 <h2>#{{ loop.index }} | {{ topic.title }}</h2>
                 <h3 class="one-line">{{ topic.description|default('n.a') }}</h3>
-                <p class="right"><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }} <i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em> <i class="fa fa-clock-o"></i> {{ topic.createdAt|date('d.m.Y H:i:s') }}</p>
+                <p class="right">{% include 'topic/details.html.twig' %}</p>
             </div>
             </li>
             {% endfor %}

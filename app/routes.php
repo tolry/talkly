@@ -5,7 +5,7 @@ $app['controllers']
         $twig    = $app['twig'];
         $request = $app['request'];
 
-        $request->server->set('PHP_AUTH_USER', 'korgano');
+        $request->server->set('PHP_AUTH_USER', 'dendeigh');
     })
 ;
 
