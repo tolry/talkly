@@ -5,11 +5,21 @@ This is just a small pet project of mine, aiming for small developer teams who l
 what the first version should deliver:
 
 - rudimentary authentication/authorization mechanism (e.g. HTTP BASIC authentication, NTLM, ...)
-- anyone can add new suggestions
-- vote
-- comment
-- talks can be archived and additional info (slide, links, ...) can be added
+- anyone can
+    - add new suggestions
+    - vote on suggestions
+    - comment on suggestions
+- after a talk is selected and performed, they can be
+    - archived
+    - slides added
 
-As said before: this is not meant for everyone and far from stable, but if you like the idea and like to contribute or use it, go ahead.
+As said before: this is not meant for everyone and far from stable. But if you like the idea and like to contribute or use it, go ahead.
 
+Also this is a testbed for me, to get a little bit more familiar with silex.
+
+technologies used:
+- zurb foundation 5
+- silex
+- doctrine orm
+- jquery
 
