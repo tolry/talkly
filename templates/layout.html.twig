@@ -12,6 +12,8 @@
         <meta name="author" content="Tobias Olry <tobias.olry@gmail.com>" />
 
         <link rel="stylesheet" href="{{ app.request.baseUrl }}/css/app.css" />
+        <!-- todo include via sass -->
+        <link rel="stylesheet" href="{{ app.request.baseUrl }}/prism/themes/prism-dark.css" />
         <script src="{{ app.request.baseUrl }}/js/foundation/vendor/custom.modernizr.js"></script>
     </head>
     <body>
@@ -51,6 +53,7 @@
 
         <script src="{{ app.request.baseUrl }}/js/jquery/jquery.min.js"></script>
         <script src="{{ app.request.baseUrl }}/js/foundation/foundation.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/prism/prism.js"></script>
         <script src="{{ app.request.baseUrl }}/js/app.js"></script>
         <script>
             $(document).foundation();
