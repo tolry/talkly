@@ -49,6 +49,11 @@ class Topic
      */
     private $votes;
 
+    /**
+     * @OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
+     */
+    private $comments;
+
     public function __construct($user)
     {
         $this->createdAt = new \DateTime();
@@ -56,7 +61,8 @@ class Topic
 
         $this->createdBy = $user;
 
-        $this->votes = new ArrayCollection();
+        $this->votes    = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function setTitle($title)
@@ -72,6 +78,11 @@ class Topic
 
         $vote = new Vote($this, $user);
         $this->votes->add($vote);
+    }
+
+    public function comment($user, $text)
+    {
+        $this->comments->add(new Comment($user, $text, $this));
     }
 
     public function getVote($user)
@@ -122,6 +133,11 @@ class Topic
     public function getVotes()
     {
         return $this->votes;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     public function voteCastBy($user)

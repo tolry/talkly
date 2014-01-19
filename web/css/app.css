@@ -9960,3 +9960,33 @@ footer {
 textarea {
   height: auto;
 }
+
+/* line 65, ../../assets/scss/app.scss */
+[data-toggle] .data-toggle-open {
+  display: none;
+}
+
+/* line 66, ../../assets/scss/app.scss */
+[data-toggle] .data-toggle-closed {
+  display: inherit;
+}
+
+/* line 68, ../../assets/scss/app.scss */
+[data-toggle].toggle-open .data-toggle-open {
+  display: inherit;
+}
+
+/* line 69, ../../assets/scss/app.scss */
+[data-toggle].toggle-open .data-toggle-closed {
+  display: none;
+}
+
+/* line 71, ../../assets/scss/app.scss */
+.panel-white {
+  background: white;
+}
+
+/* line 73, ../../assets/scss/app.scss */
+.border-right {
+  border-right: 1px solid #ddd;
+}

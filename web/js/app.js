@@ -3,9 +3,21 @@
 $(document).foundation();
 
 $(document).ready(function() {
-    $('.toggle').click(function() {
+    $('[data-toggle]').click(function(event) {
+
         var id = $(this).data('toggle-target');
-        $("#" + id).toggle('slide');
+        var $toggleTarget = $("#" + id);
+
+        if ($toggleTarget.is(':visible')) {
+            $toggleTarget.hide('slide');
+            $(this).removeClass('toggle-open');
+        } else {
+            $toggleTarget.show('slide');
+            $(this).addClass('toggle-open');
+            $toggleTarget.find('input,textarea').first().focus();
+        }
+
+        return false;
     });
 
     $('a.ajax-action').click(function(event) {

@@ -31,9 +31,10 @@ class IndexController
         $qb = $this->em->createQueryBuilder();
 
         $qb
-            ->select('t, v')
+            ->select('t, v, c')
             ->from('TobiasOlry\Talkly\Entity\Topic', 't')
             ->leftJoin('t.votes', 'v')
+            ->leftJoin('t.comments', 'c')
             ->add('orderBy', 't.createdAt DESC')
         ;
 
@@ -47,9 +48,10 @@ class IndexController
         $qb = $this->em->createQueryBuilder();
 
         $qb
-            ->select('t, v')
+            ->select('t, v, c')
             ->from('TobiasOlry\Talkly\Entity\Topic', 't')
             ->leftJoin('t.votes', 'v')
+            ->leftJoin('t.comments', 'c')
             ->add('orderBy', 't.createdAt DESC')
         ;
 

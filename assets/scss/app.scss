@@ -62,3 +62,12 @@ textarea {
     height: auto;
 }
 
+[data-toggle] .data-toggle-open { display: none; }
+[data-toggle] .data-toggle-closed { display: inherit; }
+
+[data-toggle].toggle-open .data-toggle-open { display: inherit; }
+[data-toggle].toggle-open .data-toggle-closed { display: none; }
+
+.panel-white { background: white; }
+
+.border-right { border-right: 1px solid #ddd; }

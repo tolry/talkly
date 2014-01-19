@@ -29,4 +29,9 @@ $app
     ->bind('topic-retract-vote')
 ;
 
+$app
+    ->post('/topic/{id}/comment', 'topic.controller:comment')
+    ->bind('topic-comment')
+;
+
 

@@ -111,5 +111,17 @@ class TopicController
 
         return $this->redirect($topic);
     }
+
+    public function comment(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+        $topic->comment($request->getUser(), $request->get('comment'));
+
+        $this->em->flush();
+
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'comment added');
+
+        return $this->redirect($topic);
+    }
 }
 
