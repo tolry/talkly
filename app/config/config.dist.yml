@@ -1,3 +1,10 @@
-
 debug: true
+db.options:
+    driver:   pdo_mysql
+    host:     localhost
+    port:     ~
+    dbname:   talkly
+    user:     talkly
+    password: 
+    charset:  UTF8
 
