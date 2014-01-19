@@ -10,7 +10,7 @@ use Salavert\Twig\Extension\TimeAgoExtension;
 
 
 // config
-$app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/../config/config.yml'));
+$app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/config/config.yml'));
 $app['debug'] = $app['config']['debug'];
 
 $app->register(new Silex\Provider\SessionServiceProvider(array('name' => 'TALKLY_SESSION')));
@@ -31,7 +31,7 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 }));
 
 $app->register(new Provider\MonologServiceProvider(), array(
-        'monolog.logfile' => __DIR__ . '/../logs/' . ($app['debug'] ? 'development' : 'prod') . '.log',
+        'monolog.logfile' => __DIR__ . '/logs/' . ($app['debug'] ? 'development' : 'prod') . '.log',
         'monolog.level'   => ($app['debug'] ? Logger::DEBUG : Logger::WARNING)
 ));
 
@@ -56,7 +56,7 @@ $app->register(new DoctrineOrmServiceProvider, array(
 
 if ($app['debug']) {
     $app->register(new Provider\WebProfilerServiceProvider(), array(
-        'profiler.cache_dir'    => __DIR__.'/../cache/profiler',
+        'profiler.cache_dir'    => __DIR__.'/cache/profiler',
         'profiler.mount_prefix' => '/_profiler', // this is the default
     ));
 }

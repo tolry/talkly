@@ -1,8 +1,8 @@
 .sass-cache
-bower_components
-cache/*
-!cache/.gitkeep
-logs/*
-!logs/.gitkeep
 vendor
-config/config.yml
+assets/bower
+app/cache/*
+!app/cache/.gitkeep
+app/logs/*
+!app/logs/.gitkeep
+app/config/config.yml
