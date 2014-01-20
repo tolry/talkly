@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": "true",
   "dependencies": {
-    "foundation": "zurb/bower-foundation",
-    "prism": "gh-pages"
+    "foundation": "zurb/bower-foundation"
   }
 }

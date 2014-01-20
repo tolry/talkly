@@ -3,6 +3,7 @@
 @import "font-awesome";
 @import "mixins";
 
+
 .content-orbit li div {
     color: white;
     background: darken($primary-color, 20%);
@@ -68,6 +69,5 @@ textarea {
 [data-toggle].toggle-open .data-toggle-open { display: inherit; }
 [data-toggle].toggle-open .data-toggle-closed { display: none; }
 
-.panel-white { background: white; }
+.panel { background: white; }
 
-.border-right { border-right: 1px solid #ddd; }

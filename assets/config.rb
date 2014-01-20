@@ -1,6 +1,7 @@
 # Require any additional compass plugins here.
 add_import_path "bower/foundation/scss"
 add_import_path "bower/font-awesome/scss"
+add_import_path "bower/SyntaxHighlighter/compass/"
 
 # Set this to the root of your project when deployed:
 http_path = "../web/"

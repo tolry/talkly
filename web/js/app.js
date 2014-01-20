@@ -20,32 +20,8 @@ $(document).ready(function() {
         return false;
     });
 
-    $('a.ajax-action').click(function(event) {
+    hljs.initHighlightingOnLoad();
 
-        event.stopPropagation();
-
-        var url = $(this).attr('href');
-        $.ajax(url, {
-            dataType: 'json',
-            method:   'post',
-            complete: function(jqXHR) {
-                if (jqXHR.responseJSON == undefined) {
-                    console.log(jqXHR.responseText);
-                    alert('error');
-
-                    return false;
-                }
-
-                var json = jqXHR.responseJSON;
-
-                console.log(json);
-
-                // todo - currently not used
-            }
-        });
-
-        return false;
-    });
 });
 
 var app = {
