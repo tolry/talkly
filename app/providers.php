@@ -10,6 +10,10 @@ use Salavert\Twig\Extension\TimeAgoExtension;
 
 
 // config
+
+if (! file_exists(__DIR__ . '/config/config.yml')) {
+    throw new \RuntimeException('you need to generate a config file first, just copy and edit app/config/config.dist.yml to app/config/config.yml');
+}
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/config/config.yml'));
 $app['debug'] = $app['config']['debug'];
 
