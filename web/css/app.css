@@ -9979,8 +9979,3 @@ textarea {
 [data-toggle].toggle-open .data-toggle-closed {
   display: none;
 }
-
-/* line 72, ../../assets/scss/app.scss */
-.panel {
-  background: white;
-}

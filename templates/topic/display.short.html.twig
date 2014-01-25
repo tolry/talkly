@@ -1,10 +1,8 @@
-<div class="clearfix">
-    <div class="right"><abbr title="{{ topic.createdAt|date }}">{{ topic.createdAt|time_ago_in_words }}</abbr></div>
-    <h4>{{ topic.title }}</h4>
-    <div>
-        {{ topic.description }}
-    </div>
-    <div class="right"><a href="#topic-{{ topic.id }}">&raquo; Details</a></div>
-    <hr />
+<div class="clearfix panel">
+    <h4>
+        {{ topic.title }}
+        <small><abbr title="{{ topic.createdAt|date }}">{{ topic.createdAt|time_ago_in_words }}</abbr></small>
+    </h4>
+    <p class="text-right"><a href="#topic-{{ topic.id }}">&raquo; Details</a></p>
 </div>
 
