@@ -9874,79 +9874,88 @@ th.hide-for-touch {
 }
 
 /* line 27, ../../assets/scss/app.scss */
-header {
-  margin: 0 0 30px 0;
-  background: #e7e7e7;
-}
-
-/* line 32, ../../assets/scss/app.scss */
 .bg-secondary {
   background: #e7e7e7;
 }
 
-/* line 36, ../../assets/scss/app.scss */
+/* line 31, ../../assets/scss/app.scss */
 .top {
   background-color: #333333;
   color: white;
   padding: 10px 0;
 }
 
-/* line 42, ../../assets/scss/app.scss */
-footer {
+/* line 37, ../../assets/scss/app.scss */
+body {
   background-color: #333333;
+}
+
+/* line 41, ../../assets/scss/app.scss */
+main {
+  background-color: white;
+  padding-top: 30px;
+}
+
+/* line 46, ../../assets/scss/app.scss */
+header {
+  background: #e7e7e7;
+}
+
+/* line 50, ../../assets/scss/app.scss */
+footer {
   color: white;
   padding: 10px 0 30px 0;
 }
 
 @-webkit-keyframes highlight {
-  /* line 49, ../../assets/scss/app.scss */
+  /* line 56, ../../assets/scss/app.scss */
   0% {
     background: #008cba;
   }
 
-  /* line 52, ../../assets/scss/app.scss */
+  /* line 59, ../../assets/scss/app.scss */
   100% {
     background: inherit;
   }
 }
 
 @-moz-keyframes highlight {
-  /* line 49, ../../assets/scss/app.scss */
+  /* line 56, ../../assets/scss/app.scss */
   0% {
     background: #008cba;
   }
 
-  /* line 52, ../../assets/scss/app.scss */
+  /* line 59, ../../assets/scss/app.scss */
   100% {
     background: inherit;
   }
 }
 
 @-o-keyframes highlight {
-  /* line 49, ../../assets/scss/app.scss */
+  /* line 56, ../../assets/scss/app.scss */
   0% {
     background: #008cba;
   }
 
-  /* line 52, ../../assets/scss/app.scss */
+  /* line 59, ../../assets/scss/app.scss */
   100% {
     background: inherit;
   }
 }
 
 @keyframes highlight {
-  /* line 49, ../../assets/scss/app.scss */
+  /* line 56, ../../assets/scss/app.scss */
   0% {
     background: #008cba;
   }
 
-  /* line 52, ../../assets/scss/app.scss */
+  /* line 59, ../../assets/scss/app.scss */
   100% {
     background: inherit;
   }
 }
 
-/* line 57, ../../assets/scss/app.scss */
+/* line 64, ../../assets/scss/app.scss */
 .highlight-target:target .panel {
   border-style: dotted !important;
   -webkit-animation: highlight 2s;
@@ -9955,27 +9964,27 @@ footer {
   animation: highlight 2s;
 }
 
-/* line 62, ../../assets/scss/app.scss */
+/* line 69, ../../assets/scss/app.scss */
 textarea {
   height: auto;
 }
 
-/* line 66, ../../assets/scss/app.scss */
+/* line 73, ../../assets/scss/app.scss */
 [data-toggle] .data-toggle-open {
   display: none;
 }
 
-/* line 67, ../../assets/scss/app.scss */
+/* line 74, ../../assets/scss/app.scss */
 [data-toggle] .data-toggle-closed {
   display: inherit;
 }
 
-/* line 69, ../../assets/scss/app.scss */
+/* line 76, ../../assets/scss/app.scss */
 [data-toggle].toggle-open .data-toggle-open {
   display: inherit;
 }
 
-/* line 70, ../../assets/scss/app.scss */
+/* line 77, ../../assets/scss/app.scss */
 [data-toggle].toggle-open .data-toggle-closed {
   display: none;
 }

@@ -24,11 +24,6 @@
     white-space: nowrap;
 }
 
-header {
-    margin:0 0 30px 0;
-    background:$secondary-color;
-}
-
 .bg-secondary {
     background:$secondary-color;
 }
@@ -39,8 +34,20 @@ header {
     padding: 10px 0;
 }
 
-footer {
+body {
     background-color: $topbar-bg-color;
+}
+
+main {
+    background-color: white;
+    padding-top: 30px;
+}
+
+header {
+    background:$secondary-color;
+}
+
+footer {
     color: white;
     padding: 10px 0 30px 0;
 }

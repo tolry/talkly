@@ -9,7 +9,7 @@
             {% set topic = topics[i] %}
             <li data-orbit-slide="headline-{{ loop.index }}">
             <div>
-                <h2>#{{ loop.index }} | {{ topic.title }}</h2>
+                <h2 class="one-line">#{{ loop.index }} | {{ topic.title }}</h2>
                 <h3 class="one-line">{{ topic.description|default('n.a') }}</h3>
                 <p class="right">{% include 'topic/details.html.twig' %}</p>
             </div>
