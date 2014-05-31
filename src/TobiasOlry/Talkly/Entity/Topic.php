@@ -7,7 +7,7 @@ namespace TobiasOlry\Talkly\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="TobiasOlry\Talkly\Repository\TopicRepository")
  * @Table
  */
 class Topic
@@ -53,6 +53,16 @@ class Topic
      * @OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
      */
     private $comments;
+
+    /**
+     * @Column(type="text", nullable=true)
+     */
+    private $lectureNote;
+
+    /**
+     * @Column(type="date", nullable=true)
+     */
+    private $lectureDate;
 
     public function __construct($user)
     {

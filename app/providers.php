@@ -72,11 +72,11 @@ switch($app['config']['user_provider']) {
         $app['user_provider'] = $app->share(function() use ($app) {
             return new DebugUserProvider($app['config']['user_provider_debug_user']);
         });
-        break;
+    break;
     case 'ntlm':
         $app['user_provider'] = $app->share(function() use ($app) {
             return new NtlmUserProvider($app['request_stack']);
         });
-        break;
+    break;
 }
 
