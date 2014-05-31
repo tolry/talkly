@@ -4,13 +4,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 $app['controllers']
     ->before(function() use($app) {
-        $twig    = $app['twig'];
-        $request = $app['request'];
+        $request      = $app['request'];
+        $userProvider = $app['user_provider'];
 
-        $user = $app['user_provider']->getUsername();
+        if (! $user = $userProvider->getUsername()) {
 
-        if (! $user) {
-            // @todo return RedirectResponse
             return new Response('not allowed', 403);
         }
 

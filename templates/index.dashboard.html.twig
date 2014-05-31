@@ -2,65 +2,10 @@
 
 {% block content %}
 <div class="row">
-    {% if topics|length > 2 %}
-    <div class="large-12">
-        <ul class="content-orbit" data-orbit>
-            {% for i in 0..2 %}
-            {% set topic = topics[i] %}
-            <li data-orbit-slide="headline-{{ loop.index }}">
-                <div>
-                    <h2 class="one-line">
-                        <span class="fa-stack">
-                            <i class="fa fa-star fa-stack-2x"></i>
-                            <strong class="fa-stack-1x star-text">{{ loop.index }}</strong>
-                        </span>
-                        {{ topic.title }}
-                    </h2>
-                    <p class="right">{% include 'topic/details.html.twig' %}</p>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
+    {% include 'topic/slider.html.twig' with {topics: topics|slice(0,2)} %}
 </div>
 
-<div class="row">
-    <div class="small-12 medium-8 medium-centered large-6 large-centered columns text-center">
-        <a class="button radius" data-toggle data-toggle-target="create-topic-form">
-            <div class="data-toggle-closed">
-                <i class="fa fa-angle-double-down"></i>
-                add a new suggestion
-                <i class="fa fa-angle-double-down"></i>
-            </div>
-
-            <div class="data-toggle-open">
-                <i class="fa fa-angle-double-up"></i>
-                cancel new suggestion
-                <i class="fa fa-angle-double-up"></i>
-            </div>
-        </a>
-    </div>
-</div>
-
-<div class="bg-secondary hide" id="create-topic-form">
-    <div class="row">
-        <div class="small-12 medium-8 medium-centered large-6 large-centered columns">
-            <h5>new suggestion</h5>
-            <form action="{{ path('topic-create') }}" method="post" data-abide>
-                <div>
-                    {{ form_widget(form.title, {attr: {placeholder: 'title'}}) }}
-                    <small class="error">you need to enter a title</small>
-                </div>
-                <div>
-                    {{ form_widget(form.description, {attr: {placeholder: 'description (markdown allowed)', rows: 8}}) }}
-                    <small class="error">you need to enter some form of description</small>
-                </div>
-                <button class="button radius small right"><i class="fa fa-plus-square"></i> submit</button>
-            </form>
-        </div>
-    </div>
-</div>
+{% include 'index.dashboard.create.html.twig' with {form: form} %}
 
 <div class="row">
 

@@ -1,7 +1,5 @@
 <?php
 /*
- * (c) SimpleThings GmbH
- *
  * @author Tobias Olry <tobias.olry@web.de>
  */
 

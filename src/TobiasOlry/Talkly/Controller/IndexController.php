@@ -75,7 +75,7 @@ class IndexController
                 'index.dashboard.html.twig',
                 array(
                     'topics'           => $this->getAllTopics(),
-                    'last_submissions' => $this->getLastSubmissions($limit = 5),
+                    'last_submissions' => $this->getLastSubmissions($limit = 3),
                     'form'             => $form->createView(),
                 )
             )
