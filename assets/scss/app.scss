@@ -4,12 +4,14 @@
 @import "mixins";
 
 
+meta.foundation-data-attribute-namespace { font-family: false; }
+
 .content-orbit li div {
     color: white;
     background: darken($primary-color, 20%);
     padding: 30px 40px;
 
-    h2, h3, p {
+    h2, h3, p, small {
         color: white;
     }
 
@@ -52,19 +54,13 @@ footer {
     padding: 10px 0 30px 0;
 }
 
-@include keyframes("highlight") {
-    0% {
-        background: $primary-color;
-    }
-    100% {
-        background: inherit;
-    }
+.highlight-target:target {
+    border-left: 4px solid gray;
+    padding-left: 2em;
 }
 
-.highlight-target:target .panel {
-    border-style: dotted !important;
-    @include animation("highlight 2s");
-}
+.quiet { color: gray; }
+.star-text { color: darken($primary-color, 20%); }
 
 textarea {
     height: auto;

@@ -6,6 +6,8 @@ use Monolog\Logger;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use TobiasOlry\Talkly\Twig\MarkdownExtension;
 use TobiasOlry\Talkly\Translator\NullTranslator;
+use TobiasOlry\Talkly\UserProvider\DebugUserProvider;
+use TobiasOlry\Talkly\UserProvider\NtlmUserProvider;
 use Salavert\Twig\Extension\TimeAgoExtension;
 
 
@@ -63,5 +65,13 @@ if ($app['debug']) {
         'profiler.cache_dir'    => __DIR__.'/cache/profiler',
         'profiler.mount_prefix' => '/_profiler', // this is the default
     ));
+}
+
+switch($app['config']['user_provider']) {
+    case 'debug':
+        $app['user_provider'] = $app->share(function() use ($app) {
+            return new DebugUserProvider($app['config']['user_provider_debug_user']);
+        });
+        break;
 }
 

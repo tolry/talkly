@@ -1,11 +1,20 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Response;
+
 $app['controllers']
     ->before(function() use($app) {
         $twig    = $app['twig'];
         $request = $app['request'];
 
-        $request->server->set('PHP_AUTH_USER', 'dendeigh');
+        $user = $app['user_provider']->getUsername();
+
+        if (! $user) {
+            // @todo return RedirectResponse
+            return new Response('not allowed', 403);
+        }
+
+        $request->server->set('PHP_AUTH_USER', $user);
     })
 ;
 

@@ -13,9 +13,9 @@
     </div>
 
     <h4>{{ topic.title }}</h4>
+    <p class="quiet">{% include 'topic/details.html.twig' %}</p>
     <div>{{ markdown_extra(topic.description) }}</div>
     <p><strong>Votes:</strong> {{ topic.votes|join(', ') }}</p>
-    <p class="right">{% include 'topic/details.html.twig' %}</p>
 
     <p>
         <a href="#" data-toggle data-toggle-target="topic-{{ topic.id }}-comments">

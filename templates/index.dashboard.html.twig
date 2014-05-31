@@ -8,11 +8,16 @@
             {% for i in 0..2 %}
             {% set topic = topics[i] %}
             <li data-orbit-slide="headline-{{ loop.index }}">
-            <div>
-                <h2 class="one-line">#{{ loop.index }} | {{ topic.title }}</h2>
-                <h3 class="one-line">{{ topic.description|default('n.a') }}</h3>
-                <p class="right">{% include 'topic/details.html.twig' %}</p>
-            </div>
+                <div>
+                    <h2 class="one-line">
+                        <span class="fa-stack">
+                            <i class="fa fa-star fa-stack-2x"></i>
+                            <strong class="fa-stack-1x star-text">{{ loop.index }}</strong>
+                        </span>
+                        {{ topic.title }}
+                    </h2>
+                    <p class="right">{% include 'topic/details.html.twig' %}</p>
+                </div>
             </li>
             {% endfor %}
         </ul>
