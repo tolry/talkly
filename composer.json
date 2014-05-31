@@ -14,7 +14,8 @@
         "symfony/validator": "dev-master",
         "symfony/config": "dev-master",
         "symfony/translation": "dev-master",
-        "salavert/time-ago-in-words": "1.*"
+        "salavert/time-ago-in-words": "1.*",
+        "timetoogo/pinq": "@stable"
     },
     "autoload": {
         "psr-0": { "": "src/" }

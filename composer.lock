@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7e9aeb67068b16dbf27362ed009557e9",
+    "hash": "512bd15f52b3de3fa3c2138dc04ee23a",
     "packages": [
         {
             "name": "deralex/yaml-config-service-provider",
@@ -786,6 +786,50 @@
                 "psr-3"
             ],
             "time": "2013-11-14 19:48:31"
+        },
+        {
+            "name": "nikic/php-parser",
+            "version": "v0.9.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "1e5e280ae88a27effa2ae4aa2bd088494ed8594f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1e5e280ae88a27effa2ae4aa2bd088494ed8594f",
+                "reference": "1e5e280ae88a27effa2ae4aa2bd088494ed8594f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "PHPParser": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "time": "2013-08-25 17:11:40"
         },
         {
             "name": "pimple/pimple",
@@ -2309,6 +2353,56 @@
             "time": "2014-01-07 13:29:57"
         },
         {
+            "name": "timetoogo/pinq",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TimeToogo/Pinq.git",
+                "reference": "96f718b5a4d2561c094f7af2871f5edb4474abcc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TimeToogo/Pinq/zipball/96f718b5a4d2561c094f7af2871f5edb4474abcc",
+                "reference": "96f718b5a4d2561c094f7af2871f5edb4474abcc",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "0.9.4",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "0.6.1"
+            },
+            "suggest": {
+                "doctrine/cache": "In-memory caching components for parsed function (Recommended for optimal performance)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pinq\\": "Source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Elliot Levin",
+                    "email": "elliot@aanet.com.au"
+                }
+            ],
+            "description": "PHP Integrated query - A real Linq for PHP",
+            "homepage": "http://www.github.com/TimeToogo/Pinq",
+            "keywords": [
+                "collection",
+                "pinq",
+                "query"
+            ],
+            "time": "2014-05-21 14:11:18"
+        },
+        {
             "name": "twig/twig",
             "version": "dev-master",
             "source": {
@@ -2376,7 +2470,8 @@
         "symfony/form": 20,
         "symfony/validator": 20,
         "symfony/config": 20,
-        "symfony/translation": 20
+        "symfony/translation": 20,
+        "timetoogo/pinq": 0
     },
     "platform": [
 

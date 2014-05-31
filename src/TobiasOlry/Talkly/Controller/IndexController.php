@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
+
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
 
@@ -26,21 +27,14 @@ class IndexController
         $this->formFactory  = $formFactory;
     }
 
-    private function getLastSubmissions($limit = 3)
+    private function getLastSubmissions($topics, $limit = 3)
     {
-        $qb = $this->em->createQueryBuilder();
+        $topics = \Pinq\Traversable::from($topics);
 
-        $qb
-            ->select('t, v, c')
-            ->from('TobiasOlry\Talkly\Entity\Topic', 't')
-            ->leftJoin('t.votes', 'v')
-            ->leftJoin('t.comments', 'c')
-            ->add('orderBy', 't.createdAt DESC')
+        return $topics
+            ->orderByDescending(function($topic) { return $topic->getCreatedAt(); })
+            ->take($limit)
         ;
-
-        $topics = $qb->getQuery()->getResult();
-
-        return array_slice($topics, 0, $limit);
     }
 
     private function getAllTopics()
@@ -70,12 +64,14 @@ class IndexController
             new Topic($request->getUser())
         );
 
+        $topics = $this->getAllTopics();
+
         return new Response(
             $this->twig->render(
                 'index.dashboard.html.twig',
                 array(
-                    'topics'           => $this->getAllTopics(),
-                    'last_submissions' => $this->getLastSubmissions($limit = 3),
+                    'topics'           => $topics,
+                    'last_submissions' => $this->getLastSubmissions($topics, $limit = 3),
                     'form'             => $form->createView(),
                 )
             )
