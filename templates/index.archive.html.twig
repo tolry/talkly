@@ -5,10 +5,10 @@
 
     <div class="large-4 small-12 columns">
 
-        <h4><i class="fa fa-home"></i> Home</h4><hr>
+        <h3><i class="fa fa-home"></i> Home</h3><hr>
         <p><a href="{{ path('homepage') }}" class="button radius tiny"> back home</a></p>
 
-        <h4>Months</h4><hr>
+        <h3><i class="fa fa-calendar"></i> Months</h3>
 
         <ul>
         {% for month, monthly_topics in topics %}
@@ -23,7 +23,7 @@
 
     <div class="large-8 small-12 columns">
 
-        <h4>Archived Topics</h4><hr>
+        <h3>Archived Topics</h3><hr>
 
         {% for month, monthly_topics in topics %}
             {% for topic in monthly_topics %}

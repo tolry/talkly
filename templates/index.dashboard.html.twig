@@ -11,19 +11,19 @@
 
     <div class="large-4 small-12 columns">
 
-        <h4>Last Submissions</h4><hr>
+        <h3>Last Submissions</h3><hr>
 
         {% for topic in last_submissions %}
             {% include 'topic/display.short.html.twig' with {topic: topic} %}
         {% endfor %}
 
-        <h4><i class="fa fa-file-archive-o"></i> Archive</h4><hr>
+        <h3><i class="fa fa-file-archive-o"></i> Archive</h3>
         <p><a href="{{ path('archive') }}" class="button radius tiny"> archived submissions</a></p>
     </div>
 
     <div class="large-8 small-12 columns">
 
-        <h4>Open Topics [highest ranked first]</h4><hr>
+        <h3>Open Topics [highest ranked first]</h3><hr>
 
         {% for topic in topics %}
             {% include 'topic/display.long.html.twig' with {topic: topic} %}
