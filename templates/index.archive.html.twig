@@ -1,0 +1,42 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+
+    <div class="large-4 small-12 columns">
+
+        <h4><i class="fa fa-home"></i> Home</h4><hr>
+        <p><a href="{{ path('homepage') }}" class="button radius tiny"> back home</a></p>
+
+        <h4>Months</h4><hr>
+
+        <ul>
+        {% for month, monthly_topics in topics %}
+            <li>
+                <a href="#month-{{ monthly_topics[0].lectureDate.format('Y-m') }}">
+                    {{ monthly_topics[0].lectureDate.format('F Y') }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="large-8 small-12 columns">
+
+        <h4>Archived Topics</h4><hr>
+
+        {% for month, monthly_topics in topics %}
+            {% for topic in monthly_topics %}
+                {% if loop.first %}
+                <h4 class="highlight-target" id="month-{{ topic.lectureDate.format('Y-m') }}">{{ topic.lectureDate.format('F Y') }}</h4>
+                {% endif %}
+                {% include 'topic/display.long.html.twig' with {topic: topic} %}
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+

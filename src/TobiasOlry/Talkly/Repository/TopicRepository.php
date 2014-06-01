@@ -44,5 +44,28 @@ class TopicRepository extends EntityRepository
         ;
     }
 
+    public function findArchivedGroupByMonth()
+    {
+        $criteria = new TopicCriteria();
+        $criteria->archived = true;
+
+        $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
+
+        return $topics
+            ->orderByDescending(function($topic) { return $topic->getLectureDate(); })
+            ->groupBy(function($topic) { return $topic->getLectureDate()->format('Y-m'); })
+        ;
+    }
+
+    public function filterLastSubmissions($topics, $limit = 3)
+    {
+        $topics = \Pinq\Traversable::from($topics);
+
+        return $topics
+            ->orderByDescending(function($topic) { return $topic->getCreatedAt(); })
+            ->take($limit)
+        ;
+    }
+
 }
 

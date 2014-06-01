@@ -60,6 +60,11 @@ class Topic
     private $lectureNote;
 
     /**
+     * @Column(type="string", nullable=true)
+     */
+    private $lectureUser;
+
+    /**
      * @Column(type="date", nullable=true)
      */
     private $lectureDate;
@@ -159,6 +164,33 @@ class Topic
         }
 
         return false;
+    }
+
+    public function getLectureDate()
+    {
+        return $this->lectureDate;
+    }
+
+    public function getLectureNote()
+    {
+        return $this->lectureNote;
+    }
+
+    public function getLectureUser()
+    {
+        return $this->lectureUser;
+    }
+
+    public function setLectureDetails(\DateTime $date, $user, $note)
+    {
+        $this->lectureDate = $date;
+        $this->lectureUser = $user;
+        $this->lectureNote = $note;
+    }
+
+    public function isArchived()
+    {
+        return $this->lectureDate <> null;
     }
 }
 

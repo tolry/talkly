@@ -22,6 +22,11 @@ $app
 ;
 
 $app
+    ->get('/archive', 'index.controller:archive')
+    ->bind('archive')
+;
+
+$app
     ->post('/topic/create', 'topic.controller:create')
     ->bind('topic-create')
 ;

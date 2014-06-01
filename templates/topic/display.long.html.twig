@@ -4,6 +4,7 @@
     <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
     {% endfor %}
 
+    {% if not topic.archived %}
     <div class="right">
         {% if topic.voteCastBy(app.request.user) %}
         <a href="{{ path('topic-retract-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
@@ -11,9 +12,19 @@
         <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
         {% endif %}
     </div>
+    {% endif %}
 
     <h4>{{ topic.title }}</h4>
     <p class="quiet">{% include 'topic/details.html.twig' %}</p>
+    {% if topic.archived %}
+        <div class="panel callout radius">
+            <p><strong>
+                <i class="fa fa-calendar-o"></i> {{ topic.lectureDate.format('d.m.Y') }}
+                <i class="fa fa-user"></i> {{ topic.lectureUser }}
+            </strong></p>
+            <p>{{ markdown_extra(topic.lectureNote) }}</p>
+        </div>
+    {% endif %}
     <div>{{ markdown_extra(topic.description) }}</div>
     <p><strong>votees:</strong> {{ topic.votes|join(', ') }}</p>
 

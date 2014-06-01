@@ -28,16 +28,6 @@ class IndexController
         $this->topicRepository = $this->em->getRepository('TobiasOlry\Talkly\Entity\Topic');
     }
 
-    private function getLastSubmissions($topics, $limit = 3)
-    {
-        $topics = \Pinq\Traversable::from($topics);
-
-        return $topics
-            ->orderByDescending(function($topic) { return $topic->getCreatedAt(); })
-            ->take($limit)
-        ;
-    }
-
     public function dashboard(Request $request)
     {
         $form = $this->formFactory->create(
@@ -46,13 +36,14 @@ class IndexController
         );
 
         $topics = $this->topicRepository->findNonArchivedMostVotesFirst();
+        $lastSubmissions = $this->topicRepository->filterLastSubmissions($topics, $limit = 3);
 
         return new Response(
             $this->twig->render(
                 'index.dashboard.html.twig',
                 array(
                     'topics'           => $topics,
-                    'last_submissions' => $this->getLastSubmissions($topics, $limit = 3),
+                    'last_submissions' => $lastSubmissions,
                     'form'             => $form->createView(),
                 )
             )
@@ -61,15 +52,13 @@ class IndexController
 
     public function archive(Request $request)
     {
-        $topics = $this->getAllTopics();
+        $topics = $this->topicRepository->findArchivedGroupByMonth();
 
         return new Response(
             $this->twig->render(
                 'index.archive.html.twig',
                 array(
                     'topics'           => $topics,
-                    'last_submissions' => $this->getLastSubmissions($topics, $limit = 3),
-                    'form'             => $form->createView(),
                 )
             )
         );
