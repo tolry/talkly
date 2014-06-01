@@ -13,8 +13,8 @@
         <ul>
         {% for month, monthly_topics in topics %}
             <li>
-                <a href="#month-{{ monthly_topics[0].lectureDate.format('Y-m') }}">
-                    {{ monthly_topics[0].lectureDate.format('F Y') }}
+                <a href="#month-{{ monthly_topics|first.lectureDate.format('Y-m') }}">
+                    {{ monthly_topics|first.lectureDate.format('F Y') }}
                 </a>
             </li>
         {% endfor %}

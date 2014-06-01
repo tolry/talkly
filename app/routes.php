@@ -46,4 +46,9 @@ $app
     ->bind('topic-comment')
 ;
 
+$app
+    ->post('/topic/{id}/archive', 'topic.controller:archive')
+    ->bind('topic-archive')
+;
+
 

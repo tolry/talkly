@@ -31,7 +31,7 @@ class TopicController
         $this->twig         = $twig;
     }
 
-    private function getTopic($id)
+    private function getTopic($id, $allowArchived = false)
     {
         if (empty($id)) {
             // todo
@@ -43,12 +43,22 @@ class TopicController
             // todo
         }
 
+        if (! $allowArchived && $topic->isArchived()) {
+            // todo
+        }
+
         return $topic;
     }
 
-    private function redirect($topic)
+    private function redirect(Topic $topic)
     {
-        $url = $this->urlGenerator->generate('homepage') . '#topic-' . $topic->getId();
+        $route = 'homepage';
+        if ($topic->isArchived()) {
+            $route = 'archive';
+        }
+
+        $url = $this->urlGenerator->generate($route)
+            . '#topic-' . $topic->getId();
 
         return new RedirectResponse($url);
     }
@@ -120,6 +130,23 @@ class TopicController
         $this->em->flush();
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'comment added');
+
+        return $this->redirect($topic);
+    }
+
+    public function archive(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'), $allowArchived = true);
+
+        $topic->setLectureDetails(
+            new \DateTime($request->get('date')),
+            $request->get('user'),
+            $request->get('note')
+        );
+
+        $this->em->flush();
+
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture entered');
 
         return $this->redirect($topic);
     }

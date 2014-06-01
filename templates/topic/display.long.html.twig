@@ -15,7 +15,10 @@
     {% endif %}
 
     <h4>{{ topic.title }}</h4>
-    <p class="quiet">{% include 'topic/details.html.twig' %}</p>
+    <p class="quiet">
+        {% include 'topic/details.html.twig' %}<br />
+        <strong>votees:</strong> {{ topic.votes|join(', ') }}
+    </p>
     {% if topic.archived %}
         <div class="panel callout radius">
             <p><strong>
@@ -26,7 +29,46 @@
         </div>
     {% endif %}
     <div>{{ markdown_extra(topic.description) }}</div>
-    <p><strong>votees:</strong> {{ topic.votes|join(', ') }}</p>
+
+    {% if not topic.archived %}
+    <div class="text-right">
+        <a href="#" class="button tiny" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
+            <i class="fa fa-file-archive-o"></i> arhive
+            <i class="fa fa-angle-double-up data-toggle-open"></i>
+            <i class="fa fa-angle-double-down data-toggle-closed"></i>
+        </a>
+    </div>
+
+    <div class="hide" id="topic-{{ topic.id }}-archive">
+        <div class="row">
+            <form role="form" action="{{ path('topic-archive', {id: topic.id}) }}" method="post">
+                <div class="columns small-6">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="date" name="date" placeholder="e.g. 2014-04-04" value="{{ "now"|date('Y-m-d') }}" />
+                        </div>
+                        <div class="columns small-2">
+                            <span class="postfix"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns small-6">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="text" name="user" placeholder="user" value="{{ app.request.user }}" />
+                        </div>
+                        <div class="columns small-2">
+                            <span class="postfix"><i class="fa fa-user"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns small-12">
+                    <textarea name="note" class="form-controll" placeholder="add a note (markdown allowed)"></textarea>
+                    <div class="right"><button class="button tiny">archive</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <p>
         <a href="#" data-toggle data-toggle-target="topic-{{ topic.id }}-comments">
@@ -56,6 +98,8 @@
             </form>
         </div>
     </div>
+    {% endif %}
+
 </div>
 
 <hr/>
