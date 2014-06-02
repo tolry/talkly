@@ -75,7 +75,10 @@ switch($app['config']['user_provider']) {
     break;
     case 'ntlm':
         $app['user_provider'] = $app->share(function() use ($app) {
-            return new NtlmUserProvider($app['request_stack']);
+            return new NtlmUserProvider(
+                $app['request_stack'],
+                $app['config']['user_provider_ntlm_domain']
+            );
         });
     break;
 }

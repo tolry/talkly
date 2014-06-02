@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class NtlmUserProvider implements UserProviderInterface
 {
     private $requestStack;
+    private $domain;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, $domain)
     {
         $this->requestStack = $requestStack;
+        $this->domain       = $domain;
     }
 
     public function getUsername()
@@ -23,6 +25,12 @@ class NtlmUserProvider implements UserProviderInterface
         if (empty($username)) {
             return;
         }
+
+        if (strpos($username, $this->domain . '\\') !== 0) {
+            return;
+        }
+
+        $username = str_replace($this->domain . '\\', '', $username);
 
         return $username;
     }
