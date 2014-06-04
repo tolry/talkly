@@ -8765,8 +8765,8 @@ meta.foundation-data-attribute-namespace {
 .content-orbit li div h2, .content-orbit li div h3, .content-orbit li div p, .content-orbit li div small {
   color: white;
 }
-.content-orbit li div h2 {
-  text-shadow: 2px 1px 0 rgba(231, 231, 231, 0.6);
+.content-orbit li div h2 i {
+      text-shadow: 4px 2px 0 rgba(231, 231, 231, 0.6);
 }
 
 .one-line {
