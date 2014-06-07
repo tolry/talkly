@@ -32,7 +32,7 @@
 
     {% if not topic.archived %}
     <div class="text-right">
-        <a href="#" class="button tiny" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
+        <a href="#" class="button tiny radius" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
             <i class="fa fa-file-archive-o"></i> archive
             <i class="fa fa-angle-double-up data-toggle-open"></i>
             <i class="fa fa-angle-double-down data-toggle-closed"></i>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="columns small-12">
                     <textarea name="note" class="form-controll" placeholder="add a note (markdown allowed)"></textarea>
-                    <div class="right"><button class="button tiny">archive</button></div>
+                    <div class="right"><button class="button tiny radius">archive</button></div>
                 </div>
             </form>
         </div>
@@ -93,7 +93,7 @@
                 <div class="columns small-2">{{ app.request.user }}</div>
                 <div class="columns small-10">
                     <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
-                    <div class="right"><button class="button tiny">comment</button></div>
+                    <div class="right"><button class="button tiny radius">comment</button></div>
                 </div>
             </form>
         </div>
