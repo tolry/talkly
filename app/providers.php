@@ -79,7 +79,7 @@ if ($app['debug']) {
 switch($app['config']['user_provider']) {
     case 'debug':
         $app['user_provider'] = $app->share(function() use ($app) {
-            $user = isset($app['config']['user_provider_debug_user']) ? $app['config']['user_provider_debug_user'] : 'Max Musernman';
+            $user = isset($app['config']['user_provider_debug_user']) ? $app['config']['user_provider_debug_user'] : 'mmustermann';
             return new DebugUserProvider($user);
         });
     break;
