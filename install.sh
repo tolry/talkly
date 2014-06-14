@@ -14,7 +14,6 @@ cd assets && bower install && cd ..
 echo "setting file permissions"
 sudo chown -R $webserver_user:$webserver_group app/logs app/cache
 
-
-echo now you need to create app/config/config.yml from app/config/config.dist.yml
+echo now you need to create your database
 echo afterwards, run php bin/doctrine orm:schema-tool:create
 

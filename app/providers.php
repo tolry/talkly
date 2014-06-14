@@ -17,7 +17,8 @@ if (! file_exists(__DIR__ . '/config/config.yml')) {
     throw new \RuntimeException('you need to generate a config file first, just copy and edit app/config/config.dist.yml to app/config/config.yml');
 }
 $app->register(new DerAlex\Silex\YamlConfigServiceProvider(__DIR__ . '/config/config.yml'));
-$app['debug'] = $app['config']['debug'];
+$app['config'] = $app['config']['parameters'];
+$app['debug']  = $app['config']['debug'];
 
 $app->register(new Silex\Provider\SessionServiceProvider(array('name' => 'TALKLY_SESSION')));
 $app->register(new Provider\UrlGeneratorServiceProvider());
@@ -42,7 +43,15 @@ $app->register(new Provider\MonologServiceProvider(), array(
 ));
 
 $app->register(new Provider\DoctrineServiceProvider, array(
-    "db.options" => $app['config']['db.options']
+    "db.options" => array(
+        'driver'   => $app['config']['db_driver'],
+        'host'     => $app['config']['db_host'],
+        'port'     => $app['config']['db_port'],
+        'dbname'   => $app['config']['db_dbname'],
+        'user'     => $app['config']['db_user'],
+        'password' => $app['config']['db_password'],
+        'charset'  => $app['config']['db_charset'],
+    )
 ));
 
 $app->register(new DoctrineOrmServiceProvider, array(
@@ -70,7 +79,8 @@ if ($app['debug']) {
 switch($app['config']['user_provider']) {
     case 'debug':
         $app['user_provider'] = $app->share(function() use ($app) {
-            return new DebugUserProvider($app['config']['user_provider_debug_user']);
+            $user = isset($app['config']['user_provider_debug_user']) ? $app['config']['user_provider_debug_user'] : 'Max Musernman';
+            return new DebugUserProvider($user);
         });
     break;
     case 'ntlm':
