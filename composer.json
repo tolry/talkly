@@ -15,10 +15,25 @@
         "symfony/config": "dev-master",
         "symfony/translation": "dev-master",
         "salavert/time-ago-in-words": "1.*",
-        "timetoogo/pinq": "@stable"
+        "timetoogo/pinq": "@stable",
+        "incenteev/composer-parameter-handler": "~2.0"
     },
     "autoload": {
         "psr-0": { "": "src/" }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ]
+    },
+    "extra": {
+        "incenteev-parameters": {
+            "file": "app/config/config.yml",
+            "dist-file": "app/config/config.dist.yml"
+        }
     },
     "minimum-stability": "stable"
 }
