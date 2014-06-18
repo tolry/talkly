@@ -16,9 +16,6 @@
         {% for topic in last_submissions %}
             {% include 'topic/display.short.html.twig' with {topic: topic} %}
         {% endfor %}
-
-        <h3><i class="fa fa-file-archive-o"></i> Archive</h3>
-        <p><a href="{{ path('archive') }}" class="button radius tiny"> archived submissions</a></p>
     </div>
 
     <div class="large-8 small-12 columns">

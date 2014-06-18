@@ -1,12 +1,14 @@
 {% extends 'layout.html.twig' %}
 
+{% block navigation %}
+{% set active_menu = 'archive' %}
+{{ parent() }}
+{% endblock %}
+
 {% block content %}
 <div class="row">
 
     <div class="large-4 small-12 columns">
-
-        <h3><i class="fa fa-home"></i> Home</h3><hr>
-        <p><a href="{{ path('homepage') }}" class="button radius tiny"> back home</a></p>
 
         <h3><i class="fa fa-calendar"></i> Months</h3>
 
