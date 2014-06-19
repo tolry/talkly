@@ -8779,14 +8779,28 @@ meta.foundation-data-attribute-namespace {
   background: #e7e7e7;
 }
 
-.top {
+nav {
   background-color: #333333;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li a {
   color: white;
-  padding: 10px 0;
+  line-height: 3em;
+  display: block;
+}
+
+nav ul li.active a {
+  background: white;
+  color: black;
 }
 
 body {
   background-color: #333333;
+  padding-top: 3em;
 }
 
 main {

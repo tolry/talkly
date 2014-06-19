@@ -20,22 +20,24 @@
 
         <a href="https://github.com/tolry/talkly"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
-        <div class="fixed" id="headroom">
+        <nav class="fixed" id="headroom">
             {% set active_menu = 'homepage' %}
             {% block navigation %}
-            <nav class="top-bar" data-topbar>
-                <div class="row text-center">
-                    <section class="top-bar-section">
-                        <ul>    
-                            <li class="{{ (active_menu == 'homepage') ? 'active' : '' }} large-4 columns"><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>
-                            <li class="{{ (active_menu == 'archive') ? 'active' : '' }} large-4 columns"><a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i> Archive</a></li>
-                            <li class="large-4 columns"><a href="#"><i class="fa fa-user"></i> {{ app.request.user }}</a></li>
-                        </ul>
-                    </section>
-                </div>
-            </nav>
-            {% endblock %}
+            <div class="row">
+            <ul class="text-center">    
+                <li class="{{ (active_menu == 'homepage') ? 'active' : '' }} small-4 columns">
+                    <a href="{{ path('homepage') }}"><i class="fa fa-home"></i><span><span class="hide-for-small-only"> Home</span></span></a>
+                </li>
+                <li class="{{ (active_menu == 'archive') ? 'active' : '' }} small-4 columns">
+                    <a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i><span><span class="hide-for-small-only">  Archive</span></span></a>
+                </li>
+                <li class="small-4 columns">
+                    <a href="#"><i class="fa fa-user"></i><span><span class="hide-for-small-only">  {{ app.request.user }}</span></span></a>
+                </li>
+            </ul>
         </div>
+            {% endblock %}
+        </nav>
 
         <header>
             <div class="row">

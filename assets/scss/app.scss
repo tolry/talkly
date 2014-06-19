@@ -32,14 +32,15 @@ meta.foundation-data-attribute-namespace { font-family: false; }
     background:$secondary-color;
 }
 
-.top {
-    background-color: $topbar-bg-color;
-    color: white;
-    padding: 10px 0;
-}
+nav { background-color: $topbar-bg-color; }
+nav ul { list-style-type: none; }
+nav ul li a { color: white; line-height: 3em; display: block; }
+nav ul li.active a { background: white; color: black; }
+
 
 body {
     background-color: $topbar-bg-color;
+    padding-top: 3em;
 }
 
 main {
