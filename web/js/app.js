@@ -26,6 +26,7 @@ $(document).ready(function() {
 
     hljs.initHighlightingOnLoad();
 
+    $("#headroom").headroom();
 });
 
 var app = {

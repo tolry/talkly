@@ -8766,7 +8766,7 @@ meta.foundation-data-attribute-namespace {
   color: white;
 }
 .content-orbit li div h2 i {
-      text-shadow: 4px 2px 0 rgba(231, 231, 231, 0.6);
+  text-shadow: 4px 2px 0 rgba(231, 231, 231, 0.6);
 }
 
 .one-line {
@@ -8779,14 +8779,28 @@ meta.foundation-data-attribute-namespace {
   background: #e7e7e7;
 }
 
-.top {
+nav {
   background-color: #333333;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li a {
   color: white;
-  padding: 10px 0;
+  line-height: 3em;
+  display: block;
+}
+
+nav ul li.active a {
+  background: white;
+  color: black;
 }
 
 body {
   background-color: #333333;
+  padding-top: 3em;
 }
 
 main {
@@ -8834,4 +8848,27 @@ textarea {
 
 [data-toggle].toggle-open .data-toggle-closed {
   display: none;
+}
+
+.headroom {
+  -webkit-transition: -webkit-transform 200ms linear;
+  -moz-transition: -moz-transform 200ms linear;
+  -o-transition: -o-transform 200ms linear;
+  transition: transform 200ms linear;
+}
+
+.headroom--pinned {
+  -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%);
+}
+
+.headroom--unpinned {
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
 }
