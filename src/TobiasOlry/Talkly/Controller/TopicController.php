@@ -50,7 +50,7 @@ class TopicController
         return $topic;
     }
 
-    private function redirect(Topic $topic)
+    private function redirect(Topic $topic, $view = 'show')
     {
         $route = 'homepage';
         if ($topic->isArchived()) {
@@ -59,6 +59,12 @@ class TopicController
 
         $url = $this->urlGenerator->generate($route)
             . '#topic-' . $topic->getId();
+
+        if ($view == 'show') {
+            $route = 'topic-show';
+            $url = $this->urlGenerator
+                ->generate($route, array('id' => $topic->getId()));
+        }
 
         return new RedirectResponse($url);
     }
@@ -86,7 +92,7 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'topic created');
 
-        return $this->redirect($topic);
+        return $this->redirect($topic, 'list');
     }
 
     public function castVote(Request $request)
@@ -99,7 +105,19 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote cast');
 
-        return $this->redirect($topic);
+        return $this->redirect($topic, $request->get('view', 'list'));
+    }
+
+    public function show(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+
+        return new Response(
+            $this->twig->render(
+                'topic/show.html.twig',
+                array('topic' => $topic)
+            )
+        );
     }
 
     public function retractVote(Request $request)
@@ -119,7 +137,7 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote retracted');
 
-        return $this->redirect($topic);
+        return $this->redirect($topic, $request->get('view', 'list'));
     }
 
     public function comment(Request $request)
@@ -131,7 +149,7 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'comment added');
 
-        return $this->redirect($topic);
+        return $this->redirect($topic, $request->get('view', 'show'));
     }
 
     public function archive(Request $request)
@@ -148,7 +166,7 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture entered');
 
-        return $this->redirect($topic);
+        return $this->redirect($topic, $request->get('view', 'list'));
     }
 }
 

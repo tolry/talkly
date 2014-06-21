@@ -7,9 +7,9 @@
     {% if not topic.archived %}
     <div class="right">
         {% if topic.voteCastBy(app.request.user) %}
-        <a href="{{ path('topic-retract-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
+        <a href="{{ path('topic-retract-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
         {% else %}
-        <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
+        <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
         {% endif %}
     </div>
     {% endif %}
@@ -28,7 +28,7 @@
             <p>{{ markdown_extra(topic.lectureNote) }}</p>
         </div>
     {% endif %}
-    <div>{{ markdown_extra(topic.description) }}</div>
+    <div class="markdown">{{ markdown_extra(topic.description) }}</div>
 
     {% if not topic.archived %}
     <div class="text-right">
@@ -81,7 +81,7 @@
     <div class="hide" id="topic-{{ topic.id }}-comments">
         {% for comment in topic.comments %}
             <blockquote>
-                {{ markdown_extra(comment.commentText) }}
+                <div class="markdown">{{ markdown_extra(comment.commentText) }}</div>
                 <cite>
                     <i class="fa fa-user"></i> {{ comment.createdBy }}
                     <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}

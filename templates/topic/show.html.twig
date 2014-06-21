@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+
+    <div class="small-12 large-offset-2 large-8 end columns">
+        {% include 'topic/display.long.html.twig' with {topic: topic} %}
+    </div>
+
+</div>
+
+{% endblock %}

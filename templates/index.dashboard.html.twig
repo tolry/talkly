@@ -14,7 +14,10 @@
         <h3>Last Submissions</h3><hr>
 
         {% for topic in last_submissions %}
-            {% include 'topic/display.short.html.twig' with {topic: topic} %}
+        <h4>
+            <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
+            <small><abbr title="{{ topic.createdAt|date }}">{{ topic.createdAt|time_ago_in_words }}</abbr></small>
+        </h4>
         {% endfor %}
     </div>
 
@@ -23,7 +26,7 @@
         <h3>Open Topics [highest ranked first]</h3><hr>
 
         {% for topic in topics %}
-            {% include 'topic/display.long.html.twig' with {topic: topic} %}
+            {% include 'topic/display.short.html.twig' with {topic: topic} %}
         {% endfor %}
 
     </div>
