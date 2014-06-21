@@ -8793,9 +8793,15 @@ nav ul li a {
   display: block;
 }
 
-nav ul li.active a {
+nav ul li.active a,
+nav ul li.active a:hover {
   background: white;
   color: black;
+}
+
+nav ul li a:hover {
+  background: #4d4d4d;
+  color: white;
 }
 
 body {
@@ -8828,6 +8834,10 @@ footer {
 
 .star-text {
   color: #003f54;
+}
+
+.votes-text {
+  padding-top: 0.2em;
 }
 
 textarea {
@@ -8871,4 +8881,8 @@ textarea {
   -ms-transform: translateY(-100%);
   -o-transform: translateY(-100%);
   transform: translateY(-100%);
+}
+
+.markdown pre {
+  margin-bottom: 1em;
 }

@@ -32,7 +32,7 @@
                 {% if loop.first %}
                 <h4 class="highlight-target" id="month-{{ topic.lectureDate.format('Y-m') }}">{{ topic.lectureDate.format('F Y') }}</h4>
                 {% endif %}
-                {% include 'topic/display.long.html.twig' with {topic: topic} %}
+                {% include 'topic/display.short.html.twig' with {topic: topic} %}
             {% endfor %}
         {% endfor %}
 

@@ -32,6 +32,11 @@ $app
 ;
 
 $app
+    ->get('/topic/{id}/show', 'topic.controller:show')
+    ->bind('topic-show')
+;
+
+$app
     ->get('/topic/{id}/cast-vote', 'topic.controller:castVote')
     ->bind('topic-cast-vote')
 ;
