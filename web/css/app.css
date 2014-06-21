@@ -8823,6 +8823,16 @@ footer {
   padding: 10px 0 30px 0;
 }
 
+footer a {
+  color: white;
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
 .highlight-target:target {
   border-left: 4px solid gray;
   padding-left: 2em;
