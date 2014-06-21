@@ -22,6 +22,10 @@ $(document).ready(function() {
         }
 
         return false;
+    }).each(function() {
+        if ($(this).data('toggle-start-opened') == '1') {
+            $(this).trigger('click');
+        }
     });
 
     hljs.initHighlightingOnLoad();

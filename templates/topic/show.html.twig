@@ -1,9 +1,26 @@
 {% extends 'layout.html.twig' %}
 
+{% block navigation %}
+    {% if topic.archived %}
+    {% set active_menu = 'archive' %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
 {% block content %}
 <div class="row">
 
     <div class="small-12 large-offset-2 large-8 end columns">
+        <ul class="breadcrumbs">
+            {% if topic.archived %}
+            <li><a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i> Archive</a></li>
+            {% else %}
+            <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>
+            {% endif %}
+            <li class="current one-line"><a href="#">{{ topic.title }}</a></li>
+        </ul>
+
         {% include 'topic/display.long.html.twig' with {topic: topic} %}
     </div>
 

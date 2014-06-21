@@ -36,7 +36,7 @@ class IndexController
         );
 
         $topics = $this->topicRepository->findNonArchivedMostVotesFirst();
-        $lastSubmissions = $this->topicRepository->filterLastSubmissions($topics, $limit = 3);
+        $lastSubmissions = $this->topicRepository->filterLastSubmissions($topics, $limit = 8);
 
         return new Response(
             $this->twig->render(

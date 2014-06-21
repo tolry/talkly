@@ -32,10 +32,10 @@
 
     {% if not topic.archived %}
     <div class="text-right">
-        <a href="#" class="button tiny radius" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
+        <a href="#" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
             <i class="fa fa-file-archive-o"></i> archive
-            <i class="fa fa-angle-double-up data-toggle-open"></i>
-            <i class="fa fa-angle-double-down data-toggle-closed"></i>
+            <i class="fa fa-angle-double-down data-toggle-open"></i>
+            <i class="fa fa-angle-double-right data-toggle-closed"></i>
         </a>
     </div>
 
@@ -71,10 +71,10 @@
     </div>
 
     <p>
-        <a href="#" data-toggle data-toggle-target="topic-{{ topic.id }}-comments">
+        <a href="#" data-toggle data-toggle-start-opened="1" data-toggle-target="topic-{{ topic.id }}-comments">
             <i class="fa fa-comments-o"></i> {{ topic.comments|length }} comment(s)
-            <i class="fa fa-angle-double-up data-toggle-open"></i>
-            <i class="fa fa-angle-double-down data-toggle-closed"></i>
+            <i class="fa fa-angle-double-down data-toggle-open"></i>
+            <i class="fa fa-angle-double-right data-toggle-closed"></i>
         </a>
     </p>
 
