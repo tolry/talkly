@@ -6,6 +6,7 @@
         "symfony/config":                        "~2.5",
         "symfony/translation":                   "~2.5",
         "symfony/yaml":                          "~2.5",
+        "symfony/console":                       "~2.5",
 
         "monolog/monolog":                       "~1.0",
 
@@ -15,6 +16,7 @@
         "deralex/yaml-config-service-provider":  "1.0.x-dev",
         "silex/web-profiler":                    "~1.0",
         "symfony/doctrine-bridge":               "~2.5",
+        "doctrine/migrations":                   "dev-master",
 
         "michelf/php-markdown":                  "~1.4.1",
         "salavert/time-ago-in-words":            "~1.0",
