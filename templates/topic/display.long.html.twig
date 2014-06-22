@@ -21,10 +21,10 @@
     <br/>
     {% if topic.archived %}
         <div class="panel callout radius">
-            <p><strong>
-                <i class="fa fa-calendar-o"></i> {{ topic.lectureDate.format('d.m.Y') }}
-                <i class="fa fa-user"></i> {{ topic.lectureUser }}
-            </strong></p>
+            <ul class="topic-details clearfix">
+                <li><i class="fa fa-calendar-o"></i> {{ topic.lectureDate.format('d.m.Y') }}</li>
+                <li><i class="fa fa-user"></i> {{ topic.lectureUser }}</li>
+            </ul>
             <p>{{ markdown_extra(topic.lectureNote) }}</p>
         </div>
     {% endif %}
