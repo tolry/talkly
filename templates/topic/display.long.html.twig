@@ -15,10 +15,10 @@
     {% endif %}
 
     <h4>{{ topic.title }}</h4>
-    <p class="quiet">
+    <div class="quiet">
         {% include 'topic/details.html.twig' %}<br />
-        <strong>votees:</strong> {{ topic.votes|join(', ') }}
-    </p>
+    </div>
+    <br/>
     {% if topic.archived %}
         <div class="panel callout radius">
             <p><strong>

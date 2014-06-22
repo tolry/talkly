@@ -8896,3 +8896,22 @@ textarea {
 .markdown pre {
   margin-bottom: 1em;
 }
+
+.slider {
+  margin-top: -30px;
+  margin-bottom: 30px;
+  background: #003f54;
+  padding: 10px;
+}
+
+ul.topic-details {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.topic-details li {
+  display: block;
+  float: left;
+  margin: 0 15px 0 0;
+  padding: 0;
+}
