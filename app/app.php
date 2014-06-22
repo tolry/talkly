@@ -10,6 +10,7 @@ $app = new Silex\Application();
 $app['loader'] = $loader;
 
 require_once __DIR__ . '/providers.php';
+require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/controllers.php';
 require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/commands.php';

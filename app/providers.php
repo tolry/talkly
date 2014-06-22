@@ -6,10 +6,7 @@ use Monolog\Logger;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use TobiasOlry\Talkly\Twig\MarkdownExtension;
 use TobiasOlry\Talkly\Translator\NullTranslator;
-use TobiasOlry\Talkly\UserProvider\DebugUserProvider;
-use TobiasOlry\Talkly\UserProvider\NtlmUserProvider;
 use Salavert\Twig\Extension\TimeAgoExtension;
-
 
 // config
 
@@ -75,21 +72,3 @@ if ($app['debug']) {
         'profiler.mount_prefix' => '/_profiler', // this is the default
     ));
 }
-
-switch($app['config']['user_provider']) {
-    case 'debug':
-        $app['user_provider'] = $app->share(function() use ($app) {
-            $user = isset($app['config']['user_provider_debug_user']) ? $app['config']['user_provider_debug_user'] : 'mmustermann';
-            return new DebugUserProvider($user);
-        });
-    break;
-    case 'ntlm':
-        $app['user_provider'] = $app->share(function() use ($app) {
-            return new NtlmUserProvider(
-                $app['request_stack'],
-                $app['config']['user_provider_ntlm_domain']
-            );
-        });
-    break;
-}
-

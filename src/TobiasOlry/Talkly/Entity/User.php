@@ -2,7 +2,8 @@
 
 namespace TobiasOlry\Talkly\Entity;
 
-use Doctrine\ORM\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
+use TobiasOlry\Talkly\Security\UserInterface;
 
 /**
  *
@@ -10,7 +11,7 @@ use Doctrine\ORM\Common\Collections\ArrayCollection;
  *
  * @Entity
  */
-class User
+class User implements UserInterface
 {
 
     /**
