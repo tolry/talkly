@@ -6,6 +6,7 @@
         "symfony/config":                        "~2.5",
         "symfony/translation":                   "~2.5",
         "symfony/yaml":                          "~2.5",
+        "symfony/console":                       "~2.5",
 
         "monolog/monolog":                       "~1.0",
 
