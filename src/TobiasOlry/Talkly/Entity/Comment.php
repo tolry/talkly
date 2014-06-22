@@ -25,7 +25,7 @@ class Comment
     private $topic;
 
     /**
-     * @Column(type="string")
+     * @ManyToOne(targetEntity="User", inversedBy="comments")
      */
     private $createdBy;
 
@@ -39,7 +39,13 @@ class Comment
      */
     private $commentText;
 
-    public function __construct($user, $commentText, Topic $topic)
+    /**
+     *
+     * @param User $user
+     * @param Topic $topic
+     * @param string $commentText
+     */
+    public function __construct(User $user, Topic $topic, $commentText)
     {
         $this->createdBy   = $user;
         $this->topic       = $topic;
@@ -47,21 +53,30 @@ class Comment
         $this->commentText = $commentText;
     }
 
+    /**
+     *
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     *
+     * @return User
+     */
     public function getCreatedBy()
     {
         return $this->createdBy;
     }
 
+    /*
+     *
+     * @return string
+     */
     public function getCommentText()
     {
         return $this->commentText;
     }
-
 }
-
-

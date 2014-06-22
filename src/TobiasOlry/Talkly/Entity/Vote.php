@@ -7,7 +7,6 @@ namespace TobiasOlry\Talkly\Entity;
 
 /**
  * @Entity
- * @Table
  */
 class Vote
 {
@@ -19,7 +18,7 @@ class Vote
     private $id;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ManyToOne(targetEntity="User", inversedBy="votes")
      */
     private $voter;
 
@@ -33,22 +32,33 @@ class Vote
      */
     private $topic;
 
-    public function __construct(Topic $topic, $voter)
+    /**
+     *
+     * @param Topic $topic
+     * @param User $voter
+     */
+    public function __construct(Topic $topic, User $voter)
     {
         $this->topic     = $topic;
         $this->createdAt = new \DateTime();
         $this->voter     = $voter;
     }
 
+    /**
+     *
+     * @return User
+     */
     public function getVoter()
     {
         return $this->voter;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->voter;
+        return (string) $this->voter;
     }
-
 }
-

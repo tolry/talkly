@@ -20,7 +20,7 @@ class Topic
     private $id;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ManyToOne(targetEntity="User", inversedBy="topics")
      */
     private $createdBy;
 
@@ -60,7 +60,7 @@ class Topic
     private $lectureNote;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ManyToOne(targetEntity="User", inversedBy="lectures")
      */
     private $lectureUser;
 
@@ -69,7 +69,11 @@ class Topic
      */
     private $lectureDate;
 
-    public function __construct($user)
+    /**
+     *
+     * @param User $user
+     */
+    public function __construct(User $user)
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
@@ -80,30 +84,102 @@ class Topic
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     *
+     * @param string $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    public function castVote($user)
+    /**
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     *
+     * @return Vote[]
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     *
+     * @return Comment[]
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     *
+     * @param User $user
+     */
+    public function castVote(User $user)
     {
         if ($this->voteCastBy($user)) {
-            return false;
+            return;
         }
 
         $vote = new Vote($this, $user);
         $this->votes->add($vote);
     }
 
-    public function comment($user, $text)
+    /**
+     *
+     * @param User $user
+     * @param string $text
+     */
+    public function comment(User $user, $text)
     {
-        $this->comments->add(new Comment($user, $text, $this));
+        $this->comments->add(new Comment($user, $this, $text));
     }
 
-    public function getVote($user)
+    /**
+     *
+     * @param User $user
+     * @return Vote
+     */
+    public function getVote(User $user)
     {
         if (! $this->voteCastBy($user)) {
-            return;
+            return null;
         }
 
         foreach ($this->votes as $vote) {
@@ -112,50 +188,15 @@ class Topic
             }
         }
 
-        return;
+        return null;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function getVotes()
-    {
-        return $this->votes;
-    }
-
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    public function voteCastBy($user)
+    /**
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function voteCastBy(User $user)
     {
         foreach ($this->votes as $vote) {
             if ($vote->getVoter() == $user) {
@@ -166,32 +207,70 @@ class Topic
         return false;
     }
 
-    public function getLectureDate()
-    {
-        return $this->lectureDate;
-    }
-
-    public function getLectureNote()
-    {
-        return $this->lectureNote;
-    }
-
-    public function getLectureUser()
-    {
-        return $this->lectureUser;
-    }
-
-    public function setLectureDetails(\DateTime $date, $user, $note)
+    /**
+     *
+     * @param \DateTime $date
+     * @param User $user
+     * @param string $note
+     */
+    public function setLectureDetails(\DateTime $date, User $user, $note)
     {
         $this->lectureDate = $date;
         $this->lectureUser = $user;
         $this->lectureNote = $note;
     }
 
+    /**
+     *
+     * @return bool
+     */
     public function isArchived()
     {
         return $this->lectureDate <> null;
     }
+
+    /**
+     *
+     * @return User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getLectureDate()
+    {
+        return $this->lectureDate;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getLectureNote()
+    {
+        return $this->lectureNote;
+    }
+
+    /**
+     *
+     * @return User
+     */
+    public function getLectureUser()
+    {
+        return $this->lectureUser;
+    }
 }
-
-
