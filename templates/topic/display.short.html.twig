@@ -22,10 +22,9 @@
     {% endif %}
 
     <h4><a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a></h4>
-    <p class="quiet">
-        {% include 'topic/details.html.twig' %}<br />
-        <strong>votees:</strong> {{ topic.votes|join(', ') }}
-    </p>
+    <div class="quiet">
+    {% include 'topic/details.html.twig' %}
+    </div>
 
 </div> <hr/>
 

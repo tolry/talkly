@@ -1,4 +1,8 @@
-<i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em>
-<i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}
-<i class="fa fa-comments-o"></i> {{ topic.comments|length }}
-<i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}
+<ul class="topic-details">
+    <li><i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em></li>
+    <li data-tooltip title="{% if topic.votes|length %}{{ topic.votes|join(', ') }}{% else %}no votes{% endif %}">
+        <i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}
+    </li>
+    <li><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</li>
+    <li data-tooltip title="{{ topic.createdAt|date('Y-m-d H:i:s') }}"><i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}</li>
+</ul>
