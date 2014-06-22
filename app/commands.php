@@ -2,9 +2,7 @@
 
 use Symfony\Component\Console\Application;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
-use Symfony\Component\Console\Helper\HelperSet;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 
 $app['doctrine.commands'] = array(
