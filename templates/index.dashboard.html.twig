@@ -16,10 +16,10 @@
         <h3>Last Submissions</h3><hr>
 
         {% for topic in last_submissions %}
-        <h4>
+        <div class="quiet"><span title="{{ topic.createdAt|date }}" data-tooltip>{{ topic.createdAt|time_ago_in_words }}</span></div>
+        <h4 class="one-line">
             <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
-            <small><abbr title="{{ topic.createdAt|date }}">{{ topic.createdAt|time_ago_in_words }}</abbr></small>
-        </h4>
+        </h4><br />
         {% endfor %}
     </div>
 
