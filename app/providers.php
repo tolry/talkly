@@ -3,7 +3,6 @@
 use Silex\Provider;
 
 use Monolog\Logger;
-use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use TobiasOlry\Talkly\Twig\MarkdownExtension;
 use TobiasOlry\Talkly\Translator\NullTranslator;
 use Salavert\Twig\Extension\TimeAgoExtension;
@@ -37,33 +36,6 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 $app->register(new Provider\MonologServiceProvider(), array(
         'monolog.logfile' => __DIR__ . '/logs/' . ($app['debug'] ? 'development' : 'prod') . '.log',
         'monolog.level'   => ($app['debug'] ? Logger::DEBUG : Logger::WARNING)
-));
-
-$app->register(new Provider\DoctrineServiceProvider, array(
-    "db.options" => array(
-        'driver'   => $app['config']['db_driver'],
-        'host'     => $app['config']['db_host'],
-        'port'     => $app['config']['db_port'],
-        'dbname'   => $app['config']['db_dbname'],
-        'user'     => $app['config']['db_user'],
-        'password' => $app['config']['db_password'],
-        'charset'  => $app['config']['db_charset'],
-    )
-));
-
-$app->register(new DoctrineOrmServiceProvider, array(
-    "orm.proxies_dir" => __DIR__ . '/cache/doctrine/orm/proxies',
-    "orm.em.options" => array(
-        "mappings" => array(
-            // Using actual filesystem paths
-            array(
-                "type"            => "annotation",
-                "namespace"       => "TobiasOlry\\Talkly\\Entity",
-                "path"            => __DIR__."/../src/TobiasOlry/Talkly/Entity",
-                "naming_strategy" => "doctrine.orm.naming_strategy.underscore",
-            ),
-        ),
-    ),
 ));
 
 if ($app['debug']) {

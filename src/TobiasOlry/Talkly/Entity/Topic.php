@@ -209,19 +209,6 @@ class Topic
 
     /**
      *
-     * @param \DateTime $date
-     * @param User $user
-     * @param string $note
-     */
-    public function setLectureDetails(\DateTime $date, User $user, $note)
-    {
-        $this->lectureDate = $date;
-        $this->lectureUser = $user;
-        $this->lectureNote = $note;
-    }
-
-    /**
-     *
      * @return bool
      */
     public function isArchived()
@@ -249,6 +236,15 @@ class Topic
 
     /**
      *
+     * @param \DateTime $date
+     */
+    public function setLectureDate(\DateTime $date)
+    {
+        $this->lectureDate = $date;
+    }
+
+    /**
+     *
      * @return \DateTime
      */
     public function getLectureDate()
@@ -258,11 +254,29 @@ class Topic
 
     /**
      *
+     * @param string $note
+     */
+    public function setLectureNote($note)
+    {
+        $this->lectureNote = $note;
+    }
+
+    /**
+     *
      * @return string
      */
     public function getLectureNote()
     {
         return $this->lectureNote;
+    }
+
+    /**
+     *
+     * @param User $user
+     */
+    public function setLectureUser(User $user)
+    {
+        $this->lectureUser = $user;
     }
 
     /**

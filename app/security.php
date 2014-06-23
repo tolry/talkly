@@ -5,6 +5,7 @@ use TobiasOlry\Talkly\Security\UserProvider\DebugUserProvider;
 use TobiasOlry\Talkly\Security\UserProvider\NtlmUserProvider;
 use TobiasOlry\Talkly\Security\Security;
 use TobiasOlry\Talkly\Security\UserManager;
+use TobiasOlry\Talkly\Twig\SecurityExtension;
 
 $app['controllers']->before(
     function () use ($app) {
@@ -29,7 +30,7 @@ switch($app['config']['user_provider']) {
         $app['security.user_provider'] = $app->share(
             function () use ($app) {
                 $user = isset($app['config']['user_provider_debug_user'])
-                    ? $app['config']['user_provider_debug_user'] : 'mmustermannx';
+                    ? $app['config']['user_provider_debug_user'] : 'mmustermann';
 
                 return new DebugUserProvider($user);
             }
@@ -58,3 +59,9 @@ $app['security.token'] = $app->share(
         return new Security();
     }
 );
+
+$app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
+    $twig->addExtension(new SecurityExtension($app['security.token']));
+
+    return $twig;
+}));
