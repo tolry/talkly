@@ -16,10 +16,9 @@ $app['controllers']->before(
             return new Response('not allowed', 403);
         }
 
-        $request->server->set('PHP_AUTH_USER', $username);
-
         $user = $app['security.usermanager']->findOrCreate($username);
 
+        $request->server->set('PHP_AUTH_USER', $username);
         $app['security.token']->setUser($user);
     }
 );
