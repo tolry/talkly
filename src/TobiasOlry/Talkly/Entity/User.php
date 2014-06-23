@@ -10,6 +10,7 @@ use TobiasOlry\Talkly\Security\UserInterface;
  * @author David Badura <d.a.badura@gmail.com>
  *
  * @Entity
+ * @Table(name="UserProfil")
  */
 class User implements UserInterface
 {
