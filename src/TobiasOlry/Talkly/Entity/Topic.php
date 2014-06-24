@@ -55,6 +55,12 @@ class Topic
     private $comments;
 
     /**
+     * @ManyToMany(targetEntity="User", inversedBy="speakingTopics")
+     * @JoinTable(name="speaker")
+     */
+    private $speakers;
+
+    /**
      * @Column(type="text", nullable=true)
      */
     private $lectureNote;
@@ -82,6 +88,7 @@ class Topic
 
         $this->votes    = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->speakers = new ArrayCollection();
     }
 
     /**
@@ -145,6 +152,15 @@ class Topic
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     *
+     * @return User[]
+     */
+    public function getSpeakers()
+    {
+        return $this->speakers;
     }
 
     /**

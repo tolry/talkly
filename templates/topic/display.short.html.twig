@@ -4,20 +4,37 @@
     <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
     {% endfor %}
 
-    <h2 class="left">
+    <div class="left">
         <span class="fa-stack">
             <i class="fa fa-thumbs-o-up fa-stack-2x"></i>
             <strong class="fa-stack-1x votes-text">{{ topic.votes|length }}</strong>
         </span>
-    </h2>
+    </div>
 
     {% if not topic.archived %}
     <div class="right">
+
         {% if topic.voteCastBy(security.user) %}
-        <a href="{{ path('topic-retract-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
+        <a data-tooltip title="retract your vote" class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id}) }}">
+            <i class="fa fa-thumbs-up"></i>
+        </a>
         {% else %}
-        <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
+        <a data-tooltip title="vote" class="button tiny radius secondary" href="{{ path('topic-cast-vote', {id: topic.id}) }}">
+            <i class="fa fa-thumbs-up"></i>
+        </a>
         {% endif %}
+
+
+        {% if topic.speakers.contains(security.user) %}
+        <a data-tooltip title="remove you as a speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id}) }}">
+            <i class="fa fa-microphone"></i>
+        </a>
+        {% else %}
+        <a data-tooltip title="add you as a speaker" class="button tiny radius secondary" href="{{ path('topic-add-speaker', {id: topic.id}) }}">
+            <i class="fa fa-microphone"></i>
+        </a>
+        {% endif %}
+
     </div>
     {% endif %}
 

@@ -39,3 +39,13 @@ $app
     ->post('/topic/{id}/archive', 'topic.controller:archive')
     ->bind('topic-archive')
 ;
+
+$app
+    ->get('/topic/{id}/add-speaker', 'topic.controller:addSpeakerAction')
+    ->bind('topic-add-speaker')
+;
+
+$app
+    ->get('/topic/{id}/remove-speaker', 'topic.controller:removeSpeakerAction')
+    ->bind('topic-remove-speaker')
+;

@@ -182,4 +182,39 @@ class TopicController
 
         return $this->redirect($topic, $request->get('view', 'list'));
     }
+
+    public function addSpeakerAction(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+        $user  = $this->security->getUser();
+
+        if (!$topic->getSpeakers()->contains($user)) {
+            $topic->getSpeakers()->add($user);
+            $user->getSpeakingTopics()->add($topic);
+        }
+
+        $this->em->flush();
+
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'add you as a speaker');
+
+        return $this->redirect($topic, $request->get('view', 'list'));
+    }
+
+
+    public function removeSpeakerAction(Request $request)
+    {
+        $topic = $this->getTopic($request->get('id'));
+        $user  = $this->security->getUser();
+
+        if ($topic->getSpeakers()->contains($user)) {
+            $topic->getSpeakers()->removeElement($user);
+            $user->getSpeakingTopics()->removeElement($topic);
+        }
+
+        $this->em->flush();
+
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
+
+        return $this->redirect($topic, $request->get('view', 'list'));
+    }
 }
