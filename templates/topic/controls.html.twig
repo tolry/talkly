@@ -1,0 +1,20 @@
+{% if topic.voteCastBy(security.user) %}
+<a data-tooltip title="retract your vote" class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id}) }}">
+    <i class="fa fa-thumbs-up"></i>
+</a>
+{% else %}
+<a data-tooltip title="vote" class="button tiny radius secondary" href="{{ path('topic-cast-vote', {id: topic.id}) }}">
+    <i class="fa fa-thumbs-up"></i>
+</a>
+{% endif %}
+
+
+{% if topic.speakers.contains(security.user) %}
+<a data-tooltip title="unregister as speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id}) }}">
+    <i class="fa fa-microphone"></i>
+</a>
+{% else %}
+<a data-tooltip title="register as a speaker" class="button tiny radius secondary" href="{{ path('topic-add-speaker', {id: topic.id}) }}">
+    <i class="fa fa-microphone"></i>
+</a>
+{% endif %}

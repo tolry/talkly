@@ -52,6 +52,12 @@ class User implements UserInterface
 
     /**
      *
+     * @ManyToMany(targetEntity="Topic", mappedBy="speakers")
+     */
+    protected $speakingTopics;
+
+    /**
+     *
      * @OneToMany(targetEntity="Topic", mappedBy="lectureUser")
      */
     protected $lectures;
@@ -70,10 +76,11 @@ class User implements UserInterface
     {
         $this->username = $username;
 
-        $this->comments = new ArrayCollection();
-        $this->topics   = new ArrayCollection();
-        $this->lectures = new ArrayCollection();
-        $this->votes    = new ArrayCollection();
+        $this->comments       = new ArrayCollection();
+        $this->topics         = new ArrayCollection();
+        $this->lectures       = new ArrayCollection();
+        $this->votes          = new ArrayCollection();
+        $this->speakingTopics = new ArrayCollection();
     }
 
     /**
@@ -110,6 +117,15 @@ class User implements UserInterface
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     *
+     * @return Topic[]
+     */
+    public function getSpeakingTopics()
+    {
+        return $this->speakingTopics;
     }
 
     /**

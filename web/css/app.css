@@ -8820,8 +8820,8 @@ footer a :hover {
 }
 
 .highlight-target:target {
-  border-left: 4px solid gray;
-  padding-left: 2em;
+  border-left: 4px solid #008cba;
+  padding-left: 1em;
 }
 
 .quiet {
@@ -8832,8 +8832,16 @@ footer a :hover {
   color: #003f54;
 }
 
+.votes {
+  font-size: 1.5em;
+  margin-top: 25px;
+}
+
 .votes-text {
   padding-top: 0.2em;
+  font-size: 0.7em;
+  text-align: right;
+  padding-right: 0.8em;
 }
 
 textarea {
