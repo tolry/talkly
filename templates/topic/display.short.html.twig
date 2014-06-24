@@ -4,43 +4,30 @@
     <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
     {% endfor %}
 
-    <div class="left">
-        <span class="fa-stack">
+    <div class="row">
+
+    <div class="columns small-1">
+        <span class="fa-stack votes">
             <i class="fa fa-thumbs-o-up fa-stack-2x"></i>
             <strong class="fa-stack-1x votes-text">{{ topic.votes|length }}</strong>
         </span>
     </div>
 
-    {% if not topic.archived %}
-    <div class="right">
+    <div class="columns small-11">
 
-        {% if topic.voteCastBy(security.user) %}
-        <a data-tooltip title="retract your vote" class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id}) }}">
-            <i class="fa fa-thumbs-up"></i>
-        </a>
-        {% else %}
-        <a data-tooltip title="vote" class="button tiny radius secondary" href="{{ path('topic-cast-vote', {id: topic.id}) }}">
-            <i class="fa fa-thumbs-up"></i>
-        </a>
+        {% if not topic.archived %}
+        <div class="right">
+            {% include 'topic/controls.html.twig' %}
+        </div>
         {% endif %}
 
-
-        {% if topic.speakers.contains(security.user) %}
-        <a data-tooltip title="remove you as a speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id}) }}">
-            <i class="fa fa-microphone"></i>
-        </a>
-        {% else %}
-        <a data-tooltip title="add you as a speaker" class="button tiny radius secondary" href="{{ path('topic-add-speaker', {id: topic.id}) }}">
-            <i class="fa fa-microphone"></i>
-        </a>
-        {% endif %}
+        <h4><a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a></h4>
+        <div class="quiet">
+        {% include 'topic/details.html.twig' %}
+        </div>
 
     </div>
-    {% endif %}
 
-    <h4><a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a></h4>
-    <div class="quiet">
-    {% include 'topic/details.html.twig' %}
     </div>
 
 </div> <hr/>

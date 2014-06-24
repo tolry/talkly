@@ -6,11 +6,7 @@
 
     {% if not topic.archived %}
     <div class="right">
-        {% if topic.voteCastBy(security.user) %}
-        <a href="{{ path('topic-retract-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
-        {% else %}
-        <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
-        {% endif %}
+        {% include 'topic/controls.html.twig' %}
     </div>
     {% endif %}
 

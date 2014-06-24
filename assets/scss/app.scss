@@ -57,12 +57,23 @@ footer {
 
 .highlight-target:target {
     border-left: 4px solid gray;
-    padding-left: 2em;
+    padding-left: 1em;
 }
 
 .quiet { color: gray; }
 .star-text { color: darken($primary-color, 20%); }
-.votes-text { padding-top: 0.2em; }
+
+.votes {
+    font-size: 1.5em;
+    margin-top: 25px;
+}
+
+.votes-text {
+    padding-top: 0.2em;
+    font-size: 0.7em;
+    text-align: right;
+    padding-right: 0.8em;
+}
 
 textarea {
     height: auto;
