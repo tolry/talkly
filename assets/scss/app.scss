@@ -8,20 +8,6 @@
 
 meta.foundation-data-attribute-namespace { font-family: false; }
 
-.content-orbit li div {
-    color: white;
-    background: darken($primary-color, 20%);
-    padding: 30px 40px;
-
-    h2, h3, p, small {
-        color: white;
-    }
-
-    h2 i {
-        text-shadow: 4px 2px 0 rgba($secondary_color,0.6);
-    }
-}
-
 .one-line {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -57,10 +43,17 @@ header {
 footer {
     color: white;
     padding: 10px 0 30px 0;
-}
 
-footer a       { color: white; font-weight: bold; }
-footer a:hover { color: white; text-decoration: underline; }
+    a {
+        color: white;
+        font-weight: bold;
+
+        :hover {
+            color: white;
+            text-decoration: underline;
+        }
+    }
+}
 
 .highlight-target:target {
     border-left: 4px solid gray;
@@ -92,13 +85,6 @@ textarea {
 }
 
 .markdown pre { margin-bottom: 1em; }
-
-.slider {
-    margin-top: -30px;
-    margin-bottom: 30px;
-    background: #003f54;
-    padding: 10px;
-}
 
 ul.topic-details {
     margin: 0;

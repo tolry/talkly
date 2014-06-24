@@ -1,11 +1,6 @@
 {% extends 'layout.html.twig' %}
 
 {% block content %}
-<div class="slider">
-    <div class="row">
-        {% include 'topic/slider.html.twig' with {topics: topics|slice(0,3)} %}
-    </div>
-</div>
 
 {% include 'index.dashboard.create.html.twig' with {form: form} %}
 
@@ -17,9 +12,9 @@
 
         {% for topic in last_submissions %}
         <div class="quiet"><span title="{{ topic.createdAt|date }}" data-tooltip>{{ topic.createdAt|time_ago_in_words }}</span></div>
-        <h4 class="one-line">
+        <h5 class="one-line">
             <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
-        </h4><br />
+        </h5><br />
         {% endfor %}
     </div>
 

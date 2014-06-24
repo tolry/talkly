@@ -8757,18 +8757,6 @@ meta.foundation-data-attribute-namespace {
   font-family: false;
 }
 
-.content-orbit li div {
-  color: white;
-  background: #003f54;
-  padding: 30px 40px;
-}
-.content-orbit li div h2, .content-orbit li div h3, .content-orbit li div p, .content-orbit li div small {
-  color: white;
-}
-.content-orbit li div h2 i {
-  text-shadow: 4px 2px 0 rgba(231, 231, 231, 0.6);
-}
-
 .one-line {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -8822,13 +8810,11 @@ footer {
   color: white;
   padding: 10px 0 30px 0;
 }
-
 footer a {
   color: white;
   font-weight: bold;
 }
-
-footer a:hover {
+footer a :hover {
   color: white;
   text-decoration: underline;
 }
@@ -8895,13 +8881,6 @@ textarea {
 
 .markdown pre {
   margin-bottom: 1em;
-}
-
-.slider {
-  margin-top: -30px;
-  margin-bottom: 30px;
-  background: #003f54;
-  padding: 10px;
 }
 
 ul.topic-details {
