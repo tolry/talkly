@@ -3,7 +3,7 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace TobiasOlry\Talkly\UserProvider;
+namespace TobiasOlry\Talkly\Security\UserProvider;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -35,4 +35,3 @@ class NtlmUserProvider implements UserProviderInterface
         return $username;
     }
 }
-

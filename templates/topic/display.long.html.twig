@@ -6,7 +6,7 @@
 
     {% if not topic.archived %}
     <div class="right">
-        {% if topic.voteCastBy(app.request.user) %}
+        {% if topic.voteCastBy(security.user) %}
         <a href="{{ path('topic-retract-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-down"></i> retract your vote</a>
         {% else %}
         <a class="button tiny radius" href="{{ path('topic-cast-vote', {id: topic.id, view: 'show'}) }}"><i class="fa fa-thumbs-up"></i> vote</a>
@@ -45,7 +45,7 @@
                 <div class="columns small-6">
                     <div class="row collapse">
                         <div class="columns small-10">
-                            <input type="date" name="date" placeholder="e.g. 2014-04-04" value="{{ "now"|date('Y-m-d') }}" />
+                            {{ form_widget(form.lectureDate) }}
                         </div>
                         <div class="columns small-2">
                             <span class="postfix"><i class="fa fa-calendar"></i></span>
@@ -55,7 +55,7 @@
                 <div class="columns small-6">
                     <div class="row collapse">
                         <div class="columns small-10">
-                            <input type="text" name="user" placeholder="user" value="{{ app.request.user }}" />
+                            {{ form_widget(form.lectureUser) }}
                         </div>
                         <div class="columns small-2">
                             <span class="postfix"><i class="fa fa-user"></i></span>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="columns small-12">
-                    <textarea name="note" class="form-controll" placeholder="add a note (markdown allowed)"></textarea>
+                    {{ form_widget(form.lectureNote, {attr: {class: 'form-controll', placeholder: 'add a note (markdown allowed)'}}) }}
                     <div class="right"><button class="button tiny radius">archive</button></div>
                 </div>
             </form>

@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManager;
 
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
+use TobiasOlry\Talkly\Form\ArchiveTopicType;
+
+use TobiasOlry\Talkly\Security\Security;
 
 class TopicController
 {
@@ -17,18 +20,20 @@ class TopicController
     private $formFactory;
     private $urlGenerator;
     private $twig;
+    private $security;
 
     public function __construct(
         EntityManager $em,
         $formFactory,
         $urlGenerator,
-        \Twig_Environment $twig
-    )
-    {
+        \Twig_Environment $twig,
+        Security $security
+    ) {
         $this->em           = $em;
         $this->formFactory  = $formFactory;
         $this->urlGenerator = $urlGenerator;
         $this->twig         = $twig;
+        $this->security     = $security;
     }
 
     private function getTopic($id, $allowArchived = false)
@@ -78,7 +83,7 @@ class TopicController
 
     public function create(Request $request)
     {
-        $topic = new Topic($request->getUser());
+        $topic = new Topic($this->security->getUser());
 
         $form = $this->formFactory->create(
             new CreateTopicType(),
@@ -98,7 +103,7 @@ class TopicController
     public function castVote(Request $request)
     {
         $topic = $this->getTopic($request->get('id'));
-        $voter = $request->getUser();
+        $voter = $this->security->getUser();
 
         $topic->castVote($voter);
         $this->em->flush();
@@ -112,10 +117,18 @@ class TopicController
     {
         $topic = $this->getTopic($request->get('id'));
 
+        $form = $this->formFactory->create(
+            new ArchiveTopicType(),
+            $topic
+        );
+
         return new Response(
             $this->twig->render(
                 'topic/show.html.twig',
-                array('topic' => $topic)
+                array(
+                    'topic' => $topic,
+                    'form'  => $form->createView()
+                )
             )
         );
     }
@@ -123,7 +136,7 @@ class TopicController
     public function retractVote(Request $request)
     {
         $topic = $this->getTopic($request->get('id'));
-        $voter = $request->getUser();
+        $voter = $this->security->getUser();
 
         $vote = $topic->getVote($voter);
 
@@ -143,7 +156,7 @@ class TopicController
     public function comment(Request $request)
     {
         $topic = $this->getTopic($request->get('id'));
-        $topic->comment($request->getUser(), $request->get('comment'));
+        $topic->comment($this->security->getUser(), $request->get('comment'));
 
         $this->em->flush();
 
@@ -156,11 +169,12 @@ class TopicController
     {
         $topic = $this->getTopic($request->get('id'), $allowArchived = true);
 
-        $topic->setLectureDetails(
-            new \DateTime($request->get('date')),
-            $request->get('user'),
-            $request->get('note')
+        $form = $this->formFactory->create(
+            new ArchiveTopicType(),
+            $topic
         );
+
+        $form->handleRequest($request);
 
         $this->em->flush();
 
@@ -169,4 +183,3 @@ class TopicController
         return $this->redirect($topic, $request->get('view', 'list'));
     }
 }
-
