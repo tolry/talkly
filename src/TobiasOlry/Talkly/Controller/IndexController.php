@@ -44,7 +44,7 @@ class IndexController
 
         return new Response(
             $this->twig->render(
-                'index.dashboard.html.twig',
+                'index/dashboard.html.twig',
                 array(
                     'topics'           => $topics,
                     'last_submissions' => $lastSubmissions,
@@ -60,7 +60,7 @@ class IndexController
 
         return new Response(
             $this->twig->render(
-                'index.archive.html.twig',
+                'index/archive.html.twig',
                 array(
                     'topics' => $topics,
                 )
