@@ -10,7 +10,7 @@
 
 
 {% if topic.speakers.contains(security.user) %}
-<a data-tooltip title="remove you as a speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id}) }}">
+<a data-tooltip title="unregister as speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id}) }}">
     <i class="fa fa-microphone"></i>
 </a>
 {% else %}
