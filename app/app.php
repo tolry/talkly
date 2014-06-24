@@ -15,5 +15,6 @@ require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/controllers.php';
 require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/commands.php';
+require_once __DIR__ . '/services.php';
 
 return $app;
