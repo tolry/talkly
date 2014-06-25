@@ -138,7 +138,7 @@ class TopicController
 
     public function addSpeakerAction(Request $request)
     {
-        $topic = $this->getTopic($request->get('id'));
+        $topic = $this->topicService->getTopic($request->get('id'));
         $user  = $this->security->getUser();
 
         $this->topicService->addSpeaker($topic, $user);
@@ -151,7 +151,7 @@ class TopicController
 
     public function removeSpeakerAction(Request $request)
     {
-        $topic = $this->getTopic($request->get('id'));
+        $topic = $this->topicService->getTopic($request->get('id'));
         $user  = $this->security->getUser();
 
         $this->topicService->removeSpeaker($topic, $user);
