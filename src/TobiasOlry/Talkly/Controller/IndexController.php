@@ -14,33 +14,33 @@ use TobiasOlry\Talkly\Security\Security;
 class IndexController
 {
     private $twig;
-    private $em;
     private $formFactory;
-    private $topicRepository;
+    private $topicService;
     private $security;
 
     public function __construct(
         \Twig_Environment $twig,
-        EntityManager $em,
         $formFactory,
-        Security $security
+        Security $security,
+        $topicService
     ) {
-        $this->twig            = $twig;
-        $this->em              = $em;
-        $this->formFactory     = $formFactory;
-        $this->topicRepository = $this->em->getRepository('TobiasOlry\Talkly\Entity\Topic');
-        $this->security        = $security;
+        $this->twig         = $twig;
+        $this->formFactory  = $formFactory;
+        $this->security     = $security;
+        $this->topicService = $topicService;
     }
 
-    public function dashboard(Request $request)
+    public function dashboardAction(Request $request)
     {
         $form = $this->formFactory->create(
             new CreateTopicType(),
             new Topic($this->security->getUser())
         );
 
-        $topics          = $this->topicRepository->findNonArchivedMostVotesFirst();
-        $lastSubmissions = $this->topicRepository->filterLastSubmissions($topics, $limit = 8);
+
+
+        $topics          = $this->topicService->findNonArchivedMostVotesFirst();
+        $lastSubmissions = $this->topicService->findLastSubmissions($limit = 8);
 
         return new Response(
             $this->twig->render(
@@ -54,9 +54,9 @@ class IndexController
         );
     }
 
-    public function archive(Request $request)
+    public function archiveAction(Request $request)
     {
-        $topics = $this->topicRepository->findArchivedGroupByMonth();
+        $topics = $this->topicService->findArchivedGroupByMonth();
 
         return new Response(
             $this->twig->render(

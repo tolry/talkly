@@ -57,9 +57,12 @@ class TopicRepository extends EntityRepository
         ;
     }
 
-    public function filterLastSubmissions($topics, $limit = 3)
+    public function findLastSubmissions($limit = 3)
     {
-        $topics = \Pinq\Traversable::from($topics);
+        $criteria = new TopicCriteria();
+        $criteria->archived = false;
+
+        $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
             ->orderByDescending(function($topic) { return $topic->getCreatedAt(); })
