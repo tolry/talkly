@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block navigation %}
-    {% if topic.archived %}
+    {% if topic.lectureHeld %}
     {% set active_menu = 'archive' %}
     {% endif %}
 
@@ -13,7 +13,7 @@
 
     <div class="small-12 large-offset-2 large-8 end columns">
         <ul class="breadcrumbs">
-            {% if topic.archived %}
+            {% if topic.lectureHeld %}
             <li><a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i> Archive</a></li>
             {% else %}
             <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>

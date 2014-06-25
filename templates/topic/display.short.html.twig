@@ -15,7 +15,7 @@
 
     <div class="columns small-11">
 
-        {% if not topic.archived %}
+        {% if not topic.lectureHeld %}
         <div class="right">
             {% include 'topic/controls.html.twig' %}
         </div>
@@ -31,7 +31,7 @@
                 {{ topic.title }}
         </a></h4>
         <div class="quiet">
-        {% include 'topic/details.html.twig' %}
+        {% include 'topic/details.tml.twig' %}
         </div>
 
     </div>

@@ -67,4 +67,18 @@ class IndexController
             )
         );
     }
+
+    public function calendarAction(Request $request)
+    {
+        $topics = $this->topicService->findNextGroupByMonth();
+
+        return new Response(
+            $this->twig->render(
+                'index/calendar.html.twig',
+                array(
+                    'topics' => $topics,
+                )
+            )
+        );
+    }
 }

@@ -45,7 +45,7 @@ class TopicService
             // todo
         }
 
-        if (! $allowArchived && $topic->isArchived()) {
+        if (! $allowArchived && $topic->isLectureHeld()) {
             // todo
         }
 
@@ -105,10 +105,14 @@ class TopicService
         return $this->topicRepository->findArchivedGroupByMonth();
     }
 
+    public function findNextGroupByMonth()
+    {
+        return $this->topicRepository->findNextGroupByMonth();
+    }
+
     public function save(Topic $topic)
     {
         $this->em->persist($topic);
         $this->em->flush();
     }
-
 }

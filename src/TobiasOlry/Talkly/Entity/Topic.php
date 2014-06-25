@@ -77,6 +77,12 @@ class Topic
 
     /**
      *
+     * @Column(type="boolean")
+     */
+    private $lectureHeld;
+
+    /**
+     *
      * @param User $user
      */
     public function __construct(User $user)
@@ -89,6 +95,8 @@ class Topic
         $this->votes    = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->speakers = new ArrayCollection();
+
+        $this->lectureHeld = false;
     }
 
     /**
@@ -225,15 +233,6 @@ class Topic
 
     /**
      *
-     * @return bool
-     */
-    public function isArchived()
-    {
-        return $this->lectureDate <> null;
-    }
-
-    /**
-     *
      * @return User
      */
     public function getCreatedBy()
@@ -254,7 +253,7 @@ class Topic
      *
      * @param \DateTime $date
      */
-    public function setLectureDate(\DateTime $date)
+    public function setLectureDate(\DateTime $date = null)
     {
         $this->lectureDate = $date;
     }
@@ -290,7 +289,7 @@ class Topic
      *
      * @param User $user
      */
-    public function setLectureUser(User $user)
+    public function setLectureUser(User $user = null)
     {
         $this->lectureUser = $user;
     }
@@ -302,5 +301,23 @@ class Topic
     public function getLectureUser()
     {
         return $this->lectureUser;
+    }
+
+    /**
+     *
+     * @param bool $bool
+     */
+    public function setLectureHeld($bool = true)
+    {
+        $this->lectureHeld = $bool;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function isLectureHeld()
+    {
+        return $this->lectureHeld;
     }
 }

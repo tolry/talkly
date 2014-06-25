@@ -22,11 +22,11 @@ class TopicRepository extends EntityRepository
         ;
 
         if ($criteria->archived === false) {
-            $qb->andWhere('t.lectureDate IS NULL');
+            $qb->andWhere('t.lectureHeld = 0');
         }
 
         if ($criteria->archived === true) {
-            $qb->andWhere('t.lectureDate IS NOT NULL');
+            $qb->andWhere('t.lectureHeld = 1');
         }
 
         return $qb->getQuery()->getResult();
@@ -53,7 +53,31 @@ class TopicRepository extends EntityRepository
 
         return $topics
             ->orderByDescending(function($topic) { return $topic->getLectureDate(); })
-            ->groupBy(function($topic) { return $topic->getLectureDate()->format('Y-m'); })
+            ->groupBy(function($topic) {
+                if ($topic->getLectureDate()) {
+                    return $topic->getLectureDate()->format('Y-m');
+                }
+
+                return 'unknown';
+            })
+        ;
+    }
+
+    public function findNextGroupByMonth()
+    {
+        $criteria = new TopicCriteria();
+        $criteria->archived = false;
+
+        $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
+
+        return $topics
+            ->where(function($topic) {
+                return $topic->getLectureDate() ? true : false;
+            })
+            ->orderByAscending(function($topic) { return $topic->getLectureDate(); })
+            ->groupBy(function($topic) {
+                return $topic->getLectureDate()->format('Y-m');
+            })
         ;
     }
 

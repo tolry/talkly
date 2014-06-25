@@ -4,7 +4,7 @@
     <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
     {% endfor %}
 
-    {% if not topic.archived %}
+    {% if not topic.lectureHeld %}
     <div class="right">
         {% include 'topic/controls.html.twig' %}
     </div>
@@ -15,7 +15,7 @@
         {% include 'topic/details.html.twig' %}<br />
     </div>
     <br/>
-    {% if topic.archived %}
+    {% if topic.lectureHeld %}
         <div class="panel callout radius">
             <ul class="topic-details clearfix">
                 <li><i class="fa fa-calendar-o"></i> {{ topic.lectureDate.format('d.m.Y') }}</li>
@@ -26,44 +26,17 @@
     {% endif %}
     <div class="markdown">{{ markdown_extra(topic.description) }}</div>
 
-    {% if not topic.archived %}
-    <div class="text-right">
+    {% if not topic.lectureHeld %}
+    <p>
         <a href="#" data-toggle data-toggle-target="topic-{{ topic.id }}-archive">
-            <i class="fa fa-file-archive-o"></i> archive
+            <i class="fa fa-graduation-cap"></i> Lecture
             <i class="fa fa-angle-double-down data-toggle-open"></i>
             <i class="fa fa-angle-double-right data-toggle-closed"></i>
         </a>
-    </div>
+    </p>
 
     <div class="hide" id="topic-{{ topic.id }}-archive">
-        <div class="row">
-            <form role="form" action="{{ path('topic-archive', {id: topic.id}) }}" method="post">
-                <div class="columns small-6">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            {{ form_widget(form.lectureDate) }}
-                        </div>
-                        <div class="columns small-2">
-                            <span class="postfix"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="columns small-6">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            {{ form_widget(form.lectureUser) }}
-                        </div>
-                        <div class="columns small-2">
-                            <span class="postfix"><i class="fa fa-user"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="columns small-12">
-                    {{ form_widget(form.lectureNote, {attr: {class: 'form-controll', placeholder: 'add a note (markdown allowed)'}}) }}
-                    <div class="right"><button class="button tiny radius">archive</button></div>
-                </div>
-            </form>
-        </div>
+        {% include 'topic/lecture.html.twig' %}
     </div>
 
     <p>

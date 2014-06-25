@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
-use TobiasOlry\Talkly\Form\ArchiveTopicType;
+use TobiasOlry\Talkly\Form\LectureTopicType;
 
 use TobiasOlry\Talkly\Security\Security;
 
@@ -71,7 +71,7 @@ class TopicController
         $topic = $this->topicService->getTopic($request->get('id'));
 
         $form = $this->formFactory->create(
-            new ArchiveTopicType(),
+            new LectureTopicType(),
             $topic
         );
 
@@ -123,7 +123,7 @@ class TopicController
         $topic = $this->topicService->getTopic($request->get('id'), $allowArchived = true);
 
         $form = $this->formFactory->create(
-            new ArchiveTopicType(),
+            new LectureTopicType(),
             $topic
         );
 
@@ -131,7 +131,7 @@ class TopicController
 
         $this->topicService->save($topic);
 
-        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture entered');
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture updated');
 
         return $this->redirect($topic, $request->get('view', 'list'));
     }
@@ -164,7 +164,7 @@ class TopicController
     private function redirect(Topic $topic, $view = 'show')
     {
         $route = 'homepage';
-        if ($topic->isArchived()) {
+        if ($topic->isLectureHeld()) {
             $route = 'archive';
         }
 
