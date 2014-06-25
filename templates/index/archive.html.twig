@@ -15,8 +15,8 @@
         <ul>
         {% for month, monthly_topics in topics %}
             <li>
-                <a href="#month-{{ monthly_topics|first.lectureDate.format('Y-m') }}">
-                    {{ monthly_topics|first.lectureDate.format('F Y') }}
+                <a href="#month-{{ monthly_topics|first.lectureDate ? monthly_topics|first.lectureDate.format('Y-m') : 'unknown' }}">
+                    {{ monthly_topics|first.lectureDate ? monthly_topics|first.lectureDate.format('F Y') : 'unknown'  }}
                 </a>
             </li>
         {% endfor %}
@@ -30,7 +30,9 @@
         {% for month, monthly_topics in topics %}
             {% for topic in monthly_topics %}
                 {% if loop.first %}
-                <h4 class="highlight-target" id="month-{{ topic.lectureDate.format('Y-m') }}">{{ topic.lectureDate.format('F Y') }}</h4>
+                <h4 class="highlight-target" id="month-{{ topic.lectureDate ? topic.lectureDate.format('Y-m') : 'unknown' }}">
+                    {{ topic.lectureDate ? topic.lectureDate.format('F Y') : 'unknown' }}
+                </h4>
                 {% endif %}
                 {% include 'topic/display.short.html.twig' with {topic: topic} %}
             {% endfor %}

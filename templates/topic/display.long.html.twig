@@ -18,8 +18,8 @@
     {% if topic.lectureHeld %}
         <div class="panel callout radius">
             <ul class="topic-details clearfix">
-                <li><i class="fa fa-calendar-o"></i> {{ topic.lectureDate.format('d.m.Y') }}</li>
-                <li><i class="fa fa-user"></i> {{ topic.lectureUser }}</li>
+                <li><i class="fa fa-calendar"></i> {{ topic.lectureDate ? topic.lectureDate.format('d.m.Y') : 'unknown' }}</li>
+                <li><i class="fa fa-user"></i> {{ topic.lectureUser ? topic.lectureUser : 'unknown' }}</li>
             </ul>
             <p>{{ markdown_extra(topic.lectureNote) }}</p>
         </div>
