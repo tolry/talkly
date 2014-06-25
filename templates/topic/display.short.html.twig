@@ -21,7 +21,15 @@
         </div>
         {% endif %}
 
-        <h4><a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a></h4>
+        <h4><a href="{{ path('topic-show', {id: topic.id}) }}">
+                {% if topic.speakers|length > 0 %}
+                <span class="fa-stack" data-tooltip title="{{ topic.speakers|join(', ') }}">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-microphone fa-stack-1x"></i>
+                </span>
+                {% endif %}
+                {{ topic.title }}
+        </a></h4>
         <div class="quiet">
         {% include 'topic/details.html.twig' %}
         </div>
