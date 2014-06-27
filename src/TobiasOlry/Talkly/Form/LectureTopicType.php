@@ -20,10 +20,6 @@ class LectureTopicType extends AbstractType
                 'widget'   => 'single_text',
                 'required' => false
             ))
-            ->add('lectureUser', 'entity', array(
-                'class'    => 'TobiasOlry\Talkly\Entity\User',
-                'required' => false
-            ))
             ->add('lectureNote', 'textarea', array(
                 'required' => false
             ))

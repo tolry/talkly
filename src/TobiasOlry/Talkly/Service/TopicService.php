@@ -97,12 +97,17 @@ class TopicService
 
     public function findLastSubmissions($limit = 8)
     {
-        return $this->topicRepository->findLastSubmissions($limit = 8);
+        return $this->topicRepository->findLastSubmissions($limit);
     }
 
     public function findArchivedGroupByMonth()
     {
         return $this->topicRepository->findArchivedGroupByMonth();
+    }
+
+    public function findNextTopics($limit = 5)
+    {
+        return $this->topicRepository->findNextTopics($limit);
     }
 
     public function findNextGroupByMonth()

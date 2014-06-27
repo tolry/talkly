@@ -8,6 +8,19 @@
 
     <div class="large-4 small-12 columns">
 
+        <h3>Next Topics</h3><hr>
+
+        {% for topic in next_topics %}
+        <div class="quiet">{{ topic.lectureDate|date("Y-m-d") }}</div>
+        <h5 class="one-line">
+            <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
+        </h5><br />
+        {% else %}
+            <div class="alert-box secondary">
+            no topics
+            </div>
+        {% endfor %}
+
         <h3>Last Submissions</h3><hr>
 
         {% for topic in last_submissions %}
@@ -15,6 +28,10 @@
         <h5 class="one-line">
             <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
         </h5><br />
+        {% else %}
+            <div class="alert-box secondary">
+            no topics
+            </div>
         {% endfor %}
     </div>
 
@@ -24,6 +41,10 @@
 
         {% for topic in topics %}
             {% include 'topic/display.short.html.twig' with {topic: topic} %}
+        {% else %}
+            <div class="alert-box secondary">
+            no topics
+            </div>
         {% endfor %}
 
     </div>

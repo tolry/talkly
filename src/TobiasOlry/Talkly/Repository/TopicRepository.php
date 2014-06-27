@@ -81,6 +81,22 @@ class TopicRepository extends EntityRepository
         ;
     }
 
+    public function findNextTopics($limit = 5)
+    {
+        $criteria = new TopicCriteria();
+        $criteria->archived = false;
+
+        $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
+
+        return $topics
+            ->where(function($topic) {
+                return $topic->getLectureDate() ? true : false;
+            })
+            ->orderByAscending(function($topic) { return $topic->getLectureDate(); })
+            ->take($limit)
+        ;
+    }
+
     public function findLastSubmissions($limit = 3)
     {
         $criteria = new TopicCriteria();

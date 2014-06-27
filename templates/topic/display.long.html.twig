@@ -19,7 +19,7 @@
         <div class="panel callout radius">
             <ul class="topic-details clearfix">
                 <li><i class="fa fa-calendar"></i> {{ topic.lectureDate ? topic.lectureDate.format('d.m.Y') : 'unknown' }}</li>
-                <li><i class="fa fa-user"></i> {{ topic.lectureUser ? topic.lectureUser : 'unknown' }}</li>
+                <li><i class="fa fa-user"></i> {{ topic.speakers|length ? topic.speakers|join(', ') : 'unknown' }}</li>
             </ul>
             <p>{{ markdown_extra(topic.lectureNote) }}</p>
         </div>

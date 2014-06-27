@@ -11,22 +11,12 @@
             </div>
         </div>
         <div class="columns small-6">
-            <div class="row collapse">
-                <div class="columns small-10">
-                    {{ form_widget(form.lectureUser) }}
-                </div>
-                <div class="columns small-2">
-                    <span class="postfix"><i class="fa fa-user"></i></span>
-                </div>
-            </div>
+            {{ form_widget(form.lectureHeld) }} {{ form_label(form.lectureHeld, 'lecture held?') }}
         </div>
         <div class="columns small-12">
             {{ form_widget(form.lectureNote, {attr: {class: 'form-controll', placeholder: 'add a note (markdown allowed)'}}) }}
         </div>
-        <div class="columns small-6">
-            {{ form_widget(form.lectureHeld) }} {{ form_label(form.lectureHeld, 'lecture held?') }}
-        </div>
-        <div class="columns small-6">
+        <div class="columns small-12">
             <div class="right"><button class="button tiny radius">update</button></div>
         </div>
     </form>

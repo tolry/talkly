@@ -40,7 +40,8 @@ class IndexController
 
 
         $topics          = $this->topicService->findNonArchivedMostVotesFirst();
-        $lastSubmissions = $this->topicService->findLastSubmissions($limit = 8);
+        $lastSubmissions = $this->topicService->findLastSubmissions($limit = 5);
+        $nextTopics      = $this->topicService->findNextTopics($limit = 5);
 
         return new Response(
             $this->twig->render(
@@ -48,6 +49,7 @@ class IndexController
                 array(
                     'topics'           => $topics,
                     'last_submissions' => $lastSubmissions,
+                    'next_topics'      => $nextTopics,
                     'form'             => $form->createView(),
                 )
             )

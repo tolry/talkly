@@ -66,11 +66,6 @@ class Topic
     private $lectureNote;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="lectures")
-     */
-    private $lectureUser;
-
-    /**
      * @Column(type="date", nullable=true)
      */
     private $lectureDate;
@@ -283,24 +278,6 @@ class Topic
     public function getLectureNote()
     {
         return $this->lectureNote;
-    }
-
-    /**
-     *
-     * @param User $user
-     */
-    public function setLectureUser(User $user = null)
-    {
-        $this->lectureUser = $user;
-    }
-
-    /**
-     *
-     * @return User
-     */
-    public function getLectureUser()
-    {
-        return $this->lectureUser;
     }
 
     /**

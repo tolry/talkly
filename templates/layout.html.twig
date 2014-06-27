@@ -25,16 +25,13 @@
             {% block navigation %}
             <div class="row">
             <ul class="text-center">
-                <li class="{{ (active_menu == 'homepage') ? 'active' : '' }} small-3 columns">
+                <li class="{{ (active_menu == 'homepage') ? 'active' : '' }} small-4 columns">
                     <a href="{{ path('homepage') }}"><i class="fa fa-home"></i><span><span class="hide-for-small-only"> Home</span></span></a>
                 </li>
-                <li class="{{ (active_menu == 'calendar') ? 'active' : '' }} small-3 columns">
-                    <a href="{{ path('calendar') }}"><i class="fa fa-calendar"></i><span><span class="hide-for-small-only">  Calendar</span></span></a>
-                </li>
-                <li class="{{ (active_menu == 'archive') ? 'active' : '' }} small-3 columns">
+                <li class="{{ (active_menu == 'archive') ? 'active' : '' }} small-4 columns">
                     <a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i><span><span class="hide-for-small-only">  Archive</span></span></a>
                 </li>
-                <li class="small-3 columns">
+                <li class="small-4 columns">
                     <a href="#"><i class="fa fa-user"></i><span><span class="hide-for-small-only">  {{ app.request.user }}</span></span></a>
                 </li>
             </ul>
