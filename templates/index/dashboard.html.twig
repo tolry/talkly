@@ -8,7 +8,7 @@
 
     <div class="large-4 small-12 columns">
 
-        <h3>Next Topics</h3><hr>
+        <h3><i class="fa fa-calendar"></i> Upcoming Talks</h3><hr>
 
         {% for topic in next_topics %}
         <div class="quiet">{{ topic.lectureDate|date("Y-m-d") }}</div>
@@ -21,7 +21,7 @@
             </div>
         {% endfor %}
 
-        <h3>Last Submissions</h3><hr>
+        <h3><i class="fa fa-clock-o"></i> Last Submissions</h3><hr>
 
         {% for topic in last_submissions %}
         <div class="quiet"><span title="{{ topic.createdAt|date }}" data-tooltip>{{ topic.createdAt|time_ago_in_words }}</span></div>
