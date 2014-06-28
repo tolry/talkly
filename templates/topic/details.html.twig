@@ -10,4 +10,9 @@
     <li data-tooltip title="{% if topic.speakers|length %}{{ topic.speakers|join(', ') }}{% else %}no speakers{% endif %}">
         <i class="fa fa-microphone"></i> {{ topic.speakers|length }}
     </li>
+    {% if topic.lectureDate %}
+    <li>
+        <i class="fa fa-calendar"></i> {{ topic.lectureDate|date('Y-m-d') }}
+    </li>
+    {% endif %}
 </ul>

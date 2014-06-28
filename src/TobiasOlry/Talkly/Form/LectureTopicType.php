@@ -10,20 +10,22 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  * @author David Badura <d.a.badura@gmail.com>
  */
-class ArchiveTopicType extends AbstractType
+class LectureTopicType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('lectureDate', 'date', array(
-                'widget' => 'single_text',
-                'empty_data' => new \DateTime()
+                'widget'   => 'single_text',
+                'required' => false
             ))
-            ->add('lectureUser', 'entity', array(
-                'class' => 'TobiasOlry\Talkly\Entity\User'
+            ->add('lectureNote', 'textarea', array(
+                'required' => false
             ))
-            ->add('lectureNote', 'textarea')
+            ->add('lectureHeld', 'checkbox', array(
+                'required' => false
+            ))
         ;
     }
 

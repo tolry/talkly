@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block navigation %}
-{% set active_menu = 'archive' %}
+{% set active_menu = 'calendar' %}
 {{ parent() }}
 {% endblock %}
 
@@ -15,8 +15,8 @@
         <ul>
         {% for month, monthly_topics in topics %}
             <li>
-                <a href="#month-{{ monthly_topics|first.lectureDate ? monthly_topics|first.lectureDate.format('Y-m') : 'unknown' }}">
-                    {{ monthly_topics|first.lectureDate ? monthly_topics|first.lectureDate.format('F Y') : 'unknown'  }}
+                <a href="#month-{{ monthly_topics|first.lectureDate.format('Y-m') }}">
+                    {{ monthly_topics|first.lectureDate.format('F Y') }}
                 </a>
             </li>
         {% endfor %}
@@ -25,14 +25,12 @@
 
     <div class="large-8 small-12 columns">
 
-        <h3>Archived Topics</h3><hr>
+        <h3>Next Topics</h3><hr>
 
         {% for month, monthly_topics in topics %}
             {% for topic in monthly_topics %}
                 {% if loop.first %}
-                <h4 class="highlight-target" id="month-{{ topic.lectureDate ? topic.lectureDate.format('Y-m') : 'unknown' }}">
-                    {{ topic.lectureDate ? topic.lectureDate.format('F Y') : 'unknown' }}
-                </h4>
+                <h4 class="highlight-target" id="month-{{ topic.lectureDate.format('Y-m') }}">{{ topic.lectureDate.format('F Y') }}</h4>
                 {% endif %}
                 {% include 'topic/display.short.html.twig' with {topic: topic} %}
             {% endfor %}

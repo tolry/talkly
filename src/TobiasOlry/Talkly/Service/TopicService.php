@@ -45,7 +45,7 @@ class TopicService
             // todo
         }
 
-        if (! $allowArchived && $topic->isArchived()) {
+        if (! $allowArchived && $topic->isLectureHeld()) {
             // todo
         }
 
@@ -97,7 +97,7 @@ class TopicService
 
     public function findLastSubmissions($limit = 8)
     {
-        return $this->topicRepository->findLastSubmissions($limit = 8);
+        return $this->topicRepository->findLastSubmissions($limit);
     }
 
     public function findArchivedGroupByMonth()
@@ -105,10 +105,19 @@ class TopicService
         return $this->topicRepository->findArchivedGroupByMonth();
     }
 
+    public function findNextTopics($limit = 5)
+    {
+        return $this->topicRepository->findNextTopics($limit);
+    }
+
+    public function findNextGroupByMonth()
+    {
+        return $this->topicRepository->findNextGroupByMonth();
+    }
+
     public function save(Topic $topic)
     {
         $this->em->persist($topic);
         $this->em->flush();
     }
-
 }

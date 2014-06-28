@@ -66,14 +66,15 @@ class Topic
     private $lectureNote;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="lectures")
-     */
-    private $lectureUser;
-
-    /**
      * @Column(type="date", nullable=true)
      */
     private $lectureDate;
+
+    /**
+     *
+     * @Column(type="boolean")
+     */
+    private $lectureHeld;
 
     /**
      *
@@ -89,6 +90,8 @@ class Topic
         $this->votes    = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->speakers = new ArrayCollection();
+
+        $this->lectureHeld = false;
     }
 
     /**
@@ -225,15 +228,6 @@ class Topic
 
     /**
      *
-     * @return bool
-     */
-    public function isArchived()
-    {
-        return $this->lectureDate <> null;
-    }
-
-    /**
-     *
      * @return User
      */
     public function getCreatedBy()
@@ -254,7 +248,7 @@ class Topic
      *
      * @param \DateTime $date
      */
-    public function setLectureDate(\DateTime $date)
+    public function setLectureDate(\DateTime $date = null)
     {
         $this->lectureDate = $date;
     }
@@ -288,19 +282,19 @@ class Topic
 
     /**
      *
-     * @param User $user
+     * @param bool $bool
      */
-    public function setLectureUser(User $user)
+    public function setLectureHeld($bool = true)
     {
-        $this->lectureUser = $user;
+        $this->lectureHeld = $bool;
     }
 
     /**
      *
-     * @return User
+     * @return bool
      */
-    public function getLectureUser()
+    public function isLectureHeld()
     {
-        return $this->lectureUser;
+        return $this->lectureHeld;
     }
 }

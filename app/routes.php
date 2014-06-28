@@ -11,6 +11,11 @@ $app
 ;
 
 $app
+    ->get('/calendar', 'index.controller:calendarAction')
+    ->bind('calendar')
+;
+
+$app
     ->post('/topic/create', 'topic.controller:createAction')
     ->bind('topic-create')
 ;
