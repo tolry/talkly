@@ -52,21 +52,37 @@ class TopicService
         return $topic;
     }
 
-    public function castVote(Topic $topic, User $voter)
+    /**
+     *
+     * @param Topic $topic
+     * @param User $user
+     */
+    public function addVote(Topic $topic, User $user)
     {
-        $topic->castVote($voter);
+        if ($topic->getVotes()->contains($user)) {
+            return;
+        }
+
+        $topic->getVotes()->add($user);
+        $user->getVotes()->add($topic);
+
         $this->em->flush();
     }
 
-    public function removeVote($vote)
+    /**
+     *
+     * @param Topic Topic
+     * @param User $user
+     */
+    public function removeVote(Topic $topic, User $user)
     {
-        $this->em->remove($vote);
-        $this->em->flush();
-    }
+        if (!$topic->getVotes()->contains($user)) {
+            return;
+        }
 
-    public function comment(Topic $topic, User $user, $comment)
-    {
-        $topic->comment($user, $comment);
+        $topic->getVotes()->removeElement($user);
+        $user->getVotes()->removeElement($topic);
+
         $this->em->flush();
     }
 
@@ -87,6 +103,12 @@ class TopicService
             $user->getSpeakingTopics()->removeElement($topic);
         }
 
+        $this->em->flush();
+    }
+
+    public function comment(Topic $topic, User $user, $comment)
+    {
+        $topic->comment($user, $comment);
         $this->em->flush();
     }
 

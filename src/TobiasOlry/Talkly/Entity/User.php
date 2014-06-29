@@ -64,7 +64,7 @@ class User implements UserInterface
 
     /**
      *
-     * @OneToMany(targetEntity="Vote", mappedBy="voter")
+     * @ManyToMany(targetEntity="Topic", mappedBy="votes")
      */
     protected $votes;
 
@@ -126,6 +126,15 @@ class User implements UserInterface
     public function getSpeakingTopics()
     {
         return $this->speakingTopics;
+    }
+
+    /**
+     *
+     * @return Topic[]
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 
     /**
