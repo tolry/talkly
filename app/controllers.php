@@ -33,7 +33,8 @@ $app['user.controller'] = $app->share(
             $app['form.factory'],
             $app['url_generator'],
             $app['twig'],
-            $app['security.token']
+            $app['security.token'],
+            $app['orm.em']
         );
     }
 );

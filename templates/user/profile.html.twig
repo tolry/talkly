@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block navigation %}
+    {% set active_menu = 'user-profile' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <div class="small-12 large-offset-2 large-8 end columns">
+        {% for message in app.session.getFlashBag.get('success') %}
+        <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
+        {% endfor %}
+
+        <ul class="breadcrumbs">
+            <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>
+            <li class="current one-line"><a href="#">User {{ app.request.user }}</a></li>
+        </ul>
+
+        <form action="{{ path('user-profile-update') }}" method="post" data-abide>
+            {{ form_errors(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.email) }}
+
+            {{ form_rest(form) }}
+
+            <button class="button radius small right radius"><i class="fa fa-plus-square"></i> submit</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
+
