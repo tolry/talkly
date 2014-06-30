@@ -1,33 +1,56 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
 
 namespace TobiasOlry\Talkly\Twig;
 
-use \Michelf\Markdown;
-use \Michelf\MarkdownExtra;
+use Ciconia\Ciconia;
 
+/**
+ *
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ * @author David Badura <d.a.badura@gmail.com>
+ */
 class MarkdownExtension extends \Twig_Extension
 {
+    /**
+     *
+     * @var Ciconia
+     */
+    protected $engine;
+
+    /**
+     *
+     * @param Ciconia $engine
+     */
+    public function __construct(Ciconia $engine)
+    {
+        $this->engine = $engine;
+    }
+
+    /**
+     *
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('markdown', array($this, 'renderMarkdown'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('markdown_extra', array($this, 'renderMarkdownExtra'), array('is_safe' => array('html'))),
         );
     }
 
+    /**
+     *
+     * @param string $string
+     * @return string
+     */
     public function renderMarkdown($string)
     {
-        return Markdown::defaultTransform($string);
+        return $this->engine->render($string);
     }
 
-    public function renderMarkdownExtra($string)
-    {
-        return MarkdownExtra::defaultTransform($string);
-    }
-
+    /**
+     *
+     * @return string
+     */
     public function getName()
     {
         return 'markdown';
