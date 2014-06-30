@@ -13,6 +13,9 @@ $success-color: #43AC6A;
 $warning-color: #f08a24;
 $info-color: #a0d3e8;
 
+body {
+    overflow-y: scroll;
+}
 
 meta.foundation-data-attribute-namespace { font-family: false; }
 

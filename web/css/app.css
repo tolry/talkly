@@ -8753,6 +8753,10 @@ th.hide-for-touch {
   content: "\f1e2";
 }
 
+body {
+  overflow-y: scroll;
+}
+
 meta.foundation-data-attribute-namespace {
   font-family: false;
 }
