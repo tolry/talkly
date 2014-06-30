@@ -6,6 +6,14 @@
 @import "compass/css3/transition";
 
 
+$primary-color: #008CBA;
+$secondary-color: #e7e7e7;
+$alert-color: #f04124;
+$success-color: #43AC6A;
+$warning-color: #f08a24;
+$info-color: #a0d3e8;
+
+
 meta.foundation-data-attribute-namespace { font-family: false; }
 
 .one-line {
@@ -68,11 +76,11 @@ footer {
     margin-top: 25px;
 
     &.has-speakers {
-        color: #008cba;
+        color: $primary-color;
     }
 
     &.has-date {
-        color: #43AC6A;
+        color: $success-color;
     }
 }
 
