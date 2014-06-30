@@ -2,6 +2,9 @@
 namespace TobiasOlry\Talkly\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use TobiasOlry\Talkly\Form\UserProfileType;
 
 /*
@@ -13,24 +16,53 @@ class UserController
     private $urlGenerator;
     private $twig;
     private $security;
+    private $em;
 
     public function __construct(
         $formFactory,
         $urlGenerator,
         \Twig_Environment $twig,
-        $security
+        $security,
+        $em
     ) {
         $this->formFactory  = $formFactory;
         $this->urlGenerator = $urlGenerator;
         $this->twig         = $twig;
         $this->security     = $security;
+        $this->em           = $em;
     }
 
     public function userProfileAction(Request $request)
     {
+        return $this->userProfileUpdateAction($request);
+    }
+
+    public function userProfileUpdateAction(Request $request)
+    {
+        $user = $this->security->getUser();
         $form = $this->formFactory->create(
             new UserProfileType(),
-            $this->security->getUser()
+            $user
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'user-profile updated');
+            $url = $this->urlGenerator->generate('user-profile');
+
+            return new RedirectResponse($url);
+        }
+
+        return new Response(
+            $this->twig->render(
+                'user/profile.html.twig',
+                array(
+                    'user' => $user,
+                    'form' => $form->createView()
+                )
+            )
         );
     }
 }
