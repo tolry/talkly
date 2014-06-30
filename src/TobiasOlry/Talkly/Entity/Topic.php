@@ -46,7 +46,7 @@ class Topic
 
     /**
      * @ManyToMany(targetEntity="User", inversedBy="votes")
-     * @JoinTable(name="votes")
+     * @JoinTable(name="vote")
      */
     private $votes;
 
