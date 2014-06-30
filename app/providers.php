@@ -6,6 +6,8 @@ use Monolog\Logger;
 use TobiasOlry\Talkly\Twig\MarkdownExtension;
 use TobiasOlry\Talkly\Translator\NullTranslator;
 use Salavert\Twig\Extension\TimeAgoExtension;
+use Ciconia\Ciconia;
+use Ciconia\Extension\Gfm;
 
 // config
 
@@ -23,9 +25,21 @@ $app->register(new Provider\FormServiceProvider());
 $app->register(new Provider\TranslationServiceProvider(), array('locale_fallbacks' => array('en')));
 $app->register(new Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../templates'));
 
+$app['markdown'] = $app->share(function() use ($app) {
+    $ciconia = new Ciconia();
+    $ciconia->addExtension(new Gfm\FencedCodeBlockExtension());
+    $ciconia->addExtension(new Gfm\TaskListExtension());
+    $ciconia->addExtension(new Gfm\InlineStyleExtension());
+    $ciconia->addExtension(new Gfm\WhiteSpaceExtension());
+    $ciconia->addExtension(new Gfm\TableExtension());
+    $ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
+
+    return $ciconia;
+});
+
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 
-    $twig->addExtension(new MarkdownExtension());
+    $twig->addExtension(new MarkdownExtension($app['markdown']));
     $twig->addExtension(new TimeAgoExtension(new NullTranslator()));
 
     $twig->getExtension('core')->setDateFormat('Y-m-d H:i:s', '%d days');

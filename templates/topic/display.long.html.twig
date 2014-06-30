@@ -21,10 +21,10 @@
                 <li><i class="fa fa-calendar"></i> {{ topic.lectureDate ? topic.lectureDate.format('d.m.Y') : 'unknown' }}</li>
                 <li><i class="fa fa-microphone"></i> {{ topic.speakers|length ? topic.speakers|join(', ') : 'unknown' }}</li>
             </ul>
-            <p>{{ markdown_extra(topic.lectureNote) }}</p>
+            <p>{{ markdown(topic.lectureNote) }}</p>
         </div>
     {% endif %}
-    <div class="markdown">{{ markdown_extra(topic.description) }}</div>
+    <div class="markdown">{{ markdown(topic.description) }}</div>
 
     {% if not topic.lectureHeld %}
     <p>
@@ -50,7 +50,7 @@
     <div class="hide" id="topic-{{ topic.id }}-comments">
         {% for comment in topic.comments %}
             <blockquote>
-                <div class="markdown">{{ markdown_extra(comment.commentText) }}</div>
+                <div class="markdown">{{ markdown(comment.commentText) }}</div>
                 <cite>
                     <i class="fa fa-user"></i> {{ comment.createdBy }}
                     <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}
