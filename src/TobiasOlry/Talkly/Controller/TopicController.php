@@ -54,18 +54,6 @@ class TopicController
         return $this->redirect($topic, 'list');
     }
 
-    public function castVoteAction(Request $request)
-    {
-        $topic = $this->topicService->getTopic($request->get('id'));
-        $voter = $this->security->getUser();
-
-        $this->topicService->castVote($topic, $voter);
-
-        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote cast');
-
-        return $this->redirect($topic, $request->get('view', 'list'));
-    }
-
     public function showAction(Request $request)
     {
         $topic = $this->topicService->getTopic($request->get('id'));
@@ -86,19 +74,24 @@ class TopicController
         );
     }
 
+    public function castVoteAction(Request $request)
+    {
+        $topic = $this->topicService->getTopic($request->get('id'));
+        $voter = $this->security->getUser();
+
+        $this->topicService->addVote($topic, $voter);
+
+        $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote cast');
+
+        return $this->redirect($topic, $request->get('view', 'list'));
+    }
+
     public function retractVoteAction(Request $request)
     {
         $topic = $this->topicService->getTopic($request->get('id'));
         $voter = $this->security->getUser();
 
-        $vote = $topic->getVote($voter);
-
-        if (! $vote) {
-
-            return $this->talklyJsonResponse(Response::HTTP_BAD_REQUEST, 'retract-vote', array('error' => 'the requested vote did not exist'));
-        }
-
-        $this->topicService->removeVote($vote);
+        $this->topicService->removeVote($topic, $voter);
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'vote retracted');
 

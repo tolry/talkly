@@ -109,6 +109,4 @@ class TopicRepository extends EntityRepository
             ->take($limit)
         ;
     }
-
 }
-

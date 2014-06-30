@@ -1,4 +1,4 @@
-{% if topic.voteCastBy(security.user) %}
+{% if topic.votes.contains(security.user) %}
 <a data-tooltip title="retract your vote" class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id}) }}">
     <i class="fa fa-thumbs-up"></i>
 </a>

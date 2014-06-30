@@ -45,7 +45,8 @@ class Topic
     private $description;
 
     /**
-     * @OneToMany(targetEntity="Vote", mappedBy="topic", cascade="all")
+     * @ManyToMany(targetEntity="User", inversedBy="votes")
+     * @JoinTable(name="vote")
      */
     private $votes;
 
@@ -169,61 +170,11 @@ class Topic
     /**
      *
      * @param User $user
-     */
-    public function castVote(User $user)
-    {
-        if ($this->voteCastBy($user)) {
-            return;
-        }
-
-        $vote = new Vote($this, $user);
-        $this->votes->add($vote);
-    }
-
-    /**
-     *
-     * @param User $user
      * @param string $text
      */
     public function comment(User $user, $text)
     {
         $this->comments->add(new Comment($user, $this, $text));
-    }
-
-    /**
-     *
-     * @param User $user
-     * @return Vote
-     */
-    public function getVote(User $user)
-    {
-        if (! $this->voteCastBy($user)) {
-            return null;
-        }
-
-        foreach ($this->votes as $vote) {
-            if ($vote->getVoter() == $user) {
-                return $vote;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     *
-     * @param User $user
-     * @return bool
-     */
-    public function voteCastBy(User $user)
-    {
-        foreach ($this->votes as $vote) {
-            if ($vote->getVoter() == $user) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
