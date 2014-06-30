@@ -8,6 +8,7 @@ use TobiasOlry\Talkly\Security\UserInterface;
 /**
  *
  * @author David Badura <d.a.badura@gmail.com>
+ * @author Tobias Olry <tobias.olry@gmail.com>
  *
  * @Entity
  * @Table(name="UserProfil")
