@@ -1,18 +1,18 @@
-<ul class="topic-details clearfix">
-    <li><i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em></li>
-    <li data-tooltip title="{{ topic.createdAt|date('Y-m-d H:i:s') }}"><i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}</li>
+<ul class="inline-list">
+    <li><span><i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em></span></li>
+    <li data-tooltip title="{{ topic.createdAt|date('Y-m-d H:i:s') }}"><span><i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}</span></li>
 </ul>
-<ul class="topic-details clearfix">
+<ul class="inline-list">
     <li data-tooltip title="{% if topic.votes|length %}{{ topic.votes|join(', ') }}{% else %}no votes{% endif %}">
-        <i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}
+        <span><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}</span>
     </li>
-    <li><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</li>
+    <li><span><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</span></li>
     <li data-tooltip title="{% if topic.speakers|length %}{{ topic.speakers|join(', ') }}{% else %}no speakers{% endif %}">
-        <i class="fa fa-microphone"></i> {{ topic.speakers|length }}
+        <span><i class="fa fa-microphone"></i> {{ topic.speakers|length }}</span>
     </li>
     {% if topic.lectureDate %}
     <li>
-        <i class="fa fa-calendar"></i> {{ topic.lectureDate|date('Y-m-d') }}
+        <span><i class="fa fa-calendar"></i> {{ topic.lectureDate|date('Y-m-d') }}</span>
     </li>
     {% endif %}
 </ul>
