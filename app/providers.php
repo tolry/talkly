@@ -4,6 +4,7 @@ use Silex\Provider;
 
 use Monolog\Logger;
 use TobiasOlry\Talkly\Twig\MarkdownExtension;
+use TobiasOlry\Talkly\Twig\GravatarExtension;
 use TobiasOlry\Talkly\Translator\NullTranslator;
 use Salavert\Twig\Extension\TimeAgoExtension;
 use Ciconia\Ciconia;
@@ -43,6 +44,7 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 
     $twig->addExtension(new MarkdownExtension($app['markdown']));
     $twig->addExtension(new TimeAgoExtension(new NullTranslator()));
+    $twig->addExtension(new GravatarExtension());
 
     $twig->getExtension('core')->setDateFormat('Y-m-d H:i:s', '%d days');
 
