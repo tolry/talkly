@@ -66,12 +66,6 @@ class User implements UserInterface
 
     /**
      *
-     * @OneToMany(targetEntity="Topic", mappedBy="lectureUser")
-     */
-    protected $lectures;
-
-    /**
-     *
      * @ManyToMany(targetEntity="Topic", mappedBy="votes")
      */
     protected $votes;
