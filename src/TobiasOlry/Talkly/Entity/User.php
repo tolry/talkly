@@ -164,6 +164,11 @@ class User implements UserInterface
      */
     public function __toString()
     {
+        if (! empty($this->name)) {
+
+            return $this->name;
+        }
+
         return $this->username;
     }
 }
