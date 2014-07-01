@@ -38,25 +38,22 @@
     <div class="hide" id="topic-{{ topic.id }}-archive">
         {% include 'topic/lecture.html.twig' %}
     </div>
+    {% endif %}
 
-    <p>
-        <a href="#" data-toggle data-toggle-start-opened="1" data-toggle-target="topic-{{ topic.id }}-comments">
-            <i class="fa fa-comments-o"></i> {{ topic.comments|length }} comment(s)
-            <i class="fa fa-angle-double-down data-toggle-open"></i>
-            <i class="fa fa-angle-double-right data-toggle-closed"></i>
-        </a>
-    </p>
+    <h4><i class="fa fa-comments-o"></i> {{ topic.comments|length }} comment(s)</h4>
 
-    <div class="hide" id="topic-{{ topic.id }}-comments">
+    <div>
         {% for comment in topic.comments %}
-            <blockquote>
-                <div class="markdown">{{ markdown(comment.commentText) }}</div>
-                <cite>
-                    <i class="fa fa-user"></i> {{ comment.createdBy }}
-                    <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}
-                </cite>
-            </blockquote>
+        <blockquote>
+            <div class="markdown">{{ markdown(comment.commentText) }}</div>
+            <cite>
+                <i class="fa fa-user"></i> {{ comment.createdBy }}
+                <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}
+            </cite>
+        </blockquote>
         {% endfor %}
+
+        {% if not topic.lectureHeld %}
         <div class="row">
             <form role="form" action="{{ path('topic-comment', {id: topic.id}) }}" method="post">
                 <div class="columns small-2">{{ app.request.user }}</div>
@@ -66,8 +63,9 @@
                 </div>
             </form>
         </div>
+        {% endif %}
+
     </div>
-    {% endif %}
 
 </div>
 
