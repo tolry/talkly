@@ -139,6 +139,15 @@ class User implements UserInterface
         return $this->votes;
     }
 
+    /**
+     *
+     * @return Comment[]
+     */
+    public function getComments()
+    {
+        return $this->votes;
+    }
+
     public function getName()
     {
         return $this->name;
