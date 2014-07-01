@@ -13,7 +13,7 @@
         {% for topic in next_topics %}
         <div class="quiet">{{ topic.lectureDate|date("Y-m-d") }}</div>
         <h5 class="one-line">
-            <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
+            <a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a>
         </h5><br />
         {% else %}
             <div class="alert-box secondary">
@@ -26,7 +26,7 @@
         {% for topic in last_submissions %}
         <div class="quiet"><span title="{{ topic.createdAt|date }}" data-tooltip>{{ topic.createdAt|time_ago_in_words }}</span></div>
         <h5 class="one-line">
-            <a href="#topic-{{ topic.id }}">{{ topic.title }}</a>
+            <a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a>
         </h5><br />
         {% else %}
             <div class="alert-box secondary">
