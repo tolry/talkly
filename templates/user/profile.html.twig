@@ -30,10 +30,10 @@
                 <dl>
                     <dt>Activity</dt>
                     <dd>
-                        <ul class="topic-details clearfix">
-                            <li data-tooltip title="participated in talks"><i class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</li>
-                            <li data-tooltip title="commented on topics"><i class="fa fa-comments-o"></i> {{ user.comments|length }}</li>
-                            <li data-tooltip title="voted on topics"><i class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</li>
+                        <ul class="inline-list">
+                            <li data-tooltip title="participated in talks"><span><i class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</span></li>
+                            <li data-tooltip title="commented on topics"><span><i class="fa fa-comments-o"></i> {{ user.comments|length }}</span></li>
+                            <li data-tooltip title="voted on topics"><span><i class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</span></li>
                         </ul>
                     </dd>
                 </dl>

@@ -17,9 +17,9 @@
     <br/>
     {% if topic.lectureHeld %}
         <div class="panel callout radius">
-            <ul class="topic-details clearfix">
-                <li><i class="fa fa-calendar"></i> {{ topic.lectureDate ? topic.lectureDate.format('d.m.Y') : 'unknown' }}</li>
-                <li><i class="fa fa-microphone"></i> {{ topic.speakers|length ? topic.speakers|join(', ') : 'unknown' }}</li>
+            <ul class="inline-list">
+                <li><span><i class="fa fa-calendar"></i> {{ topic.lectureDate ? topic.lectureDate.format('d.m.Y') : 'unknown' }}</span></li>
+                <li><span><i class="fa fa-microphone"></i> {{ topic.speakers|length ? topic.speakers|join(', ') : 'unknown' }}</span></li>
             </ul>
             <p>{{ markdown(topic.lectureNote) }}</p>
         </div>
