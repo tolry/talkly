@@ -59,7 +59,7 @@
         {% endfor %}
         <div class="row">
             <form role="form" action="{{ path('topic-comment', {id: topic.id}) }}" method="post">
-                <div class="columns small-2">{{ app.request.user }}</div>
+                <div class="columns small-2"><img class="th" src="{{ gravatar(security.user) }}"></div>
                 <div class="columns small-10">
                     <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
                     <div class="right"><button class="button tiny radius">comment</button></div>
