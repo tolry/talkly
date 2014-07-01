@@ -22,6 +22,22 @@
         <form action="{{ path('user-profile-update') }}" method="post" data-abide>
             {{ form_errors(form) }}
 
+                <dl>
+                    <dt>Username</dt>
+                    <dd>{{ user.username }}</dd>
+                </dl>
+
+                <dl>
+                    <dt>Activity</dt>
+                    <dd>
+                        <ul class="topic-details clearfix">
+                            <li data-tooltip title="participated in talks"><i class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</li>
+                            <li data-tooltip title="commented on topics"><i class="fa fa-comments-o"></i> {{ user.comments|length }}</li>
+                            <li data-tooltip title="voted on topics"><i class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</li>
+                        </ul>
+                    </dd>
+                </dl>
+
                 {{ form_row(form.name) }}
                 {{ form_row(form.email) }}
 
