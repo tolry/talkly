@@ -34,11 +34,6 @@ class UserController
 
     public function userProfileAction(Request $request)
     {
-        return $this->userProfileUpdateAction($request);
-    }
-
-    public function userProfileUpdateAction(Request $request)
-    {
         $user = $this->security->getUser();
         $form = $this->formFactory->create(
             new UserProfileType(),

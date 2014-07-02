@@ -56,11 +56,7 @@ $app
 ;
 
 $app
-    ->get('/user-profile', 'user.controller:userProfileAction')
+    ->match('/user-profile', 'user.controller:userProfileAction')
     ->bind('user-profile')
 ;
 
-$app
-    ->post('/user-profile-update', 'user.controller:userProfileUpdateAction')
-    ->bind('user-profile-update')
-;

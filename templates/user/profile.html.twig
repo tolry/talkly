@@ -19,7 +19,7 @@
             <li class="current one-line"><a href="#">User {{ app.request.user }}</a></li>
         </ul>
 
-        <form action="{{ path('user-profile-update') }}" method="post" data-abide>
+        <form action="{{ path('user-profile') }}" method="post" data-abide>
             {{ form_errors(form) }}
 
                 <dl>
