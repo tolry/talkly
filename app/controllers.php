@@ -30,11 +30,11 @@ $app['topic.controller'] = $app->share(
 $app['user.controller'] = $app->share(
     function () use ($app) {
         return new UserController(
+            $app['service.user'],
             $app['form.factory'],
             $app['url_generator'],
             $app['twig'],
-            $app['security.token'],
-            $app['orm.em']
+            $app['security.token']
         );
     }
 );

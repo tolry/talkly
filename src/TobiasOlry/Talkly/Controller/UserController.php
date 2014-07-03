@@ -16,20 +16,20 @@ class UserController
     private $urlGenerator;
     private $twig;
     private $security;
-    private $em;
+    private $userService;
 
     public function __construct(
+        $userService,
         $formFactory,
         $urlGenerator,
         \Twig_Environment $twig,
-        $security,
-        $em
+        $security
     ) {
+        $this->userService  = $userService;
         $this->formFactory  = $formFactory;
         $this->urlGenerator = $urlGenerator;
         $this->twig         = $twig;
         $this->security     = $security;
-        $this->em           = $em;
     }
 
     public function userProfileAction(Request $request)
@@ -43,7 +43,8 @@ class UserController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->em->flush();
+            $this->userService->save($user);
+
             $request->getSession()->getFlashBag()->add('success', 'user-profile updated');
             $url = $this->urlGenerator->generate('user-profile');
 
