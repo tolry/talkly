@@ -60,6 +60,7 @@ class TopicService
     public function addVote(Topic $topic, User $user)
     {
         if ($topic->getVotes()->contains($user)) {
+
             return;
         }
 
@@ -77,6 +78,7 @@ class TopicService
     public function removeVote(Topic $topic, User $user)
     {
         if (!$topic->getVotes()->contains($user)) {
+
             return;
         }
 

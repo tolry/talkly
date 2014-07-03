@@ -54,3 +54,9 @@ $app
     ->get('/topic/{id}/remove-speaker', 'topic.controller:removeSpeakerAction')
     ->bind('topic-remove-speaker')
 ;
+
+$app
+    ->match('/user-profile', 'user.controller:userProfileAction')
+    ->bind('user-profile')
+;
+

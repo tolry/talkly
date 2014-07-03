@@ -8,6 +8,7 @@ use TobiasOlry\Talkly\Security\UserInterface;
 /**
  *
  * @author David Badura <d.a.badura@gmail.com>
+ * @author Tobias Olry <tobias.olry@gmail.com>
  *
  * @Entity
  * @Table(name="UserProfil")
@@ -34,6 +35,13 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Column(type="string")
+     */
+    protected $name;
+
+    /**
+     * @var string
+     *
      * @Column(type="string", nullable=true)
      */
     protected $email;
@@ -55,12 +63,6 @@ class User implements UserInterface
      * @ManyToMany(targetEntity="Topic", mappedBy="speakers")
      */
     protected $speakingTopics;
-
-    /**
-     *
-     * @OneToMany(targetEntity="Topic", mappedBy="lectureUser")
-     */
-    protected $lectures;
 
     /**
      *
@@ -139,10 +141,34 @@ class User implements UserInterface
 
     /**
      *
+     * @return Comment[]
+     */
+    public function getComments()
+    {
+        return $this->votes;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     *
      * @return string
      */
     public function __toString()
     {
+        if (! empty($this->name)) {
+
+            return $this->name;
+        }
+
         return $this->username;
     }
 }
