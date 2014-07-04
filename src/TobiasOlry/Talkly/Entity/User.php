@@ -40,6 +40,20 @@ class User implements UserInterface
     protected $name;
 
     /**
+     * @var boolean
+     *
+     * @Column(type="boolean", nullable=true)
+     */
+    protected $notifyByEmail;
+
+    /**
+     * @var boolean
+     *
+     * @Column(type="boolean", nullable=true)
+     */
+    protected $notifyInApplication;
+
+    /**
      * @var string
      *
      * @Column(type="string", nullable=true)
@@ -83,6 +97,9 @@ class User implements UserInterface
         $this->lectures       = new ArrayCollection();
         $this->votes          = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
+
+        $this->notifyByEmail       = false;
+        $this->notifyInApplication = false;
     }
 
     /**
@@ -156,6 +173,26 @@ class User implements UserInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getNotifyByEmail()
+    {
+        return $this->notifyByEmail;
+    }
+
+    public function setNotifyByEmail($notifyByEmail)
+    {
+        $this->notifyByEmail = (boolean) $notifyByEmail;
+    }
+
+    public function getNotifyInApplication()
+    {
+        return $this->notifyInApplication;
+    }
+
+    public function setNotifyInApplication($notifyInApplication)
+    {
+        $this->notifyInApplication = (boolean) $notifyInApplication;
     }
 
     /**

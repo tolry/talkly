@@ -16,8 +16,10 @@ class UserProfileType extends AbstractType
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', 'email')
-                ->add('name', 'text')
+                ->add('email',               'email')
+                ->add('name',                'text')
+                ->add('notifyByEmail',       'checkbox', array('required' => false))
+                ->add('notifyInApplication', 'checkbox', array('required' => false))
             ;
         }
 
