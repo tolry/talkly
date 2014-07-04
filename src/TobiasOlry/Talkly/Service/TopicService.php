@@ -5,6 +5,10 @@ namespace TobiasOlry\Talkly\Service;
 use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Entity\Topic;
 
+use TobiasOlry\Talkly\Event\Events;
+use TobiasOlry\Talkly\Event\TopicEvent;
+use TobiasOlry\Talkly\Event\CommentEvent;
+
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -14,22 +18,14 @@ use Doctrine\ORM\EntityManager;
 class TopicService
 {
 
-    /**
-     *
-     */
-    protected $em;
+    private $em;
+    private $topicRepository;
+    private $eventDispatcher;
 
-    /**
-     *
-     */
-    protected $topicRepository;
-
-    /**
-     *
-     */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $eventDispatcher)
     {
-        $this->em = $em;
+        $this->em              = $em;
+        $this->eventDispatcher = $eventDispatcher;
         $this->topicRepository = $em->getRepository('TobiasOlry\Talkly\Entity\Topic');
     }
 
@@ -110,8 +106,13 @@ class TopicService
 
     public function comment(Topic $topic, User $user, $comment)
     {
-        $topic->comment($user, $comment);
+        $comment = $topic->comment($user, $comment);
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(
+            Events::COMMENT_CREATED,
+            new CommentEvent($comment)
+        );
     }
 
     public function findNonArchivedMostVotesFirst()
@@ -139,9 +140,19 @@ class TopicService
         return $this->topicRepository->findNextGroupByMonth();
     }
 
-    public function save(Topic $topic)
+    public function add(Topic $topic)
     {
         $this->em->persist($topic);
+        $this->em->flush();
+
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_CREATED,
+            new TopicEvent($topic)
+        );
+    }
+
+    public function update(Topic $topic)
+    {
         $this->em->flush();
     }
 }

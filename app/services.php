@@ -14,7 +14,8 @@ $app['service.user'] = $app->share(
 $app['service.topic'] = $app->share(
     function () use ($app) {
         return new TopicService(
-            $app['orm.em']
+            $app['orm.em'],
+            $app['dispatcher']
         );
     }
 );
