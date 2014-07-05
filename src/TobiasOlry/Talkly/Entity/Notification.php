@@ -52,6 +52,11 @@ class Notification
         $this->createdAt = new \DateTime();
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * @return \DateTime
      */
@@ -79,5 +84,10 @@ class Notification
     public function isDone()
     {
         return $this->done;
+    }
+
+    public function markAsDone()
+    {
+        $this->done = true;
     }
 }

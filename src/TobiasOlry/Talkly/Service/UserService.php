@@ -20,9 +20,9 @@ class UserService
         $this->repository = $em->getRepository('TobiasOlry\Talkly\Entity\User');
     }
 
-    public function save(User $user)
+    public function update(User $user)
     {
-        $this->em->flush($user);
+        $this->em->flush();
     }
 
     public function findAll()
