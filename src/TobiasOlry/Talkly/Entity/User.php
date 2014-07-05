@@ -35,7 +35,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     protected $name;
 
