@@ -12,13 +12,16 @@ class EmailTransport implements TransportInterface
 {
     private $mailer;
     private $emailSender;
+    private $twig;
 
     public function __construct(
         Swift_Mailer $mailer,
+        \Twig_Environment $twig,
         $emailSender
     )
     {
         $this->mailer      = $mailer;
+        $this->twig        = $twig;
         $this->emailSender = $emailSender;
     }
 
@@ -34,9 +37,17 @@ class EmailTransport implements TransportInterface
             return;
         }
 
+        $html = $this->twig->render(
+            'mail/notification.html.twig',
+            array(
+                'user' => $user,
+                'message' => $message,
+            )
+        );
+
         $message = \Swift_Message::newInstance()
             ->setSubject('new notification')
-            ->setBody($message)
+            ->setBody($html, 'text/html')
             ->setFrom(array($this->emailSender))
             ->setTo(array($user->getEmail() => (string) $user))
         ;
