@@ -24,6 +24,7 @@ $app->register(new Provider\ServiceControllerServiceProvider());
 $app->register(new Provider\FormServiceProvider());
 $app->register(new Provider\TranslationServiceProvider(), array('locale_fallbacks' => array('en')));
 $app->register(new Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../templates'));
+$app->register(new Provider\SwiftmailerServiceProvider());
 
 $app['markdown'] = $app->share(function() use ($app) {
     $ciconia = new Ciconia();
