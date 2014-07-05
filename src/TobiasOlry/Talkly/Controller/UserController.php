@@ -90,6 +90,20 @@ class UserController
         throw new NotFoundHttpException;
     }
 
+    public function markAllNotificationsReadAction()
+    {
+        $user = $this->security->getUser();
+        foreach ($user->getUnreadNotifications() as $notification) {
+            $notification->markAsDone();
+        }
+
+        $this->userService->update($user);
+
+        $url = $this->urlGenerator->generate('user-notifications');
+
+        return new RedirectResponse($url);
+    }
+
     public function markNotificationReadAction(Request $request)
     {
         $notification = $this->getNotification($request->get('id'));

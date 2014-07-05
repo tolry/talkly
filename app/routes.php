@@ -70,3 +70,8 @@ $app
     ->bind('user-notification-read')
 ;
 
+$app
+    ->match('/user/mark-all-notifications-read', 'user.controller:markAllNotificationsReadAction')
+    ->bind('user-notification-read-all')
+;
+
