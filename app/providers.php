@@ -34,6 +34,7 @@ $app['markdown'] = $app->share(function() use ($app) {
     $ciconia->addExtension(new Gfm\WhiteSpaceExtension());
     $ciconia->addExtension(new Gfm\TableExtension());
     $ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
+    $ciconia->addExtension($app['service.markdown.extension.topic']);
 
     return $ciconia;
 });

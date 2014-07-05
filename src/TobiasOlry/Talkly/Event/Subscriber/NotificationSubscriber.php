@@ -48,7 +48,7 @@ class NotificationSubscriber implements EventSubscriberInterface
     public function onTopicCreated(TopicEvent $event)
     {
         $message = sprintf(
-            "New Topic #%d '%s' created",
+            "New Topic #%d created",
             $event->getTopic()->getId(),
             $event->getTopic()->getTitle()
         );
@@ -67,9 +67,8 @@ class NotificationSubscriber implements EventSubscriberInterface
     {
         $topic   = $event->getComment()->getTopic();
         $message = sprintf(
-            "New Comment on Topic #%d '%s' by %s",
+            "New Comment on Topic #%d by %s",
             $topic->getId(),
-            $topic->getTitle(),
             $event->getComment()->getCreatedBy()
         );
 

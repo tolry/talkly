@@ -9,7 +9,7 @@
 {% block content %}
 <div class="row">
 
-    <div class="small-12 large-8 large-offset-2 end columns">
+    <div class="small-12 large-10 large-offset-1 end columns">
         <div class="text-right">
             <a href="{{ path('user-profile') }}">edit profile</a>
             <hr />
@@ -34,7 +34,7 @@
                 {% for notification in security.user.unreadNotifications %}
                 <tr>
                     <td>{{ notification.createdAt|time_ago_in_words }}</td>
-                    <td>{{ markdown(notification.message)|replace({'<p>':'', '</p>':''}) }}</td>
+                    <td>{{ markdown(notification.message)|replace({'<p>':'', '</p>':''})|raw }}</td>
                     <td><a href="{{ path('user-notification-read', {id: notification.id}) }}"><i class="fa fa-check"></i></a></td>
                 </tr>
                 {% else %}

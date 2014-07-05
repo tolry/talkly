@@ -2,6 +2,7 @@
 
 use TobiasOlry\Talkly\Service\TopicService;
 use TobiasOlry\Talkly\Service\UserService;
+use TobiasOlry\Talkly\Markdown\TopicExtension;
 use TobiasOlry\Talkly\Event\Subscriber\NotificationSubscriber;
 use TobiasOlry\Talkly\Event\NotificationTransport\EmailTransport;
 use TobiasOlry\Talkly\Event\NotificationTransport\DatabaseTransport;
@@ -54,3 +55,13 @@ $app['service.eventsubscriber'] = $app->share(
         return $subscriber;
     }
 );
+
+$app['service.markdown.extension.topic'] = $app->share(
+    function () use ($app) {
+        return new TopicExtension(
+            $app['url_generator'],
+            $app['service.topic']
+        );
+    }
+);
+
