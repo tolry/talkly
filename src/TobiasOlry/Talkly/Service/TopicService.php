@@ -9,6 +9,9 @@ use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\Talkly\Event\CommentEvent;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHtppException;
+
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -32,17 +35,17 @@ class TopicService
     public function getTopic($id, $allowArchived = false)
     {
         if (empty($id)) {
-            // todo
+            throw new NotFoundHttpException();
         }
 
         $topic = $this->topicRepository->find($id);
 
         if (! $topic) {
-            // todo
+            throw new NotFoundHttpException();
         }
 
         if (! $allowArchived && $topic->isLectureHeld()) {
-            // todo
+            throw new AccessDeniedHtppException();
         }
 
         return $topic;
