@@ -163,12 +163,21 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return Notifications[]
      */
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * @return Notifications[]
+     */
+    public function getUnreadNotifications()
+    {
+        return $this->notifications->filter(function($notification) {
+            return ! $notification->isDone();
+        });
     }
 
     /**
