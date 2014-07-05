@@ -10,13 +10,16 @@ use TobiasOlry\Talkly\Entity\User;
 
 class EmailTransport implements TransportInterface
 {
-    protected $mailer;
+    private $mailer;
+    private $emailSender;
 
     public function __construct(
-        Swift_Mailer $mailer
+        Swift_Mailer $mailer,
+        $emailSender
     )
     {
-        $this->mailer       = $mailer;
+        $this->mailer      = $mailer;
+        $this->emailSender = $emailSender;
     }
 
     public function addNotification(User $user, $message)
@@ -34,8 +37,8 @@ class EmailTransport implements TransportInterface
         $message = \Swift_Message::newInstance()
             ->setSubject('new notification')
             ->setBody($message)
-            ->setFrom(array('tobias.olry@gmail.com'))
-            ->setTo(array('tobias.olry@gmail.com'))
+            ->setFrom(array($this->emailSender))
+            ->setTo(array($user->getEmail() => (string) $user))
         ;
 
         $this->mailer->send($message);

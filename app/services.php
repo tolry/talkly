@@ -25,7 +25,8 @@ $app['service.topic'] = $app->share(
 $app['service.notificationtransport.email'] = $app->share(
     function () use ($app) {
         return new EmailTransport(
-            $app['mailer']
+            $app['mailer'],
+            $app['config']['notification_email_sender']
         );
     }
 );

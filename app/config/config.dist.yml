@@ -1,6 +1,8 @@
 parameters:
     debug:         true
     user_provider: debug
+    user_provider_ntlm_domain: ~
+    notification_email_sender: ~
     db_driver:     pdo_mysql
     db_host:       localhost
     db_port:       ~
