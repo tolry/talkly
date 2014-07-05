@@ -143,6 +143,16 @@ class TopicService
         return $this->topicRepository->findNextGroupByMonth();
     }
 
+    public function findAllParticipants(Topic $topic)
+    {
+        return array_unique(array_merge(
+            $topic->getVotes()->toArray(),
+            $topic->getCommentingUsers(),
+            $topic->getSpeakers()->toArray(),
+            array($topic->getCreatedBy())
+        ));
+    }
+
     public function add(Topic $topic)
     {
         $this->em->persist($topic);

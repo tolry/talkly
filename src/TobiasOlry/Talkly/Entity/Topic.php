@@ -158,6 +158,16 @@ class Topic
         return $this->comments;
     }
 
+    public function getCommentingUsers()
+    {
+        $users = array();
+        foreach ($this->comments as $comment) {
+            $users[] = $comment->getCreatedBy();
+        }
+
+        return array_unique($users);
+    }
+
     /**
      *
      * @return User[]

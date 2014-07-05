@@ -79,4 +79,9 @@ class Comment
     {
         return $this->commentText;
     }
+
+    public function getTopic()
+    {
+        return $this->topic;
+    }
 }

@@ -54,13 +54,33 @@ class NotificationSubscriber implements EventSubscriberInterface
         );
 
         foreach ($this->userService->findAll() as $user) {
+            if ($event->getTopic()->getCreatedBy() == $user) {
+
+                continue;
+            }
+
             $this->publish($user, $message);
         }
     }
 
     public function onCommentCreated(CommentEvent $event)
     {
-        var_dump('onCommentCreated');
+        $topic   = $event->getComment()->getTopic();
+        $message = sprintf(
+            "New Comment on Topic #%d '%s' by %s",
+            $topic->getId(),
+            $topic->getTitle(),
+            $event->getComment()->getCreatedBy()
+        );
+
+        foreach ($this->topicService->findAllParticipants($topic) as $user) {
+            if ($topic->getCreatedBy() == $user) {
+
+                continue;
+            }
+
+            $this->publish($user, $message);
+        }
     }
 
     private function publish(User $user, $message)
