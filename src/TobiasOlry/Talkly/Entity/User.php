@@ -62,6 +62,12 @@ class User implements UserInterface
 
     /**
      *
+     * @OneToMany(targetEntity="Notification", mappedBy="user", cascade="all")
+     */
+    protected $notifications;
+
+    /**
+     *
      * @OneToMany(targetEntity="Comment", mappedBy="createdBy")
      */
     protected $comments;
@@ -158,11 +164,20 @@ class User implements UserInterface
 
     /**
      *
+     * @return Notifications[]
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+    /**
+     *
      * @return Comment[]
      */
     public function getComments()
     {
-        return $this->votes;
+        return $this->comments;
     }
 
     public function getName()

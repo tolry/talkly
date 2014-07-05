@@ -4,6 +4,7 @@ use TobiasOlry\Talkly\Service\TopicService;
 use TobiasOlry\Talkly\Service\UserService;
 use TobiasOlry\Talkly\Event\Subscriber\NotificationSubscriber;
 use TobiasOlry\Talkly\Event\NotificationTransport\EmailTransport;
+use TobiasOlry\Talkly\Event\NotificationTransport\DatabaseTransport;
 
 $app['service.user'] = $app->share(
     function () use ($app) {
@@ -31,6 +32,14 @@ $app['service.notificationtransport.email'] = $app->share(
     }
 );
 
+$app['service.notificationtransport.db'] = $app->share(
+    function () use ($app) {
+        return new DatabaseTransport(
+            $app['service.user']
+        );
+    }
+);
+
 $app['service.eventsubscriber'] = $app->share(
     function () use ($app) {
         $subscriber = new NotificationSubscriber(
@@ -39,6 +48,7 @@ $app['service.eventsubscriber'] = $app->share(
         );
 
         $subscriber->addTransport($app['service.notificationtransport.email']);
+        $subscriber->addTransport($app['service.notificationtransport.db']);
 
         return $subscriber;
     }

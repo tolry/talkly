@@ -7,6 +7,7 @@ namespace TobiasOlry\Talkly\Service;
 
 use Doctrine\ORM\EntityManager;
 use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\Talkly\Entity\Notification;
 
 class UserService
 {
@@ -27,6 +28,12 @@ class UserService
     public function findAll()
     {
         return $this->repository->findAll();
+    }
+
+    public function addNotification(User $user, $message)
+    {
+        $user->getNotifications()->add(new Notification($user, $message));
+        $this->em->flush();
     }
 }
 
