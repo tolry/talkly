@@ -42,9 +42,15 @@ class MarkdownExtension extends \Twig_Extension
      * @param string $string
      * @return string
      */
-    public function renderMarkdown($string)
+    public function renderMarkdown($string, $inline = false)
     {
-        return $this->engine->render($string);
+        $html = $this->engine->render($string);
+
+        if ($inline) {
+            $html = str_replace(array('<p>', '</p>'), '', $html);
+        }
+
+        return $html;
     }
 
     /**
