@@ -16,6 +16,9 @@ class Version20140704230524 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql", "Migration can only be executed safely on 'mysql'.");
 
         $this->addSql("ALTER TABLE UserProfil ADD notifyByEmail TINYINT(1) DEFAULT NULL, ADD notifyInApplication TINYINT(1) DEFAULT NULL");
+
+        // set a default value
+        $this->addSql("UPDATE UserProfil SET notifyInApplication = 1");
     }
 
     public function down(Schema $schema)
