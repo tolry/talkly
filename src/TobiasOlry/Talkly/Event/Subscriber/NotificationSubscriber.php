@@ -73,7 +73,7 @@ class NotificationSubscriber implements EventSubscriberInterface
         );
 
         foreach ($this->topicService->findAllParticipants($topic) as $user) {
-            if ($topic->getCreatedBy() == $user) {
+            if ($event->getComment()->getCreatedBy() == $user) {
 
                 continue;
             }
