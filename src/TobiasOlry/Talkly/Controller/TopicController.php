@@ -46,8 +46,7 @@ class TopicController
         );
 
         $form->handleRequest($request);
-
-        $this->topicService->save($topic);
+        $this->topicService->add($topic);
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'topic created');
 
@@ -121,8 +120,7 @@ class TopicController
         );
 
         $form->handleRequest($request);
-
-        $this->topicService->save($topic);
+        $this->topicService->update($topic);
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture updated');
 

@@ -158,6 +158,16 @@ class Topic
         return $this->comments;
     }
 
+    public function getCommentingUsers()
+    {
+        $users = array();
+        foreach ($this->comments as $comment) {
+            $users[] = $comment->getCreatedBy();
+        }
+
+        return array_unique($users);
+    }
+
     /**
      *
      * @return User[]
@@ -168,13 +178,17 @@ class Topic
     }
 
     /**
-     *
      * @param User $user
      * @param string $text
+     *
+     * @return Comment
      */
     public function comment(User $user, $text)
     {
-        $this->comments->add(new Comment($user, $this, $text));
+        $comment = new Comment($user, $this, $text);
+        $this->comments->add($comment);
+
+        return $comment;
     }
 
     /**

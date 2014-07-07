@@ -35,9 +35,23 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     protected $name;
+
+    /**
+     * @var boolean
+     *
+     * @Column(type="boolean", nullable=true)
+     */
+    protected $notifyByEmail;
+
+    /**
+     * @var boolean
+     *
+     * @Column(type="boolean", nullable=true)
+     */
+    protected $notifyInApplication;
 
     /**
      * @var string
@@ -45,6 +59,12 @@ class User implements UserInterface
      * @Column(type="string", nullable=true)
      */
     protected $email;
+
+    /**
+     *
+     * @OneToMany(targetEntity="Notification", mappedBy="user", cascade="all")
+     */
+    protected $notifications;
 
     /**
      *
@@ -83,6 +103,9 @@ class User implements UserInterface
         $this->lectures       = new ArrayCollection();
         $this->votes          = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
+
+        $this->notifyByEmail       = false;
+        $this->notifyInApplication = true;
     }
 
     /**
@@ -140,12 +163,30 @@ class User implements UserInterface
     }
 
     /**
+     * @return Notifications[]
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
+    }
+
+    /**
+     * @return Notifications[]
+     */
+    public function getUnreadNotifications()
+    {
+        return $this->notifications->filter(function($notification) {
+            return ! $notification->isDone();
+        });
+    }
+
+    /**
      *
      * @return Comment[]
      */
     public function getComments()
     {
-        return $this->votes;
+        return $this->comments;
     }
 
     public function getName()
@@ -156,6 +197,26 @@ class User implements UserInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getNotifyByEmail()
+    {
+        return $this->notifyByEmail;
+    }
+
+    public function setNotifyByEmail($notifyByEmail)
+    {
+        $this->notifyByEmail = (boolean) $notifyByEmail;
+    }
+
+    public function getNotifyInApplication()
+    {
+        return $this->notifyInApplication;
+    }
+
+    public function setNotifyInApplication($notifyInApplication)
+    {
+        $this->notifyInApplication = (boolean) $notifyInApplication;
     }
 
     /**

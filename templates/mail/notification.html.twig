@@ -1,0 +1,8 @@
+{% extends 'mail/layout.html.twig' %}
+
+{% block content %}
+<p>Hi {{ user }},</p>
+<p>talkly has a notification for you!</p>
+<p>{{ markdown(message) }}</p>
+<p>kind regards,<br />&nbsp;&nbsp;&nbsp;talkly mailrobot</p>
+{% endblock %}

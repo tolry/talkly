@@ -5,6 +5,13 @@ namespace TobiasOlry\Talkly\Service;
 use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Entity\Topic;
 
+use TobiasOlry\Talkly\Event\Events;
+use TobiasOlry\Talkly\Event\TopicEvent;
+use TobiasOlry\Talkly\Event\CommentEvent;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHtppException;
+
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -14,39 +21,31 @@ use Doctrine\ORM\EntityManager;
 class TopicService
 {
 
-    /**
-     *
-     */
-    protected $em;
+    private $em;
+    private $topicRepository;
+    private $eventDispatcher;
 
-    /**
-     *
-     */
-    protected $topicRepository;
-
-    /**
-     *
-     */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $eventDispatcher)
     {
-        $this->em = $em;
+        $this->em              = $em;
+        $this->eventDispatcher = $eventDispatcher;
         $this->topicRepository = $em->getRepository('TobiasOlry\Talkly\Entity\Topic');
     }
 
     public function getTopic($id, $allowArchived = false)
     {
         if (empty($id)) {
-            // todo
+            throw new NotFoundHttpException();
         }
 
         $topic = $this->topicRepository->find($id);
 
         if (! $topic) {
-            // todo
+            throw new NotFoundHttpException();
         }
 
         if (! $allowArchived && $topic->isLectureHeld()) {
-            // todo
+            throw new AccessDeniedHtppException();
         }
 
         return $topic;
@@ -110,8 +109,13 @@ class TopicService
 
     public function comment(Topic $topic, User $user, $comment)
     {
-        $topic->comment($user, $comment);
+        $comment = $topic->comment($user, $comment);
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(
+            Events::COMMENT_CREATED,
+            new CommentEvent($comment)
+        );
     }
 
     public function findNonArchivedMostVotesFirst()
@@ -139,9 +143,29 @@ class TopicService
         return $this->topicRepository->findNextGroupByMonth();
     }
 
-    public function save(Topic $topic)
+    public function findAllParticipants(Topic $topic)
+    {
+        return array_unique(array_merge(
+            $topic->getVotes()->toArray(),
+            $topic->getCommentingUsers(),
+            $topic->getSpeakers()->toArray(),
+            array($topic->getCreatedBy())
+        ));
+    }
+
+    public function add(Topic $topic)
     {
         $this->em->persist($topic);
+        $this->em->flush();
+
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_CREATED,
+            new TopicEvent($topic)
+        );
+    }
+
+    public function update(Topic $topic)
+    {
         $this->em->flush();
     }
 }

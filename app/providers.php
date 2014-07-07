@@ -24,6 +24,7 @@ $app->register(new Provider\ServiceControllerServiceProvider());
 $app->register(new Provider\FormServiceProvider());
 $app->register(new Provider\TranslationServiceProvider(), array('locale_fallbacks' => array('en')));
 $app->register(new Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../templates'));
+$app->register(new Provider\SwiftmailerServiceProvider());
 
 $app['markdown'] = $app->share(function() use ($app) {
     $ciconia = new Ciconia();
@@ -33,6 +34,7 @@ $app['markdown'] = $app->share(function() use ($app) {
     $ciconia->addExtension(new Gfm\WhiteSpaceExtension());
     $ciconia->addExtension(new Gfm\TableExtension());
     $ciconia->addExtension(new Gfm\UrlAutoLinkExtension());
+    $ciconia->addExtension($app['service.markdown.extension.topic']);
 
     return $ciconia;
 });

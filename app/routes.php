@@ -56,7 +56,22 @@ $app
 ;
 
 $app
+    ->get('/user-notifications', 'user.controller:userNotificationsAction')
+    ->bind('user-notifications')
+;
+
+$app
     ->match('/user-profile', 'user.controller:userProfileAction')
     ->bind('user-profile')
+;
+
+$app
+    ->match('/notification/{id}/mark-read', 'user.controller:markNotificationReadAction')
+    ->bind('user-notification-read')
+;
+
+$app
+    ->match('/user/mark-all-notifications-read', 'user.controller:markAllNotificationsReadAction')
+    ->bind('user-notification-read-all')
 ;
 

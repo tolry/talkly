@@ -7,6 +7,9 @@ use TobiasOlry\Talkly\Security\Security;
 use TobiasOlry\Talkly\Security\UserManager;
 use TobiasOlry\Talkly\Twig\SecurityExtension;
 
+use TobiasOlry\Talkly\Event\Subscriber\NotificationSubscriber;
+use TobiasOlry\Talkly\Event\notificationtransport\EmailTransport;
+
 $app['controllers']->before(
     function () use ($app) {
         $request      = $app['request'];
@@ -20,6 +23,8 @@ $app['controllers']->before(
 
         $request->server->set('PHP_AUTH_USER', $username);
         $app['security.token']->setUser($user);
+
+        $app['dispatcher']->addSubscriber($app['service.eventsubscriber']);
     }
 );
 

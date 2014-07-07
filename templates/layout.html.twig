@@ -32,7 +32,14 @@
                     <a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i><span><span class="hide-for-small-only">  Archive</span></span></a>
                 </li>
                 <li class="{{ (active_menu == 'user-profile') ? 'active' : '' }} small-4 columns">
-                    <a href="{{ path('user-profile') }}"><i class="fa fa-user"></i><span><span class="hide-for-small-only">  {{ app.request.user }}</span></span></a>
+                    <a href="{{ path('user-notifications') }}">
+                        <i class="fa fa-user"></i>
+                        <span><span class="hide-for-small-only">  {{ security.user }}</span></span>
+                        {% if security.user.unreadNotifications|length > 0 %}
+                        <span class="label info round" data-tooltip title="{{ security.user.unreadNotifications|length }} unread notification(s)">{{ security.user.unreadNotifications|length }}</label>
+                        {% else %}
+                        {% endif %}
+                    </a>
                 </li>
             </ul>
         </div>
