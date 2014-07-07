@@ -105,7 +105,7 @@ class User implements UserInterface
         $this->speakingTopics = new ArrayCollection();
 
         $this->notifyByEmail       = false;
-        $this->notifyInApplication = false;
+        $this->notifyInApplication = true;
     }
 
     /**
