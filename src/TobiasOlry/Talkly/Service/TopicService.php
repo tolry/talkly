@@ -45,7 +45,7 @@ class TopicService
         }
 
         if (! $allowArchived && $topic->isLectureHeld()) {
-            throw new AccessDeniedHtppException();
+            // throw new AccessDeniedHtppException();
         }
 
         return $topic;
