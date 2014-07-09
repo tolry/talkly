@@ -40,32 +40,11 @@
     </div>
     {% endif %}
 
-    <h4><i class="fa fa-comments-o"></i> {{ topic.comments|length }} comment(s)</h4>
+    {% if topic.lectureHeld %}
+        {% include 'topic/comments.html.twig' with {comments: topic.feedbackComments, name: "feedback", show_form: true} %}
+    {% endif %}
 
-    <div>
-        {% for comment in topic.comments %}
-        <blockquote>
-            <div class="markdown">{{ markdown(comment.commentText) }}</div>
-            <cite>
-                <i class="fa fa-user"></i> {{ comment.createdBy }}
-                <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}
-            </cite>
-        </blockquote>
-        {% endfor %}
-
-        {% if not topic.lectureHeld %}
-        <div class="row">
-            <form role="form" action="{{ path('topic-comment', {id: topic.id}) }}" method="post">
-                <div class="columns small-2">{{ app.request.user }}</div>
-                <div class="columns small-10">
-                    <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
-                    <div class="right"><button class="button tiny radius">comment</button></div>
-                </div>
-            </form>
-        </div>
-        {% endif %}
-
-    </div>
+    {% include 'topic/comments.html.twig' with {comments: topic.comments, name: "comment(s)", show_form: not topic.lectureHeld} %}
 
 </div>
 

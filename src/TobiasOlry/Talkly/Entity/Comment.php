@@ -35,6 +35,14 @@ class Comment
     private $createdAt;
 
     /**
+     * true, if comment was written after
+     * the lecture was already held
+     *
+     * @Column(type="boolean", nullable=false)
+     */
+    private $feedback;
+
+    /**
      * @Column(type="text")
      */
     private $commentText;
@@ -51,6 +59,7 @@ class Comment
         $this->topic       = $topic;
         $this->createdAt   = new \DateTime();
         $this->commentText = $commentText;
+        $this->feedback    = false;
     }
 
     /**
@@ -63,7 +72,6 @@ class Comment
     }
 
     /**
-     *
      * @return User
      */
     public function getCreatedBy()
@@ -72,7 +80,6 @@ class Comment
     }
 
     /*
-     *
      * @return string
      */
     public function getCommentText()
@@ -84,4 +91,15 @@ class Comment
     {
         return $this->topic;
     }
+
+    public function isFeedback()
+    {
+        return $this->feedback;
+    }
+
+    public function markAsFeedback()
+    {
+        $this->feedback = true;
+    }
+
 }

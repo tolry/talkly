@@ -1,0 +1,26 @@
+<h4><i class="fa fa-comments-o"></i> {{ comments|length }} {{ name }}</h4>
+
+<div>
+    {% for comment in comments %}
+    <blockquote>
+        <div class="markdown">{{ markdown(comment.commentText) }}</div>
+        <cite>
+            <i class="fa fa-user"></i> {{ comment.createdBy }}
+            <i class="fa fa-clock-o"></i> {{ comment.createdAt|time_ago_in_words }}
+        </cite>
+    </blockquote>
+    {% endfor %}
+
+    {% if show_form %}
+    <div class="row">
+        <form role="form" action="{{ path('topic-comment', {id: topic.id}) }}" method="post">
+            <div class="columns small-3 one-line">{{ security.user }}</div>
+            <div class="columns small-9">
+                <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
+                <div class="right"><button class="button tiny radius">comment</button></div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
