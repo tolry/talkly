@@ -150,12 +150,23 @@ class Topic
     }
 
     /**
-     *
      * @return Comment[]
      */
     public function getComments()
     {
-        return $this->comments;
+        return $this->comments->filter(function($comment) {
+            return ! $comment->isFeedback();
+        });
+    }
+
+    /**
+     * @return Comment[]
+     */
+    public function getFeedbackComments()
+    {
+        return $this->comments->filter(function($comment) {
+            return $comment->isFeedback();
+        });
     }
 
     public function getCommentingUsers()
@@ -186,6 +197,11 @@ class Topic
     public function comment(User $user, $text)
     {
         $comment = new Comment($user, $this, $text);
+
+        if ($this->isLectureHeld()) {
+            $comment->markAsFeedback();
+        }
+
         $this->comments->add($comment);
 
         return $comment;
