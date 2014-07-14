@@ -4,6 +4,7 @@
 @import "mixins";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
+@import "compass/css3/text-shadow";
 
 
 body {
@@ -108,3 +109,8 @@ textarea {
 }
 
 .markdown pre { margin-bottom: 1em; }
+
+.text-highlight {
+    color: $primary-color;
+    font-weight: bold;
+}

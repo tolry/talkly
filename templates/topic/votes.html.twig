@@ -1,17 +1,4 @@
-<span class="fa-stack votes
-    {{ topic.speakers|length ? 'has-speakers' : '' }}
-    {{ topic.lectureDate ? 'has-date' : '' }}
-" data-tooltip title="
-    {% if topic.speakers|length and not topic.lectureDate %}
-        Topic has a speaker! But not a lecture date.
-    {% elseif not topic.speakers|length and topic.lectureDate %}
-        Topic has a lecture date
-    {% elseif topic.speakers|length and topic.lectureDate %}
-        Topic has a speaker and a lecture date! :-)
-    {% else %}
-        Topic has not a speaker :-(
-    {% endif %}
-">
+<span class="fa-stack votes">
     <i class="fa fa-thumbs-o-up fa-stack-2x"></i>
     <strong class="fa-stack-1x votes-text">{{ topic.votes|length }}</strong>
 </span>
