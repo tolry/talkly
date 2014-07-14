@@ -8887,12 +8887,6 @@ footer a :hover {
   font-size: 1.5em;
   margin-top: 25px;
 }
-.votes.has-speakers {
-  color: #008cba;
-}
-.votes.has-date {
-  color: #43ac6a;
-}
 
 .votes-text {
   padding-top: 0.2em;

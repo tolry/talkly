@@ -71,14 +71,6 @@ footer {
 .votes {
     font-size: 1.5em;
     margin-top: 25px;
-
-    &.has-speakers {
-        color: $primary-color;
-    }
-
-    &.has-date {
-        color: $success-color;
-    }
 }
 
 .votes-text {
