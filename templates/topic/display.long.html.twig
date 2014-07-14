@@ -6,7 +6,7 @@
 
     {% if not topic.lectureHeld %}
     <div class="right">
-        {% include 'topic/controls.html.twig' %}
+        {% include 'topic/controls.html.twig' with {view: 'show'} %}
     </div>
     {% endif %}
 
