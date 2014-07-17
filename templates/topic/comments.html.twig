@@ -19,14 +19,8 @@
 {% if show_form %}
 <div class="row">
     <form role="form" action="{{ path('topic-comment', {id: topic.id}) }}" method="post">
-        <div class="columns small-12 medium-3 text-center">
-            <img src="{{ gravatar(security.user, 96) }}" alt="" class="th" /><br />
-            <div class="one-line">{{ security.user }}</div>
-        </div>
-        <div class="columns small-12 medium-9">
-            <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
-            <div class="right"><button class="button tiny radius">comment</button></div>
-        </div>
+        <textarea name="comment" class="form-controll" placeholder="add comment (markdown allowed)"></textarea>
+        <div class="right"><button class="button tiny radius">comment</button></div>
     </form>
 </div>
 {% endif %}
