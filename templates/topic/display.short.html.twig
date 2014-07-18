@@ -18,7 +18,7 @@
         </div>
         {% endif %}
 
-        <h4><a href="{{ path('topic-show', {id: topic.id}) }}">
+        <h4 class="one-line" data-tooltip title="{{ topic.title }}"><a href="{{ path('topic-show', {id: topic.id}) }}">
             {{ topic.title }}
         </a></h4>
         <div class="quiet">
