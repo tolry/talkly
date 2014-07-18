@@ -29,7 +29,7 @@ class TopicExtension implements ExtensionInterface
      */
     public function register(\Ciconia\Markdown $markdown)
     {
-        $markdown->on('inline', array($this, 'processMentions'));
+        $markdown->on('inline', [$this, 'processMentions']);
     }
 
     /**
@@ -46,7 +46,7 @@ class TopicExtension implements ExtensionInterface
             $topicTitle = $topic->getTitle();
             $url        = $urlGenerator->generate(
                 'topic-show',
-                array('id' => $topicId),
+                ['id' => $topicId],
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
 

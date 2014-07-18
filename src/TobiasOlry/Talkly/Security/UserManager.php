@@ -36,7 +36,7 @@ class UserManager
     {
         $repo = $this->em->getRepository('TobiasOlry\Talkly\Entity\User');
 
-        if ($user = $repo->findOneBy(array('username' => $username))) {
+        if ($user = $repo->findOneBy(['username' => $username])) {
             return $user;
         }
 

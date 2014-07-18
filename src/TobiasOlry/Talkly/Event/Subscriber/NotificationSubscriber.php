@@ -21,7 +21,7 @@ class NotificationSubscriber implements EventSubscriberInterface
     private $userService;
     private $topicService;
 
-    private $transports = array();
+    private $transports = [];
 
     public function __construct(
         UserService  $userService,
@@ -34,10 +34,10 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::TOPIC_CREATED   => 'onTopicCreated',
             Events::COMMENT_CREATED => 'onCommentCreated',
-        );
+        ];
     }
 
     public function addTransport(TransportInterface $transport)

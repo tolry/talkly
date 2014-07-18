@@ -171,7 +171,7 @@ class Topic
 
     public function getCommentingUsers()
     {
-        $users = array();
+        $users = [];
         foreach ($this->comments as $comment) {
             $users[] = $comment->getCreatedBy();
         }

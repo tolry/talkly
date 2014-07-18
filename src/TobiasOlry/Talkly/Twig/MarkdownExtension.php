@@ -32,9 +32,9 @@ class MarkdownExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('markdown', array($this, 'renderMarkdown'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('markdown', [$this, 'renderMarkdown'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
@@ -47,7 +47,7 @@ class MarkdownExtension extends \Twig_Extension
         $html = $this->engine->render($string);
 
         if ($inline) {
-            $html = str_replace(array('<p>', '</p>'), '', $html);
+            $html = str_replace(['<p>', '</p>'], '', $html);
         }
 
         return $html;

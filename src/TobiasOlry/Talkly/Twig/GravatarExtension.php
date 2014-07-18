@@ -22,9 +22,9 @@ class GravatarExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('gravatar', array($this, 'gravatar'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('gravatar', [$this, 'gravatar'], ['is_safe' => ['html']]),
+        ];
     }
 
     /**
@@ -34,10 +34,10 @@ class GravatarExtension extends \Twig_Extension
      */
     public function gravatar(User $user, $size = 80)
     {
-        return strtr(self::URL, array(
+        return strtr(self::URL, [
             '{hash}' => $this->getHash($user),
             '{size}' => $size
-        ));
+        ]);
     }
 
     /**

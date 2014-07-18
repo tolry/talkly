@@ -55,10 +55,10 @@ class UserController
         return new Response(
             $this->twig->render(
                 'user/profile.html.twig',
-                array(
+                [
                     'user' => $user,
                     'form' => $form->createView()
-                )
+                ]
             )
         );
     }
@@ -70,9 +70,7 @@ class UserController
         return new Response(
             $this->twig->render(
                 'user/notifications.html.twig',
-                array(
-                    'user' => $user,
-                )
+                ['user' => $user]
             )
         );
     }

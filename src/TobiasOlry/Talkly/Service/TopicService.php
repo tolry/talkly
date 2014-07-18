@@ -149,7 +149,7 @@ class TopicService
             $topic->getVotes()->toArray(),
             $topic->getCommentingUsers(),
             $topic->getSpeakers()->toArray(),
-            array($topic->getCreatedBy())
+            [$topic->getCreatedBy()]
         ));
     }
 

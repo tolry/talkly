@@ -39,17 +39,17 @@ class EmailTransport implements TransportInterface
 
         $html = $this->twig->render(
             'mail/notification.html.twig',
-            array(
+            [
                 'user'    => $user,
                 'message' => $message,
-            )
+            ]
         );
 
         $message = \Swift_Message::newInstance()
             ->setSubject('new notification')
             ->setBody($html, 'text/html')
-            ->setFrom(array($this->emailSender => 'Talkly Mailbot'))
-            ->setTo(array($user->getEmail() => (string) $user))
+            ->setFrom([$this->emailSender => 'Talkly Mailbot'])
+            ->setTo([$user->getEmail() => (string) $user])
         ;
 
         $this->mailer->send($message);

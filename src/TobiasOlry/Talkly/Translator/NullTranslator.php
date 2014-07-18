@@ -8,7 +8,7 @@ namespace TobiasOlry\Talkly\Translator;
 
 class NullTranslator
 {
-    public function trans($message, array $placeholders = array())
+    public function trans($message, array $placeholders = [])
     {
         return str_replace(
             array_keys($placeholders),

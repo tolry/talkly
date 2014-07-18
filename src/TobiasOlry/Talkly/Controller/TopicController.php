@@ -65,10 +65,10 @@ class TopicController
         return new Response(
             $this->twig->render(
                 'topic/show.html.twig',
-                array(
+                [
                     'topic' => $topic,
                     'form'  => $form->createView()
-                )
+                ]
             )
         );
     }
@@ -165,7 +165,7 @@ class TopicController
         if ($view == 'show') {
             $route = 'topic-show';
             $url = $this->urlGenerator
-                ->generate($route, array('id' => $topic->getId()));
+                ->generate($route, ['id' => $topic->getId()]);
         }
 
         return new RedirectResponse($url);

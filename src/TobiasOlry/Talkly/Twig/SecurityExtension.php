@@ -32,9 +32,9 @@ class SecurityExtension extends \Twig_Extension
      */
     public function getGlobals()
     {
-        return array(
+        return [
             'security' => $this->security
-        );
+        ];
     }
 
     /**
