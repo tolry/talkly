@@ -22,19 +22,31 @@
         <form action="{{ path('user-profile') }}" method="post" data-abide>
             {{ form_errors(form) }}
 
-                <dl>
-                    <dt>Username</dt>
-                    <dd>{{ user.username }}</dd>
+                <div class="row">
+                    <div class="columns small-6 medium-2">
+                        <img class="th" src="{{ gravatar(security.user, 96) }}" alt="">
+                    </div>
+                    <div class="columns small-6 medium-5">
+                        <dl>
+                            <dt>Username</dt>
+                            <dd>{{ user.username }}</dd>
+                        </dl>
+                    </div>
+                    <div class="columns small-6 medium-5">
+                        <dl>
+                            <dt>Activity</dt>
+                            <dd>
+                                <ul class="inline-list">
+                                    <li data-tooltip title="participated in talks"><span><i class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</span></li>
+                                    <li data-tooltip title="commented on topics"><span><i class="fa fa-comments-o"></i> {{ user.comments|length }}</span></li>
+                                    <li data-tooltip title="voted on topics"><span><i class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</span></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
 
-                    <dt>Activity</dt>
-                    <dd>
-                        <ul class="inline-list">
-                            <li data-tooltip title="participated in talks"><span><i class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</span></li>
-                            <li data-tooltip title="commented on topics"><span><i class="fa fa-comments-o"></i> {{ user.comments|length }}</span></li>
-                            <li data-tooltip title="voted on topics"><span><i class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</span></li>
-                        </ul>
-                    </dd>
-                </dl>
+                <hr/>
 
                 {{ form_row(form.name) }}
                 {{ form_row(form.email) }}
