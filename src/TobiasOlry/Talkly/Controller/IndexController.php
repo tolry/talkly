@@ -46,12 +46,12 @@ class IndexController
         return new Response(
             $this->twig->render(
                 'index/dashboard.html.twig',
-                array(
+                [
                     'topics'           => $topics,
                     'last_submissions' => $lastSubmissions,
                     'next_topics'      => $nextTopics,
                     'form'             => $form->createView(),
-                )
+                ]
             )
         );
     }
@@ -63,9 +63,7 @@ class IndexController
         return new Response(
             $this->twig->render(
                 'index/archive.html.twig',
-                array(
-                    'topics' => $topics,
-                )
+                ['topics' => $topics]
             )
         );
     }
@@ -77,9 +75,7 @@ class IndexController
         return new Response(
             $this->twig->render(
                 'index/calendar.html.twig',
-                array(
-                    'topics' => $topics,
-                )
+                ['topics' => $topics]
             )
         );
     }

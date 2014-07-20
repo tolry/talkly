@@ -18,16 +18,16 @@ class UserProfileType extends AbstractType
             $builder
                 ->add('email',               'email')
                 ->add('name',                'text')
-                ->add('notifyByEmail',       'checkbox', array('required' => false))
-                ->add('notifyInApplication', 'checkbox', array('required' => false))
+                ->add('notifyByEmail',       'checkbox', ['required' => false])
+                ->add('notifyInApplication', 'checkbox', ['required' => false])
             ;
         }
 
         public function setDefaultOptions(OptionsResolverInterface $resolver)
         {
-                $resolver->setDefaults(array(
+                $resolver->setDefaults([
                     'data_class' => 'TobiasOlry\Talkly\Entity\User'
-                ));
+                ]);
         }
 
         public function getName()

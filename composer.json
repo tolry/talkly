@@ -22,7 +22,8 @@
         "salavert/time-ago-in-words":            "~1.0",
         "timetoogo/pinq":                        "~2.1",
         "incenteev/composer-parameter-handler":  "~2.0",
-        "swiftmailer/swiftmailer": "@stable"
+        "swiftmailer/swiftmailer": "@stable",
+        "php": ">=5.4.0"
     },
     "autoload": {
         "psr-0": { "": "src/" }

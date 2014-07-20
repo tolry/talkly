@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a058c481d03d470210d13f2bbab950b0",
+    "hash": "a8313e4e3b37e04342ecafab5cf181d2",
     "packages": [
         {
             "name": "deralex/yaml-config-service-provider",
@@ -2758,9 +2758,9 @@
         "doctrine/migrations": 20,
         "swiftmailer/swiftmailer": 0
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": [
 
     ]

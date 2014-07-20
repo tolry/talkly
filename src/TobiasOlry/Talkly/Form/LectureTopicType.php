@@ -16,24 +16,24 @@ class LectureTopicType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lectureDate', 'date', array(
+            ->add('lectureDate', 'date', [
                 'widget'   => 'single_text',
                 'required' => false
-            ))
-            ->add('lectureNote', 'textarea', array(
+            ])
+            ->add('lectureNote', 'textarea', [
                 'required' => false
-            ))
-            ->add('lectureHeld', 'checkbox', array(
+            ])
+            ->add('lectureHeld', 'checkbox', [
                 'required' => false
-            ))
+            ])
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'TobiasOlry\Talkly\Entity\Topic'
-        ));
+        ]);
     }
 
     public function getName()
