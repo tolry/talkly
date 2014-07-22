@@ -14,7 +14,7 @@ class GravatarExtension extends \Twig_Extension
      *
      * @var string
      */
-    const URL = 'http://www.gravatar.com/avatar/{hash}?d=mm&s={size}';
+    const URL = '//www.gravatar.com/avatar/{hash}?d=mm&s={size}';
 
     /**
      *
