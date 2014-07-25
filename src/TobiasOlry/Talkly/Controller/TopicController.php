@@ -124,7 +124,7 @@ class TopicController
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture updated');
 
-        return $this->redirect($topic, $request->get('view', 'list'));
+        return $this->redirect($topic, 'show');
     }
 
     public function addSpeakerAction(Request $request)
