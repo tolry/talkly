@@ -19,6 +19,11 @@ class DatabaseTransport implements TransportInterface
 
     public function addNotification(User $user, $message)
     {
+        if (! $user->getNotifyInApplication()) {
+
+            return;
+        }
+
         $this->userService->addNotification($user, $message);
     }
 }
