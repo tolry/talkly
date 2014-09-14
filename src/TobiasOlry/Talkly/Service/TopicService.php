@@ -89,12 +89,19 @@ class TopicService
 
     public function addSpeaker(Topic $topic, User $user)
     {
-        if (!$topic->getSpeakers()->contains($user)) {
-            $topic->getSpeakers()->add($user);
-            $user->getSpeakingTopics()->add($topic);
+        if ($topic->getSpeakers()->contains($user)) {
+            return;
         }
 
+        $topic->getSpeakers()->add($user);
+        $user->getSpeakingTopics()->add($topic);
+
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_SPEAKER_FOUND,
+            new TopicEvent($topic)
+        );
     }
 
     public function removeSpeaker(Topic $topic, User $user)
@@ -114,7 +121,23 @@ class TopicService
 
         $this->eventDispatcher->dispatch(
             Events::COMMENT_CREATED,
-            new CommentEvent($comment, $comment->getCreatedBy())
+            new CommentEvent($comment)
+        );
+    }
+
+    public function markAsHeld(Topic $topic)
+    {
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_TALK_HELD,
+            new TopicEvent($topic)
+        );
+    }
+
+    public function markAsScheduled(Topic $topic)
+    {
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_TALK_SCHEDULED,
+            new TopicEvent($topic)
         );
     }
 
@@ -160,7 +183,7 @@ class TopicService
 
         $this->eventDispatcher->dispatch(
             Events::TOPIC_CREATED,
-            new TopicEvent($topic, $topic->getCreatedBy())
+            new TopicEvent($topic)
         );
     }
 

@@ -9,26 +9,32 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use TobiasOlry\Talkly\Service\TopicService;
 use TobiasOlry\Talkly\Service\UserService;
+use TobiasOlry\Talkly\Security\Security;
 
 use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\NotificationTransport\TransportInterface;
+
 use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\Talkly\Entity\Topic;
 
 class NotificationSubscriber implements EventSubscriberInterface
 {
     private $userService;
     private $topicService;
+    private $security;
 
     private $transports = [];
 
     public function __construct(
         UserService $userService,
-        TopicService $topicService
+        TopicService $topicService,
+        Security $security
     ) {
         $this->userService  = $userService;
         $this->topicService = $topicService;
+        $this->security     = $security;
     }
 
     public static function getSubscribedEvents()
@@ -36,9 +42,9 @@ class NotificationSubscriber implements EventSubscriberInterface
         return [
             Events::TOPIC_CREATED        => 'onTopicCreated',
             Events::COMMENT_CREATED      => 'onCommentCreated',
-            Events::TOPIC_ARCHIVED       => 'onTopicArchived',
             Events::TOPIC_TALK_SCHEDULED => 'onTalkScheduled',
             Events::TOPIC_SPEAKER_FOUND  => 'onSpeakerFound',
+            Events::TOPIC_TALK_HELD      => 'onTalkHeld',
         ];
     }
 
@@ -55,14 +61,7 @@ class NotificationSubscriber implements EventSubscriberInterface
             $event->getTopic()->getTitle()
         );
 
-        foreach ($this->userService->findAll() as $user) {
-            if ($event->getTopic()->getCreatedBy() == $user) {
-
-                continue;
-            }
-
-            $this->publish($user, $message);
-        }
+        $this->publishToEveryone($message);
     }
 
     public function onCommentCreated(CommentEvent $event)
@@ -74,30 +73,56 @@ class NotificationSubscriber implements EventSubscriberInterface
             $event->getComment()->getCreatedBy()
         );
 
-        foreach ($this->topicService->findAllParticipants($topic) as $user) {
-            if ($event->getActingUser() == $user) {
+        $this->publishToTopicSubscribers($topic, $message);
+    }
 
+    public function onSpeakerFound(TopicEvent $event)
+    {
+        $message = sprintf(
+            "We have a speaker for Topic #%d.",
+            $event->getTopic()->getId()
+        );
+
+        $this->publishToTopicSubscribers($event->getTopic(), $message);
+    }
+
+    public function onTalkScheduled(TopicEvent $event)
+    {
+        $message = sprintf(
+            "Topic #%d got scheduled for %s.",
+            $event->getTopic()->getId(),
+            $event->getTopic()->getLectureDate()->format('Y-m-d')
+        );
+
+        $this->publishToTopicSubscribers($event->getTopic(), $message);
+    }
+
+    public function onTalkHeld(TopicEvent $event)
+    {
+        $message = sprintf(
+            "Topic #%d was archived.",
+            $event->getTopic()->getId()
+        );
+
+        $this->publishToTopicSubscribers($event->getTopic(), $message);
+    }
+
+    private function publishToTopicSubscribers(Topic $topic, $message)
+    {
+        foreach ($this->topicService->findAllParticipants($topic) as $user) {
+            if ($this->security->getUser() == $user) {
                 continue;
             }
-
             $this->publish($user, $message);
         }
     }
 
-    public function onTopicArchived(TopicEvent $event)
+    private function publishToEveryone($message)
     {
-        $topic = $event->getTopic();
-        $message = sprintf(
-            "Topic #%d was archived.",
-            $topic->getId()
-        );
-
-        foreach ($this->topicService->findAllParticipants($topic) as $user) {
-            if ($event->getActingUser() == $user) {
-
+        foreach ($this->userService->findAll() as $user) {
+            if ($this->security->getUser() == $user) {
                 continue;
             }
-
             $this->publish($user, $message);
         }
     }

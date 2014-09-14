@@ -112,7 +112,8 @@ class TopicController
 
     public function archiveAction(Request $request)
     {
-        $topic = $this->topicService->getTopic($request->get('id'), $allowArchived = true);
+        $topic      = $this->topicService->getTopic($request->get('id'), $allowArchived = true);
+        $dateBefore = $topic->getLectureDate();
 
         $form = $this->formFactory->create(
             new LectureTopicType(),
@@ -123,6 +124,12 @@ class TopicController
         $this->topicService->update($topic);
 
         $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'lecture updated');
+
+        if ($topic->isLectureHeld()) {
+            $this->topicService->markAsHeld($topic);
+        } elseif ($dateBefore != $topic->getLectureDate()) {
+            $this->topicService->markAsScheduled($topic);
+        }
 
         return $this->redirect($topic, 'show');
     }

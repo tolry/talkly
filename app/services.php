@@ -46,7 +46,8 @@ $app['service.eventsubscriber'] = $app->share(
     function () use ($app) {
         $subscriber = new NotificationSubscriber(
             $app['service.user'],
-            $app['service.topic']
+            $app['service.topic'],
+            $app['security.token']
         );
 
         $subscriber->addTransport($app['service.notificationtransport.email']);

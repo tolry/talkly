@@ -12,21 +12,14 @@ use Symfony\Component\EventDispatcher\Event;
 class CommentEvent extends Event
 {
     private $comment;
-    private $actingUser;
 
-    public function __construct(Comment $comment, User $actingUser)
+    public function __construct(Comment $comment)
     {
         $this->comment    = $comment;
-        $this->actingUser = $actingUser;
     }
 
     public function getComment()
     {
         return $this->comment;
-    }
-
-    public function getActingUser()
-    {
-        return $this->actingUser;
     }
 }

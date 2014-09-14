@@ -12,21 +12,14 @@ use Symfony\Component\EventDispatcher\Event;
 class TopicEvent extends Event
 {
     private $topic;
-    private $actingUser;
 
-    public function __construct(Topic $topic, User $actingUser)
+    public function __construct(Topic $topic)
     {
         $this->topic = $topic;
-        $this->actingUser = $actingUser;
     }
 
     public function getTopic()
     {
         return $this->topic;
-    }
-
-    public function getActingUser()
-    {
-        return $this->actingUser;
     }
 }
