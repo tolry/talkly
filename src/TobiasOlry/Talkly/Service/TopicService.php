@@ -114,7 +114,7 @@ class TopicService
 
         $this->eventDispatcher->dispatch(
             Events::COMMENT_CREATED,
-            new CommentEvent($comment)
+            new CommentEvent($comment, $comment->getCreatedBy())
         );
     }
 
@@ -160,7 +160,7 @@ class TopicService
 
         $this->eventDispatcher->dispatch(
             Events::TOPIC_CREATED,
-            new TopicEvent($topic)
+            new TopicEvent($topic, $topic->getCreatedBy())
         );
     }
 

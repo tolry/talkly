@@ -24,10 +24,9 @@ class NotificationSubscriber implements EventSubscriberInterface
     private $transports = [];
 
     public function __construct(
-        UserService  $userService,
+        UserService $userService,
         TopicService $topicService
-    )
-    {
+    ) {
         $this->userService  = $userService;
         $this->topicService = $topicService;
     }
@@ -35,8 +34,11 @@ class NotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::TOPIC_CREATED   => 'onTopicCreated',
-            Events::COMMENT_CREATED => 'onCommentCreated',
+            Events::TOPIC_CREATED        => 'onTopicCreated',
+            Events::COMMENT_CREATED      => 'onCommentCreated',
+            Events::TOPIC_ARCHIVED       => 'onTopicArchived',
+            Events::TOPIC_TALK_SCHEDULED => 'onTalkScheduled',
+            Events::TOPIC_SPEAKER_FOUND  => 'onSpeakerFound',
         ];
     }
 
@@ -73,7 +75,25 @@ class NotificationSubscriber implements EventSubscriberInterface
         );
 
         foreach ($this->topicService->findAllParticipants($topic) as $user) {
-            if ($event->getComment()->getCreatedBy() == $user) {
+            if ($event->getActingUser() == $user) {
+
+                continue;
+            }
+
+            $this->publish($user, $message);
+        }
+    }
+
+    public function onTopicArchived(TopicEvent $event)
+    {
+        $topic = $event->getTopic();
+        $message = sprintf(
+            "Topic #%d was archived.",
+            $topic->getId()
+        );
+
+        foreach ($this->topicService->findAllParticipants($topic) as $user) {
+            if ($event->getActingUser() == $user) {
 
                 continue;
             }
@@ -89,4 +109,3 @@ class NotificationSubscriber implements EventSubscriberInterface
         }
     }
 }
-
