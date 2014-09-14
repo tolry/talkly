@@ -11,7 +11,7 @@
     </li>
 
     <li class="{{ topic.speakers|length > 0 ? 'text-highlight' : '' }}">
-        <span><i class="fa fa-microphone"></i> {{ topic.speakers|join(', ') }}</span>
+        <span><i class="fa fa-microphone"></i> {{ topic.speakers|default(['no speaker yet'])|join(', ') }}</span>
     </li>
 
     {% if topic.lectureDate %}
