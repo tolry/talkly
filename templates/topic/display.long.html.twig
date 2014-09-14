@@ -25,6 +25,12 @@
             <p>{{ markdown(topic.lectureNote) }}</p>
         </div>
     {% endif %}
+
+    <div class="one-line quiet">
+        <img src="{{ gravatar(topic.createdBy, 16) }}" alt="" class="th" />
+        <strong>{{ topic.createdBy }}</strong>
+        <span data-tooltip title="{{ topic.createdAt|date('Y-m-d H:i:s') }}" class="quiet"><i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}</span>
+    </div>
     <div class="markdown">{{ markdown(topic.description) }}</div>
 
     {% if not topic.lectureHeld %}

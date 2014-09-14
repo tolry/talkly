@@ -11,7 +11,10 @@
         <h3><i class="fa fa-calendar"></i> Upcoming Talks</h3><hr>
 
         {% for topic in next_topics %}
-        <div class="quiet">{{ topic.lectureDate|date("Y-m-d") }}</div>
+        <div class="quiet one-line">
+            <i class="fa fa-clock-o"></i> {{ topic.lectureDate|date("Y-m-d") }}
+            <i class="fa fa-microphone"></i> {{ topic.speakers|join(", ") }}
+        </div>
         <h5 class="one-line">
             <a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a>
         </h5><br />

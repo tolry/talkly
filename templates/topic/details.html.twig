@@ -1,8 +1,4 @@
 <ul class="inline-list">
-    <li><span><i class="fa fa-user"></i> <em>{{ topic.createdBy }}</em></span></li>
-    <li data-tooltip title="{{ topic.createdAt|date('Y-m-d H:i:s') }}"><span><i class="fa fa-clock-o"></i> {{ topic.createdAt|time_ago_in_words }}</span></li>
-</ul>
-<ul class="inline-list">
     <li
         data-tooltip title="{% if topic.votes|length %}{{ topic.votes|join(', ') }}{% else %}no votes{% endif %}"
         class="{{ topic.votes|length > 4 ? 'text-highlight' : '' }}"
@@ -10,15 +6,12 @@
         <span><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}</span>
     </li>
 
-    <li
-        class="{{ topic.comments|length > 4 ? 'text-highlight' : '' }}"
-    >
-        <span><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</span></li>
-    <li
-        data-tooltip title="{% if topic.speakers|length %}{{ topic.speakers|join(', ') }}{% else %}no speakers{% endif %}"
-        class="{{ topic.speakers|length > 0 ? 'text-highlight' : '' }}"
-    >
-        <span><i class="fa fa-microphone"></i> {{ topic.speakers|length }}</span>
+    <li class="{{ topic.comments|length > 4 ? 'text-highlight' : '' }}">
+        <span><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</span>
+    </li>
+
+    <li class="{{ topic.speakers|length > 0 ? 'text-highlight' : '' }}">
+        <span><i class="fa fa-microphone"></i> {{ topic.speakers|join(', ') }}</span>
     </li>
 
     {% if topic.lectureDate %}
