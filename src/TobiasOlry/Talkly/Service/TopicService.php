@@ -10,7 +10,7 @@ use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\Talkly\Event\CommentEvent;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHtppException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Doctrine\ORM\EntityManager;
 
@@ -32,6 +32,13 @@ class TopicService
         $this->topicRepository = $em->getRepository('TobiasOlry\Talkly\Entity\Topic');
     }
 
+    public function checkUserCanEditTopic(Topic $topic, User $user)
+    {
+        if ($topic->getCreatedBy() != $user) {
+            throw new AccessDeniedHttpException();
+        }
+    }
+
     public function getTopic($id, $allowArchived = false)
     {
         if (empty($id)) {
@@ -45,7 +52,7 @@ class TopicService
         }
 
         if (! $allowArchived && $topic->isLectureHeld()) {
-            // throw new AccessDeniedHtppException();
+            // throw new AccessDeniedHttpException();
         }
 
         return $topic;
@@ -122,6 +129,14 @@ class TopicService
         $this->eventDispatcher->dispatch(
             Events::COMMENT_CREATED,
             new CommentEvent($comment)
+        );
+    }
+
+    public function markAsUpdated(Topic $topic)
+    {
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_TALK_UPDATED,
+            new TopicEvent($topic)
         );
     }
 
