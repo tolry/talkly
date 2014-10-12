@@ -77,6 +77,7 @@ class TopicController
     public function editAction(Request $request)
     {
         $topic = $this->topicService->getTopic($request->get('id'));
+        $this->topicService->checkUserCanEditTopic($topic, $this->security->getUser());
 
         $form = $this->formFactory->create(
             new EditTopicType(),
