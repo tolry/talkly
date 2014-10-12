@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
+use TobiasOlry\Talkly\Form\EditTopicType;
 use TobiasOlry\Talkly\Form\LectureTopicType;
 
 use TobiasOlry\Talkly\Security\Security;
@@ -65,6 +66,35 @@ class TopicController
         return new Response(
             $this->twig->render(
                 'topic/show.html.twig',
+                [
+                    'topic' => $topic,
+                    'form'  => $form->createView()
+                ]
+            )
+        );
+    }
+
+    public function editAction(Request $request)
+    {
+        $topic = $this->topicService->getTopic($request->get('id'));
+
+        $form = $this->formFactory->create(
+            new EditTopicType(),
+            $topic
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->topicService->update($topic);
+            $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'topic data updated');
+
+            return $this->redirect($topic, $request->get('view', 'list'));
+        }
+
+        return new Response(
+            $this->twig->render(
+                'topic/edit.html.twig',
                 [
                     'topic' => $topic,
                     'form'  => $form->createView()

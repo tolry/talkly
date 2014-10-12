@@ -46,6 +46,11 @@ $app
 ;
 
 $app
+    ->match('/topic/{id}/edit', 'topic.controller:editAction')
+    ->bind('topic-edit')
+;
+
+$app
     ->get('/topic/{id}/add-speaker', 'topic.controller:addSpeakerAction')
     ->bind('topic-add-speaker')
 ;
