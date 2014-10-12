@@ -87,6 +87,7 @@ class TopicController
 
         if ($form->isValid()) {
             $this->topicService->update($topic);
+            $this->topicService->markAsUpdated($topic);
             $request->getSession()->getFlashBag()->add('topic-' . $topic->getId() . '-success', 'topic data updated');
 
             return $this->redirect($topic, $request->get('view', 'list'));

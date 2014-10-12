@@ -125,6 +125,14 @@ class TopicService
         );
     }
 
+    public function markAsUpdated(Topic $topic)
+    {
+        $this->eventDispatcher->dispatch(
+            Events::TOPIC_TALK_UPDATED,
+            new TopicEvent($topic)
+        );
+    }
+
     public function markAsHeld(Topic $topic)
     {
         $this->eventDispatcher->dispatch(

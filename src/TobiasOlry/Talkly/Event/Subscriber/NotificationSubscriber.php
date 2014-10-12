@@ -64,6 +64,17 @@ class NotificationSubscriber implements EventSubscriberInterface
         $this->publishToEveryone($message);
     }
 
+    public function onTopicUpdated(TopicEvent $event)
+    {
+        $message = sprintf(
+            "Information on Topic #%d have been updated",
+            $event->getTopic()->getId(),
+            $event->getTopic()->getTitle()
+        );
+
+        $this->publishToTopicSubscribers($topic, $message);
+    }
+
     public function onCommentCreated(CommentEvent $event)
     {
         $topic   = $event->getComment()->getTopic();
