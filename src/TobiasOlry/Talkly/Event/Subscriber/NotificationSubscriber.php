@@ -14,6 +14,7 @@ use TobiasOlry\Talkly\Security\Security;
 use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
+use TobiasOlry\Talkly\Event\NotificationMessage;
 use TobiasOlry\Talkly\Event\NotificationTransport\TransportInterface;
 
 use TobiasOlry\Talkly\Entity\User;
@@ -41,6 +42,7 @@ class NotificationSubscriber implements EventSubscriberInterface
     {
         return [
             Events::TOPIC_CREATED        => 'onTopicCreated',
+            Events::TOPIC_UPDATED        => 'onTopicUpdated',
             Events::COMMENT_CREATED      => 'onCommentCreated',
             Events::TOPIC_TALK_SCHEDULED => 'onTalkScheduled',
             Events::TOPIC_SPEAKER_FOUND  => 'onSpeakerFound',
@@ -55,10 +57,9 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public function onTopicCreated(TopicEvent $event)
     {
-        $message = sprintf(
-            "New Topic #%d created",
-            $event->getTopic()->getId(),
-            $event->getTopic()->getTitle()
+        $message = NotificationMessage::create(
+            sprintf("New Topic #%d was created by %s", $event->getTopic()->getId(), $this->security->getUser()),
+            $event->getTopic()->getDescription()
         );
 
         $this->publishToEveryone($message);
@@ -66,22 +67,20 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public function onTopicUpdated(TopicEvent $event)
     {
-        $message = sprintf(
-            "Information on Topic #%d have been updated",
-            $event->getTopic()->getId(),
-            $event->getTopic()->getTitle()
+        $message = NotificationMessage::create(
+            sprintf("Information on Topic #%d has been updated by %s", $event->getTopic()->getId(), $this->security->getUser()),
+            $event->getTopic()->getDescription()
         );
 
-        $this->publishToTopicSubscribers($topic, $message);
+        $this->publishToTopicSubscribers($event->getTopic(), $message);
     }
 
     public function onCommentCreated(CommentEvent $event)
     {
         $topic   = $event->getComment()->getTopic();
-        $message = sprintf(
-            "New Comment on Topic #%d by %s",
-            $topic->getId(),
-            $event->getComment()->getCreatedBy()
+        $message = NotificationMessage::create(
+            sprintf("New Comment on Topic #%d by %s", $topic->getId(), $event->getComment()->getCreatedBy()),
+            $event->getComment()->getCommentText()
         );
 
         $this->publishToTopicSubscribers($topic, $message);
@@ -89,9 +88,9 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public function onSpeakerFound(TopicEvent $event)
     {
-        $message = sprintf(
-            "We have a speaker for Topic #%d.",
-            $event->getTopic()->getId()
+        $message = NotificationMessage::create(
+            sprintf("We have a speaker for topic #%d.", $event->getTopic()->getId()),
+            "new speaker: " . $this->security->getUser()
         );
 
         $this->publishToTopicSubscribers($event->getTopic(), $message);
@@ -99,10 +98,9 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public function onTalkScheduled(TopicEvent $event)
     {
-        $message = sprintf(
-            "Topic #%d got scheduled for %s.",
-            $event->getTopic()->getId(),
-            $event->getTopic()->getLectureDate()->format('Y-m-d')
+        $message = NotificationMessage::create(
+            sprintf("Topic #%d got scheduled for %s.", $event->getTopic()->getId(), $event->getTopic()->getLectureDate()->format('Y-m-d')),
+            "Talk was scheduled by " . $this->security->getUser()
         );
 
         $this->publishToTopicSubscribers($event->getTopic(), $message);
@@ -110,15 +108,15 @@ class NotificationSubscriber implements EventSubscriberInterface
 
     public function onTalkHeld(TopicEvent $event)
     {
-        $message = sprintf(
-            "Topic #%d was archived.",
-            $event->getTopic()->getId()
+        $message = NotificationMessage::create(
+            sprintf("Topic #%d was archivedi by %s.", $event->getTopic()->getId(), $this->security->getUser()),
+            $event->getTopic()->getLectureNote()
         );
 
         $this->publishToTopicSubscribers($event->getTopic(), $message);
     }
 
-    private function publishToTopicSubscribers(Topic $topic, $message)
+    private function publishToTopicSubscribers(Topic $topic, NotificationMessage $message)
     {
         foreach ($this->topicService->findAllParticipants($topic) as $user) {
             if ($this->security->getUser() == $user) {
@@ -128,7 +126,7 @@ class NotificationSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function publishToEveryone($message)
+    private function publishToEveryone(NotificationMessage $message)
     {
         foreach ($this->userService->findAll() as $user) {
             if ($this->security->getUser() == $user) {
@@ -138,7 +136,7 @@ class NotificationSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function publish(User $user, $message)
+    private function publish(User $user, NotificationMessage $message)
     {
         foreach ($this->transports as $transport) {
             $transport->addNotification($user, $message);

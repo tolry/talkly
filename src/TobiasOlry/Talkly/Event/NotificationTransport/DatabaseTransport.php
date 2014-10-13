@@ -7,6 +7,7 @@ namespace TobiasOlry\Talkly\Event\NotificationTransport;
 
 use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Service\UserService;
+use TobiasOlry\Talkly\Event\NotificationMessage;
 
 class DatabaseTransport implements TransportInterface
 {
@@ -17,14 +18,13 @@ class DatabaseTransport implements TransportInterface
         $this->userService = $userService;
     }
 
-    public function addNotification(User $user, $message)
+    public function addNotification(User $user, NotificationMessage $message)
     {
         if (! $user->getNotifyInApplication()) {
 
             return;
         }
 
-        $this->userService->addNotification($user, $message);
+        $this->userService->addNotification($user, $message->subject);
     }
 }
-
