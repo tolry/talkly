@@ -6,9 +6,10 @@
 namespace TobiasOlry\Talkly\Event\NotificationTransport;
 
 use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\Talkly\Event\NotificationMessage;
 
 interface TransportInterface
 {
-    function addNotification(User $user, $message);
+    public function addNotification(User $user, NotificationMessage $message);
 }
 

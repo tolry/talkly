@@ -7,6 +7,7 @@ namespace TobiasOlry\Talkly\Event\NotificationTransport;
 
 use \Swift_Mailer;
 use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\Talkly\Event\NotificationMessage;
 
 class EmailTransport implements TransportInterface
 {
@@ -18,41 +19,33 @@ class EmailTransport implements TransportInterface
         Swift_Mailer $mailer,
         \Twig_Environment $twig,
         $emailSender
-    )
-    {
+    ) {
         $this->mailer      = $mailer;
         $this->twig        = $twig;
         $this->emailSender = $emailSender;
     }
 
-    public function addNotification(User $user, $message)
+    public function addNotification(User $user, NotificationMessage $message)
     {
         if (! $user->getNotifyByEmail()) {
-
             return;
         }
 
         if (! $user->getEmail()) {
-
             return;
         }
 
         $html = $this->twig->render(
             'mail/notification.html.twig',
-            [
-                'user'    => $user,
-                'message' => $message,
-            ]
+            ['user' => $user, 'message' => $message]
         );
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('new notification')
+            ->setSubject('[talkly] ' . $message->subject)
             ->setBody($html, 'text/html')
             ->setFrom([$this->emailSender => 'Talkly Mailbot'])
-            ->setTo([$user->getEmail() => (string) $user])
-        ;
+            ->setTo([$user->getEmail() => (string) $user]);
 
         $this->mailer->send($message);
     }
 }
-

@@ -135,7 +135,7 @@ class TopicService
     public function markAsUpdated(Topic $topic)
     {
         $this->eventDispatcher->dispatch(
-            Events::TOPIC_TALK_UPDATED,
+            Events::TOPIC_UPDATED,
             new TopicEvent($topic)
         );
     }
