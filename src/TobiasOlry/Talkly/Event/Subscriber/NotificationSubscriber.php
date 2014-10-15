@@ -109,7 +109,7 @@ class NotificationSubscriber implements EventSubscriberInterface
     public function onTalkHeld(TopicEvent $event)
     {
         $message = NotificationMessage::create(
-            sprintf("Topic #%d was archivedi by %s.", $event->getTopic()->getId(), $this->security->getUser()),
+            sprintf("Topic #%d was archived by %s.", $event->getTopic()->getId(), $this->security->getUser()),
             $event->getTopic()->getLectureNote()
         );
 
