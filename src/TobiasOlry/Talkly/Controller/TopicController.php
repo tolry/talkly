@@ -2,18 +2,18 @@
 
 namespace TobiasOlry\Talkly\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManager;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
 use TobiasOlry\Talkly\Form\EditTopicType;
 use TobiasOlry\Talkly\Form\LectureTopicType;
-
 use TobiasOlry\Talkly\Security\Security;
+use TobiasOlry\Talkly\Service\TopicService;
 
 class TopicController
 {
@@ -24,9 +24,9 @@ class TopicController
     private $topicService;
 
     public function __construct(
-        $topicService,
-        $formFactory,
-        $urlGenerator,
+        TopicService $topicService,
+        FormFactoryInterface $formFactory,
+        UrlGenerator $urlGenerator,
         \Twig_Environment $twig,
         Security $security
     ) {
@@ -198,22 +198,13 @@ class TopicController
             $route = 'archive';
         }
 
-        $url = $this->urlGenerator->generate($route)
-            . '#topic-' . $topic->getId();
+        $url = $this->urlGenerator->generate($route) . '#topic-' . $topic->getId();
 
         if ($view == 'show') {
             $route = 'topic-show';
-            $url = $this->urlGenerator
-                ->generate($route, ['id' => $topic->getId()]);
+            $url   = $this->urlGenerator->generate($route, ['id' => $topic->getId()]);
         }
 
         return new RedirectResponse($url);
-    }
-
-    private function talklyJsonResponse($statusCode, $action, array $data)
-    {
-        $data['action'] = $action;
-
-        return new JsonResponse($data, $statusCode);
     }
 }

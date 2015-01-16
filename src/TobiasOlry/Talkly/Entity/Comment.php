@@ -6,31 +6,33 @@
 
 namespace TobiasOlry\Talkly\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Table
- * @Entity
+ * @ORM\Table()
+ * @ORM\Entity()
  */
 class Comment
 {
     /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Topic", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="comments")
      */
     private $topic;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
      */
     private $createdBy;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -38,12 +40,12 @@ class Comment
      * true, if comment was written after
      * the lecture was already held
      *
-     * @Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $feedback;
 
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     private $commentText;
 
@@ -101,5 +103,4 @@ class Comment
     {
         $this->feedback = true;
     }
-
 }

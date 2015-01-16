@@ -4,14 +4,15 @@ namespace TobiasOlry\Talkly\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use TobiasOlry\Talkly\Security\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  *
  * @author David Badura <d.a.badura@gmail.com>
  * @author Tobias Olry <tobias.olry@gmail.com>
  *
- * @Entity
- * @Table(name="UserProfil")
+ * @ORM\Entity()
+ * @ORM\Table(name="UserProfil")
  */
 class User implements UserInterface
 {
@@ -19,74 +20,77 @@ class User implements UserInterface
     /**
      * @var int
      *
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
     protected $id;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $username;
 
     /**
      * @var string
      *
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
      * @var boolean
      *
-     * @Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $notifyByEmail;
 
     /**
      * @var boolean
      *
-     * @Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $notifyInApplication;
 
     /**
      * @var string
      *
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $email;
 
     /**
+     * @var ArrayCollection|Notification[]
      *
-     * @OneToMany(targetEntity="Notification", mappedBy="user", cascade="all")
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user", cascade="all")
      */
     protected $notifications;
 
     /**
+     * @var ArrayCollection|Comment[]
      *
-     * @OneToMany(targetEntity="Comment", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="createdBy")
      */
     protected $comments;
 
     /**
+     * @var ArrayCollection|Topic[]
      *
-     * @OneToMany(targetEntity="Topic", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="Topic", mappedBy="createdBy")
      */
     protected $topics;
 
     /**
      *
-     * @ManyToMany(targetEntity="Topic", mappedBy="speakers")
+     * @ORM\ManyToMany(targetEntity="Topic", mappedBy="speakers")
      */
     protected $speakingTopics;
 
     /**
      *
-     * @ManyToMany(targetEntity="Topic", mappedBy="votes")
+     * @ORM\ManyToMany(targetEntity="Topic", mappedBy="votes")
      */
     protected $votes;
 
@@ -103,6 +107,7 @@ class User implements UserInterface
         $this->lectures       = new ArrayCollection();
         $this->votes          = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
+        $this->notifications  = new ArrayCollection();
 
         $this->notifyByEmail       = false;
         $this->notifyInApplication = true;
@@ -163,7 +168,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return Notifications[]
+     * @return Notification[]
      */
     public function getNotifications()
     {
@@ -171,11 +176,11 @@ class User implements UserInterface
     }
 
     /**
-     * @return Notifications[]
+     * @return Notification[]
      */
     public function getUnreadNotifications()
     {
-        return $this->notifications->filter(function($notification) {
+        return $this->notifications->filter(function(Notification $notification) {
             return ! $notification->isDone();
         });
     }

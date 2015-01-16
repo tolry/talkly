@@ -1,16 +1,20 @@
 <?php
 namespace TobiasOlry\Talkly\Controller;
 
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\NotFoundHttpException;
-
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use TobiasOlry\Talkly\Form\UserProfileType;
+use TobiasOlry\Talkly\Security\Security;
+use TobiasOlry\Talkly\Service\UserService;
 
 /*
  * @author Tobias Olry <olry@gmail.com>
  */
+
 class UserController
 {
     private $formFactory;
@@ -20,11 +24,11 @@ class UserController
     private $userService;
 
     public function __construct(
-        $userService,
-        $formFactory,
-        $urlGenerator,
+        UserService $userService,
+        FormFactoryInterface $formFactory,
+        UrlGenerator $urlGenerator,
         \Twig_Environment $twig,
-        $security
+        Security $security
     ) {
         $this->userService  = $userService;
         $this->formFactory  = $formFactory;
@@ -78,7 +82,7 @@ class UserController
     private function getNotification($id)
     {
         $notifications = $this->security->getUser()->getUnreadNotifications();
-        foreach ( $notifications as $notification) {
+        foreach ($notifications as $notification) {
             if ($notification->getId() == $id) {
 
                 return $notification;
@@ -112,7 +116,6 @@ class UserController
         $url = $this->urlGenerator->generate('user-notifications');
 
         return new RedirectResponse($url);
-
     }
 }
 

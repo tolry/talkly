@@ -6,36 +6,37 @@
 
 namespace TobiasOlry\Talkly\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 /**
- * @Table
- * @Entity
+ * @ORM\Table()
+ * @ORM\Entity()
  */
 class Notification
 {
     /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="notifications")
      */
     private $user;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     private $message;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $done;
 
