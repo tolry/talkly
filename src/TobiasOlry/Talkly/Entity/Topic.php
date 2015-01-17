@@ -5,75 +5,76 @@
 namespace TobiasOlry\Talkly\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity(repositoryClass="TobiasOlry\Talkly\Repository\TopicRepository")
- * @Table
+ * @ORM\Entity(repositoryClass="TobiasOlry\Talkly\Repository\TopicRepository")
+ * @ORM\Table()
  */
 class Topic
 {
     /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="topics")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
      */
     private $createdBy;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
-     * @Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $title;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ManyToMany(targetEntity="User", inversedBy="votes")
-     * @JoinTable(name="vote")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="votes")
+     * @ORM\JoinTable(name="vote")
      */
     private $votes;
 
     /**
-     * @OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
      */
     private $comments;
 
     /**
-     * @ManyToMany(targetEntity="User", inversedBy="speakingTopics")
-     * @JoinTable(name="speaker")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="speakingTopics")
+     * @ORM\JoinTable(name="speaker")
      */
     private $speakers;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $lectureNote;
 
     /**
-     * @Column(type="date", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $lectureDate;
 
     /**
      *
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $lectureHeld;
 
@@ -154,7 +155,7 @@ class Topic
      */
     public function getComments()
     {
-        return $this->comments->filter(function($comment) {
+        return $this->comments->filter(function(Comment $comment) {
             return ! $comment->isFeedback();
         });
     }
@@ -164,7 +165,7 @@ class Topic
      */
     public function getFeedbackComments()
     {
-        return $this->comments->filter(function($comment) {
+        return $this->comments->filter(function(Comment $comment) {
             return $comment->isFeedback();
         });
     }

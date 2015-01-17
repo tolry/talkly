@@ -39,6 +39,12 @@ class TopicService
         }
     }
 
+    /**
+     * @param int  $id
+     * @param bool $allowArchived
+     *
+     * @return null|Topic
+     */
     public function getTopic($id, $allowArchived = false)
     {
         if (empty($id)) {

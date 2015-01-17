@@ -20,15 +20,15 @@ $app->register(new DoctrineServiceProvider, array(
 $app->register(new DoctrineOrmServiceProvider, array(
     "orm.proxies_dir" => __DIR__ . '/cache/doctrine/orm/proxies',
     "orm.em.options"  => array(
-        "mappings" => array(
-            // Using actual filesystem paths
-            array(
-                "type"            => "annotation",
-                "namespace"       => "TobiasOlry\\Talkly\\Entity",
-                "path"            => __DIR__."/../src/TobiasOlry/Talkly/Entity",
-                "naming_strategy" => "doctrine.orm.naming_strategy.underscore",
-            ),
-        ),
+        "mappings" => [
+            [
+                "type"                         => "annotation",
+                "use_simple_annotation_reader" => false,
+                "namespace"                    => "TobiasOlry\\Talkly\\Entity",
+                "path"                         => __DIR__ . "/../src/TobiasOlry/Talkly/Entity",
+                "naming_strategy"              => "doctrine.orm.naming_strategy.underscore",
+            ],
+        ],
     ),
 ));
 

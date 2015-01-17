@@ -2,14 +2,13 @@
 
 namespace TobiasOlry\Talkly\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManager;
-
+use Symfony\Component\HttpFoundation\Response;
 use TobiasOlry\Talkly\Entity\Topic;
 use TobiasOlry\Talkly\Form\CreateTopicType;
-
 use TobiasOlry\Talkly\Security\Security;
+use TobiasOlry\Talkly\Service\TopicService;
 
 class IndexController
 {
@@ -20,9 +19,9 @@ class IndexController
 
     public function __construct(
         \Twig_Environment $twig,
-        $formFactory,
+        FormFactoryInterface $formFactory,
         Security $security,
-        $topicService
+        TopicService $topicService
     ) {
         $this->twig         = $twig;
         $this->formFactory  = $formFactory;
@@ -36,8 +35,6 @@ class IndexController
             new CreateTopicType(),
             new Topic($this->security->getUser())
         );
-
-
 
         $topics          = $this->topicService->findNonArchivedMostVotesFirst();
         $lastSubmissions = $this->topicService->findLastSubmissions($limit = 5);
