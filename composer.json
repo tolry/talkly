@@ -1,32 +1,29 @@
 {
     "require": {
-        "silex/silex":                           "~1.2",
-        "symfony/form":                          "~2.5",
-        "symfony/validator":                     "~2.5",
-        "symfony/config":                        "~2.5",
-        "symfony/translation":                   "~2.5",
-        "symfony/yaml":                          "~2.5",
-        "symfony/console":                       "~2.5",
-
-        "monolog/monolog":                       "~1.0",
-
-        "twig/twig":                             "~1.15",
-        "symfony/twig-bridge":                   "~2.5",
+        "silex/silex": "~1.2",
+        "symfony/form": "~2.5",
+        "symfony/validator": "~2.5",
+        "symfony/config": "~2.5",
+        "symfony/translation": "~2.5",
+        "symfony/yaml": "~2.5",
+        "symfony/console": "~2.5",
+        "monolog/monolog": "~1.0",
+        "twig/twig": "~1.15",
+        "symfony/twig-bridge": "~2.5",
         "dflydev/doctrine-orm-service-provider": "~1.0.4",
-        "deralex/yaml-config-service-provider":  "1.0.x-dev",
-        "silex/web-profiler":                    "~1.0",
-        "symfony/doctrine-bridge":               "~2.5",
-        "doctrine/migrations":                   "dev-master",
-
-        "kzykhys/ciconia":                       "~1.0.0",
-        "salavert/time-ago-in-words":            "~1.0",
-        "timetoogo/pinq":                        "~2.1",
-        "incenteev/composer-parameter-handler":  "~2.0",
+        "deralex/yaml-config-service-provider": "1.0.x-dev",
+        "silex/web-profiler": "~1.0",
+        "symfony/doctrine-bridge": "~2.5",
+        "doctrine/migrations": "dev-master",
+        "kzykhys/ciconia": "~1.0.0",
+        "salavert/time-ago-in-words": "~1.0",
+        "timetoogo/pinq": "~2.1",
+        "incenteev/composer-parameter-handler": "~2.0",
         "swiftmailer/swiftmailer": "@stable",
         "php": ">=5.4.0"
     },
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": {"": "src/"}
     },
     "scripts": {
         "post-install-cmd": [
@@ -38,7 +35,7 @@
     },
     "extra": {
         "incenteev-parameters": {
-            "file":      "app/config/config.yml",
+            "file": "app/config/config.yml",
             "dist-file": "app/config/config.dist.yml"
         }
     },
