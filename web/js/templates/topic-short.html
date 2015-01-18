@@ -1,0 +1,71 @@
+<div id="topic-{{ topic.id }}" class="clearfix highlight-target">
+
+    <div class="right" ng-if="!topic.lectureHeld">
+        <!--{% if topic.createdBy == security.user %}-->
+        <!--<a class="button tiny radius secondary"-->
+        <!--href="{{ path('topic-edit', {id: topic.id, view: view|default('list')}) }}">-->
+        <!--edit-->
+        <!--</a>-->
+        <!--{% endif %}-->
+
+        <!--{% if topic.votes.contains(security.user) %}-->
+        <!--<a data-tooltip title="retract your vote" class="button tiny radius"-->
+        <!--href="{{ path('topic-retract-vote', {id: topic.id, view: view|default('list')}) }}">-->
+        <!--<i class="fa fa-thumbs-up"></i>-->
+        <!--</a>-->
+        <!--{% else %}-->
+        <!--<a data-tooltip title="vote" class="button tiny radius secondary"-->
+        <!--href="{{ path('topic-cast-vote', {id: topic.id, view: view|default('list')}) }}">-->
+        <!--<i class="fa fa-thumbs-up"></i>-->
+        <!--</a>-->
+        <!--{% endif %}-->
+
+
+        <!--{% if topic.speakers.contains(security.user) %}-->
+        <!--<a data-tooltip title="unregister as speaker" class="button tiny radius"-->
+        <!--href="{{ path('topic-remove-speaker', {id: topic.id, view: view|default('list')}) }}">-->
+        <!--<i class="fa fa-microphone"></i>-->
+        <!--</a>-->
+        <!--{% else %}-->
+        <!--<a data-tooltip title="register as speaker" class="button tiny radius secondary"-->
+        <!--href="{{ path('topic-add-speaker', {id: topic.id, view: view|default('list')}) }}">-->
+        <!--<i class="fa fa-microphone"></i>-->
+        <!--</a>-->
+        <!--{% endif %}-->
+
+    </div>
+
+    <h4 class="one-line" data-tooltip title="{{ topic.title }}">
+        <a ng-href="{{topic._links.self.show}}">
+            {{ topic.title }}
+        </a>
+    </h4>
+
+    <div class="quiet">
+        <ul class="inline-list">
+            <li data-tooltip
+                title="{{  topic.votes.length ? topic.votes.join(', ') : 'no votes' }}"
+                class="{{ topic.votes.length > 4 ? 'text-highlight' : '' }}">
+                <span><i class="fa fa-thumbs-o-up"></i> {{ topic.votes.length }}</span>
+            </li>
+
+            <li class="{{ topic.comments_count > 4 ? 'text-highlight' : '' }}">
+                <span><i class="fa fa-comments-o"></i> {{ topic.comment_count }}</span>
+            </li>
+
+            <li class="{{ topic.speakers.length > 0 ? 'text-highlight' : '' }}">
+                <span>
+                    <i class="fa fa-microphone"></i>
+                    {{ topic.speakers.length ? topic.speakers.join(', ') : 'no speaker yet' }}
+                </span>
+            </li>
+
+            <li class="text-highlight" ng-if="topic.lecture_date">
+                <span><i class="fa fa-calendar"></i> {{ topic.lecture_date }}</span>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+<hr/>

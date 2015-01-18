@@ -2,56 +2,28 @@
 
 {% block content %}
 
-{% include 'index/dashboard.create.html.twig' with {form: form} %}
+    {% include 'index/dashboard.create.html.twig' with {form: form} %}
 
-<div class="row">
+    <div class="row" ng-controller="IndexController">
 
-    <div class="large-4 small-12 columns">
+        <div class="column">
+            <h3>Open Topics</h3>
 
-        <h3><i class="fa fa-calendar"></i> Upcoming Talks</h3><hr>
+            <select ng-model="order" ng-options="opt as opt.label for opt in sorting"></select>
+            <span ng-click="reverse=false"><i class="fa fa-sort-asc"></i></span>
+            <span ng-click="reverse=true"><i class="fa fa-sort-desc"></i></span>
+            <input class="pull-right" type="search" ng-model="search" placeholder="search">
 
-        {% for topic in next_topics %}
-        <div class="quiet one-line">
-            <i class="fa fa-clock-o"></i> {{ topic.lectureDate|date("Y-m-d") }}
-            <i class="fa fa-microphone"></i> {{ topic.speakers|join(", ") }}
+            <hr>
+
+            <div ng-repeat="topic in topics | filter:search | orderBy:order.order:reverse">
+                <topic-short topic="topic"></topic-short>
+            </div>
+            <div class="alert-box secondary" ng-hide="topics.length">
+                no topics
+            </div>
         </div>
-        <h5 class="one-line">
-            <a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a>
-        </h5><br />
-        {% else %}
-            <div class="alert-box secondary">
-            no topics
-            </div>
-        {% endfor %}
-
-        <h3><i class="fa fa-clock-o"></i> Last Submissions</h3><hr>
-
-        {% for topic in last_submissions %}
-        <div class="quiet"><span title="{{ topic.createdAt|date }}" data-tooltip>{{ topic.createdAt|time_ago_in_words }}</span></div>
-        <h5 class="one-line">
-            <a href="{{ path('topic-show', {id: topic.id}) }}">{{ topic.title }}</a>
-        </h5><br />
-        {% else %}
-            <div class="alert-box secondary">
-            no topics
-            </div>
-        {% endfor %}
-    </div>
-
-    <div class="large-8 small-12 columns">
-
-        <h3>Open Topics <span class="quiet">[highest ranked first]</span></h3><hr>
-
-        {% for topic in topics %}
-            {% include 'topic/display.short.html.twig' with {topic: topic} %}
-        {% else %}
-            <div class="alert-box secondary">
-            no topics
-            </div>
-        {% endfor %}
 
     </div>
-
-</div>
 
 {% endblock %}

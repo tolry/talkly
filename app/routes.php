@@ -80,3 +80,8 @@ $app
     ->bind('user-notification-read-all')
 ;
 
+$app
+    ->match('/api/topics', 'api.topic.controller:listAction')
+    ->bind('api-topics')
+;
+

@@ -165,6 +165,9 @@ class TopicService
         $this->eventDispatcher->dispatch(Events::TOPIC_TALK_UNSCHEDULED, new TopicEvent($topic));
     }
 
+    /**
+     * @return array|Topic[]
+     */
     public function findNonArchivedMostVotesFirst()
     {
         return $this->topicRepository->findNonArchivedMostVotesFirst();

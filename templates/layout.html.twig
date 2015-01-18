@@ -1,6 +1,6 @@
 <!doctype html>
-<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
-<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<!--[if IE 9]><html class="lt-ie10" lang="en" ng-app="talklyApp"> <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)" ng-app="talklyApp">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +20,7 @@
 
         <a class="show-for-large-up" href="https://github.com/tolry/talkly"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
-        <nav class="fixed" id="headroom">
+        <nav class="fixed" headroom>
             {% set active_menu = 'homepage' %}
             {% block navigation %}
             <div class="row">
@@ -36,8 +36,10 @@
                         <i class="fa fa-user"></i>
                         <span><span class="hide-for-small-only">  {{ security.user }}</span></span>
                         {% if security.user.unreadNotifications|length > 0 %}
-                        <span class="label info round" data-tooltip title="{{ security.user.unreadNotifications|length }} unread notification(s)">{{ security.user.unreadNotifications|length }}</label>
-                        {% else %}
+                            <span class="label info round" data-tooltip
+                                  title="{{ security.user.unreadNotifications|length }} unread notification(s)">
+                            {{ security.user.unreadNotifications|length }}
+                            </span>
                         {% endif %}
                     </a>
                 </li>
@@ -50,7 +52,10 @@
             <div class="row">
                 <div class="large-12 columns text-center">
                     <h1><i class="fa fa-bullhorn"></i> talkly</h1>
-                    <h2><small>request, vote &amp; deliver the talks you like to hear</small></h2>
+
+                    <h2>
+                        <small>request, vote &amp; deliver the talks you like to hear</small>
+                    </h2>
                 </div>
             </div>
         </header>
@@ -73,15 +78,17 @@
             </div>
         </footer>
 
+        <script src="{{ app.request.baseUrl }}/js/angular/angular.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/angular-resource/angular-resource.min.js"></script>
         <script src="{{ app.request.baseUrl }}/js/jquery/dist/jquery.min.js"></script>
         <script src="{{ app.request.baseUrl }}/js/foundation/foundation.min.js"></script>
         <script src="{{ app.request.baseUrl }}/js/headroom/headroom.min.js"></script>
-        <script src="{{ app.request.baseUrl }}/js/headroom/jQuery.headroom.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/headroom/angular.headroom.min.js"></script>
         <script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/services.js"></script>
+        <script src="{{ app.request.baseUrl }}/js/directives.js"></script>
         <script src="{{ app.request.baseUrl }}/js/app.js"></script>
         <script>
-            $(document).foundation();
-
             var doc = document.documentElement;
             doc.setAttribute('data-useragent', navigator.userAgent);
         </script>
