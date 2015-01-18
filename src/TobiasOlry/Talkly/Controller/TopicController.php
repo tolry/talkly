@@ -159,8 +159,10 @@ class TopicController
 
         if ($topic->isLectureHeld()) {
             $this->topicService->markAsHeld($topic);
-        } elseif ($dateBefore != $topic->getLectureDate()) {
+        } elseif ($dateBefore != $topic->getLectureDate() && null !== $topic->getLectureDate()) {
             $this->topicService->markAsScheduled($topic);
+        } elseif ($dateBefore != $topic->getLectureDate() && null === $topic->getLectureDate()) {
+            $this->topicService->markAsUnscheduled($topic);
         }
 
         return $this->redirect($topic, 'show');

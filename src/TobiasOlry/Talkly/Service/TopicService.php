@@ -2,17 +2,14 @@
 
 namespace TobiasOlry\Talkly\Service;
 
-use TobiasOlry\Talkly\Entity\User;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TobiasOlry\Talkly\Entity\Topic;
-
+use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\TopicEvent;
-use TobiasOlry\Talkly\Event\CommentEvent;
-
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-
-use Doctrine\ORM\EntityManager;
 
 /**
  *
@@ -160,6 +157,11 @@ class TopicService
             Events::TOPIC_TALK_SCHEDULED,
             new TopicEvent($topic)
         );
+    }
+
+    public function markAsUnscheduled(Topic $topic)
+    {
+        $this->eventDispatcher->dispatch(Events::TOPIC_TALK_UNSCHEDULED, new TopicEvent($topic));
     }
 
     public function findNonArchivedMostVotesFirst()
