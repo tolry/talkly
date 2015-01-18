@@ -4,7 +4,7 @@
 </a>
 {% endif %}
 
-{% if topic.votes.contains(security.user) %}
+{% if topic.hasVote(security.user) %}
 <a data-tooltip title="retract your vote" class="button tiny radius" href="{{ path('topic-retract-vote', {id: topic.id, view: view|default('list')}) }}">
     <i class="fa fa-thumbs-up"></i>
 </a>
@@ -15,7 +15,7 @@
 {% endif %}
 
 
-{% if topic.speakers.contains(security.user) %}
+{% if topic.hasSpeaker(security.user) %}
 <a data-tooltip title="unregister as speaker" class="button tiny radius" href="{{ path('topic-remove-speaker', {id: topic.id, view: view|default('list')}) }}">
     <i class="fa fa-microphone"></i>
 </a>

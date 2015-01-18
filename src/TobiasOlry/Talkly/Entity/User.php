@@ -3,8 +3,8 @@
 namespace TobiasOlry\Talkly\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use TobiasOlry\Talkly\Security\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use TobiasOlry\Talkly\Security\UserInterface;
 
 /**
  *
@@ -155,7 +155,37 @@ class User implements UserInterface
      */
     public function getSpeakingTopics()
     {
-        return $this->speakingTopics;
+        return $this->speakingTopics->toArray();
+    }
+
+    /**
+     * @param Topic $topic
+     *
+     * @return bool
+     */
+    public function hasSpeakingTopic(Topic $topic)
+    {
+        return $this->speakingTopics->contains($topic);
+    }
+
+    /**
+     * @param Topic $topic
+     */
+    public function addSpeakingTopic(Topic $topic)
+    {
+        if (! $this->hasSpeakingTopic($topic)) {
+            $this->speakingTopics->add($topic);
+        }
+    }
+
+    /**
+     * @param Topic $topic
+     */
+    public function removeSpeakingTopic(Topic $topic)
+    {
+        if ($this->hasSpeakingTopic($topic)) {
+            $this->speakingTopics->removeElement($topic);
+        }
     }
 
     /**
@@ -164,7 +194,37 @@ class User implements UserInterface
      */
     public function getVotes()
     {
-        return $this->votes;
+        return $this->votes->toArray();
+    }
+
+    /**
+     * @param Topic $topic
+     *
+     * @return bool
+     */
+    public function hasVoted(Topic $topic)
+    {
+        return $this->votes->contains($topic);
+    }
+
+    /**
+     * @param Topic $topic
+     */
+    public function removeVoting(Topic $topic)
+    {
+        if ($this->hasVoted($topic)) {
+            $this->votes->removeElement($topic);
+        }
+    }
+
+    /**
+     * @param Topic $topic
+     */
+    public function addVoting(Topic $topic)
+    {
+        if (! $this->hasVoted($topic)) {
+            $this->votes->add($topic);
+        }
     }
 
     /**
@@ -180,7 +240,7 @@ class User implements UserInterface
      */
     public function getUnreadNotifications()
     {
-        return $this->notifications->filter(function(Notification $notification) {
+        return $this->notifications->filter(function (Notification $notification) {
             return ! $notification->isDone();
         });
     }

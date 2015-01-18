@@ -7,6 +7,7 @@ namespace TobiasOlry\Talkly\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use TobiasOlry\Talkly\Criteria\TopicCriteria;
+use TobiasOlry\Talkly\Entity\Topic;
 
 class TopicRepository extends EntityRepository
 {
@@ -18,8 +19,7 @@ class TopicRepository extends EntityRepository
             ->select('t, v, c')
             ->leftJoin('t.votes', 'v')
             ->leftJoin('t.comments', 'c')
-            ->add('orderBy', 't.createdAt DESC')
-        ;
+            ->add('orderBy', 't.createdAt DESC');
 
         if ($criteria->archived === false) {
             $qb->andWhere('t.lectureHeld = 0');
@@ -34,79 +34,79 @@ class TopicRepository extends EntityRepository
 
     public function findNonArchivedMostVotesFirst()
     {
-        $criteria = new TopicCriteria();
-        $criteria->archived = false;
+        $criteria = new TopicCriteria(false);
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
-            ->orderByDescending(function($topic) { return $topic->getVotes()->count(); })
-        ;
+            ->orderByDescending(function (Topic $topic) {
+                return count($topic->getVotes());
+            });
     }
 
     public function findArchivedGroupByMonth()
     {
-        $criteria = new TopicCriteria();
-        $criteria->archived = true;
+        $criteria = new TopicCriteria(true);
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
-            ->orderByDescending(function($topic) { return $topic->getLectureDate(); })
-            ->groupBy(function($topic) {
+            ->orderByDescending(function (Topic $topic) {
+                return $topic->getLectureDate();
+            })
+            ->groupBy(function (Topic $topic) {
                 if ($topic->getLectureDate()) {
                     return $topic->getLectureDate()->format('Y-m');
                 }
 
                 return 'unknown';
-            })
-        ;
+            });
     }
 
     public function findNextGroupByMonth()
     {
-        $criteria = new TopicCriteria();
-        $criteria->archived = false;
+        $criteria = new TopicCriteria(false);
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
-            ->where(function($topic) {
+            ->where(function (Topic $topic) {
                 return $topic->getLectureDate() ? true : false;
             })
-            ->orderByAscending(function($topic) { return $topic->getLectureDate(); })
-            ->groupBy(function($topic) {
-                return $topic->getLectureDate()->format('Y-m');
+            ->orderByAscending(function (Topic $topic) {
+                return $topic->getLectureDate();
             })
-        ;
+            ->groupBy(function (Topic $topic) {
+                return $topic->getLectureDate()->format('Y-m');
+            });
     }
 
     public function findNextTopics($limit = 5)
     {
-        $criteria = new TopicCriteria();
-        $criteria->archived = false;
+        $criteria = new TopicCriteria(false);
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
-            ->where(function($topic) {
+            ->where(function (Topic $topic) {
                 return $topic->getLectureDate() ? true : false;
             })
-            ->orderByAscending(function($topic) { return $topic->getLectureDate(); })
-            ->take($limit)
-        ;
+            ->orderByAscending(function (Topic $topic) {
+                return $topic->getLectureDate();
+            })
+            ->take($limit);
     }
 
     public function findLastSubmissions($limit = 3)
     {
-        $criteria = new TopicCriteria();
-        $criteria->archived = false;
+        $criteria = new TopicCriteria(false);
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
         return $topics
-            ->orderByDescending(function($topic) { return $topic->getCreatedAt(); })
-            ->take($limit)
-        ;
+            ->orderByDescending(function (Topic $topic) {
+                return $topic->getCreatedAt();
+            })
+            ->take($limit);
     }
 }
