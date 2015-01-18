@@ -41,12 +41,13 @@ class NotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::TOPIC_CREATED        => 'onTopicCreated',
-            Events::TOPIC_UPDATED        => 'onTopicUpdated',
-            Events::COMMENT_CREATED      => 'onCommentCreated',
-            Events::TOPIC_TALK_SCHEDULED => 'onTalkScheduled',
-            Events::TOPIC_SPEAKER_FOUND  => 'onSpeakerFound',
-            Events::TOPIC_TALK_HELD      => 'onTalkHeld',
+            Events::TOPIC_CREATED          => 'onTopicCreated',
+            Events::TOPIC_UPDATED          => 'onTopicUpdated',
+            Events::COMMENT_CREATED        => 'onCommentCreated',
+            Events::TOPIC_TALK_SCHEDULED   => 'onTalkScheduled',
+            Events::TOPIC_TALK_UNSCHEDULED => 'onTalkUnscheduled',
+            Events::TOPIC_SPEAKER_FOUND    => 'onSpeakerFound',
+            Events::TOPIC_TALK_HELD        => 'onTalkHeld',
         ];
     }
 
@@ -101,6 +102,16 @@ class NotificationSubscriber implements EventSubscriberInterface
         $message = NotificationMessage::create(
             sprintf("Topic #%d got scheduled for %s.", $event->getTopic()->getId(), $event->getTopic()->getLectureDate()->format('Y-m-d')),
             "Talk was scheduled by " . $this->security->getUser()
+        );
+
+        $this->publishToTopicSubscribers($event->getTopic(), $message);
+    }
+
+    public function onTalkUnscheduled(TopicEvent $event)
+    {
+        $message = NotificationMessage::create(
+            sprintf("Topic #%d got unscheduled.", $event->getTopic()->getId()),
+            "Talk was unscheduled by " . $this->security->getUser()
         );
 
         $this->publishToTopicSubscribers($event->getTopic(), $message);
