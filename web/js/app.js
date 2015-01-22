@@ -49,7 +49,7 @@ var app = {
     }
 };
 
-angular.module('talklyApp', ['talklyApp.services', 'talklyApp.directives', 'headroom'])
+angular.module('talklyApp', ['talklyApp.services', 'talklyApp.directives', 'headroom', 'angularMoment'])
     .controller('IndexController', ['$scope', 'Topics', function ($scope, Topics) {
         $scope.topics = [];
         $scope.sorting = [

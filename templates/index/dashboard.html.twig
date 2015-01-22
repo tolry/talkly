@@ -9,10 +9,24 @@
         <div class="column">
             <h3>Open Topics</h3>
 
-            <select ng-model="order" ng-options="opt as opt.label for opt in sorting"></select>
-            <span ng-click="reverse=false"><i class="fa fa-sort-asc"></i></span>
-            <span ng-click="reverse=true"><i class="fa fa-sort-desc"></i></span>
-            <input class="pull-right" type="search" ng-model="search" placeholder="search">
+            <div class="row collapse">
+                <div class="large-4 columns">
+                    <select ng-model="order" ng-options="opt as opt.label for opt in sorting"></select>
+                </div>
+                <div class="large-1 columns">
+                    <a class="button postfix" ng-click="reverse=false" ng-class="{'secondary': reverse}">
+                        <i class="fa fa-sort-asc"></i>
+                    </a>
+                </div>
+                <div class="large-1 columns">
+                    <a class="button postfix" ng-click="reverse=true" ng-class="{'secondary': !reverse}">
+                        <i class="fa fa-sort-desc"></i>
+                    </a>
+                </div>
+                <div class="large-4 columns">
+                    <input class="pull-right" type="search" ng-model="search" placeholder="search">
+                </div>
+            </div>
 
             <hr>
 

@@ -39,13 +39,14 @@ class TopicController
         $topics = iterator_to_array($this->topicService->findNonArchivedMostVotesFirst());
 
         $result = (new ArrayCollection($topics))->map(function (Topic $topic) {
-            $votes = (new ArrayCollection($topic->getVotes()->toArray()))->map(function (User $user) {
-                return (string) $user;
-            })->toArray();
 
-            $speakers = (new ArrayCollection($topic->getSpeakers()->toArray()))->map(function (User $user) {
-                return (string) $user;
-            })->toArray();
+            $votes = array_map(function (User $user) {
+                return ['id' => $user->getId(), 'name' => (string) $user];
+            }, $topic->getVotes()->toArray());
+
+            $speakers = array_map(function (User $user) {
+                return ['id' => $user->getId(), 'name' => (string) $user];
+            }, $topic->getSpeakers()->toArray());
 
             $params = ['id' => $topic->getId()];
 
@@ -61,8 +62,8 @@ class TopicController
                     'self' => [
                         'show'           => $this->urlGenerator->generate('topic-show', $params),
                         'edit'           => $this->urlGenerator->generate('topic-edit', $params),
-                        'cast-vote'      => $this->urlGenerator->generate('topic-cast-vote', $params),
-                        'retract-vote'   => $this->urlGenerator->generate('topic-retract-vote', $params),
+                        'cast_vote'      => $this->urlGenerator->generate('topic-cast-vote', $params),
+                        'retract_vote'   => $this->urlGenerator->generate('topic-retract-vote', $params),
                         'add-speaker'    => $this->urlGenerator->generate('topic-add-speaker', $params),
                         'remove-speaker' => $this->urlGenerator->generate('topic-remove-speaker', $params),
                     ]
