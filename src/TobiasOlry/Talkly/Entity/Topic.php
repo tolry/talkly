@@ -143,11 +143,41 @@ class Topic
 
     /**
      *
-     * @return Vote[]
+     * @return User[]
      */
     public function getVotes()
     {
-        return $this->votes;
+        return $this->votes->toArray();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function hasVote(User $user)
+    {
+        return $this->votes->contains($user);
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeVote(User $user)
+    {
+        if ($this->hasVote($user)) {
+            $this->votes->removeElement($user);
+        }
+    }
+
+    /**
+     * @param User $user
+     */
+    public function addVote(User $user)
+    {
+        if (! $this->hasVote($user)) {
+            $this->votes->add($user);
+        }
     }
 
     /**
@@ -155,7 +185,7 @@ class Topic
      */
     public function getComments()
     {
-        return $this->comments->filter(function(Comment $comment) {
+        return $this->comments->filter(function (Comment $comment) {
             return ! $comment->isFeedback();
         });
     }
@@ -165,7 +195,7 @@ class Topic
      */
     public function getFeedbackComments()
     {
-        return $this->comments->filter(function(Comment $comment) {
+        return $this->comments->filter(function (Comment $comment) {
             return $comment->isFeedback();
         });
     }
@@ -186,11 +216,41 @@ class Topic
      */
     public function getSpeakers()
     {
-        return $this->speakers;
+        return $this->speakers->toArray();
     }
 
     /**
      * @param User $user
+     *
+     * @return bool
+     */
+    public function hasSpeaker(User $user)
+    {
+        return $this->speakers->contains($user);
+    }
+
+    /**
+     * @param User $user
+     */
+    public function addSpeaker(User $user)
+    {
+        if (! $this->hasSpeaker($user)) {
+            $this->speakers->add($user);
+        }
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeSpeaker(User $user)
+    {
+        if ($this->hasSpeaker($user)) {
+            $this->speakers->removeElement($user);
+        }
+    }
+
+    /**
+     * @param User   $user
      * @param string $text
      *
      * @return Comment

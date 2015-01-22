@@ -3,6 +3,7 @@
 namespace TobiasOlry\Talkly\Service;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TobiasOlry\Talkly\Entity\Topic;
@@ -10,6 +11,7 @@ use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\TopicEvent;
+use TobiasOlry\Talkly\Repository\TopicRepository;
 
 /**
  *
@@ -17,12 +19,15 @@ use TobiasOlry\Talkly\Event\TopicEvent;
  */
 class TopicService
 {
-
     private $em;
-    private $topicRepository;
     private $eventDispatcher;
 
-    public function __construct(EntityManager $em, $eventDispatcher)
+    /**
+     * @var TopicRepository
+     */
+    private $topicRepository;
+
+    public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
     {
         $this->em              = $em;
         $this->eventDispatcher = $eventDispatcher;
@@ -64,47 +69,41 @@ class TopicService
     /**
      *
      * @param Topic $topic
-     * @param User $user
+     * @param User  $user
      */
     public function addVote(Topic $topic, User $user)
     {
-        if ($topic->getVotes()->contains($user)) {
-
+        if ($topic->hasVote($user)) {
             return;
         }
 
-        $topic->getVotes()->add($user);
-        $user->getVotes()->add($topic);
+        $topic->addVote($user);
+        $user->addVote($topic);
 
         $this->em->flush();
     }
 
     /**
      *
-     * @param Topic Topic
-     * @param User $user
+     * @param Topic $topic
+     * @param User  $user
      */
     public function removeVote(Topic $topic, User $user)
     {
-        if (!$topic->getVotes()->contains($user)) {
-
-            return;
-        }
-
-        $topic->getVotes()->removeElement($user);
-        $user->getVotes()->removeElement($topic);
+        $topic->removeVote($user);
+        $user->removeVote($topic);
 
         $this->em->flush();
     }
 
     public function addSpeaker(Topic $topic, User $user)
     {
-        if ($topic->getSpeakers()->contains($user)) {
+        if ($topic->hasSpeaker($user)) {
             return;
         }
 
-        $topic->getSpeakers()->add($user);
-        $user->getSpeakingTopics()->add($topic);
+        $topic->addSpeaker($user);
+        $user->addSpeakingTopic($topic);
 
         $this->em->flush();
 
@@ -114,12 +113,14 @@ class TopicService
         );
     }
 
+    /**
+     * @param Topic $topic
+     * @param User  $user
+     */
     public function removeSpeaker(Topic $topic, User $user)
     {
-        if ($topic->getSpeakers()->contains($user)) {
-            $topic->getSpeakers()->removeElement($user);
-            $user->getSpeakingTopics()->removeElement($topic);
-        }
+        $topic->removeSpeaker($user);
+        $user->removeSpeakingTopic($topic);
 
         $this->em->flush();
     }
@@ -192,9 +193,9 @@ class TopicService
     public function findAllParticipants(Topic $topic)
     {
         return array_unique(array_merge(
-            $topic->getVotes()->toArray(),
+            $topic->getVotes(),
             $topic->getCommentingUsers(),
-            $topic->getSpeakers()->toArray(),
+            $topic->getSpeakers(),
             [$topic->getCreatedBy()]
         ));
     }
@@ -212,6 +213,6 @@ class TopicService
 
     public function update(Topic $topic)
     {
-        $this->em->flush();
+        $this->em->flush($topic);
     }
 }

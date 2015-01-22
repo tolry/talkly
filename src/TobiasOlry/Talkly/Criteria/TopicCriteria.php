@@ -8,5 +8,10 @@ namespace TobiasOlry\Talkly\Criteria;
 class TopicCriteria
 {
     public $archived;
+
+    public function __construct($archived = null)
+    {
+        $this->archived = $archived;
+    }
 }
 
