@@ -77,8 +77,8 @@ class TopicService
             return;
         }
 
-        $topic->addVoting($user);
-        $user->addVoting($topic);
+        $topic->addVote($user);
+        $user->addVote($topic);
 
         $this->em->flush();
     }
@@ -90,8 +90,8 @@ class TopicService
      */
     public function removeVote(Topic $topic, User $user)
     {
-        $topic->removeVoting($user);
-        $user->removeVoting($topic);
+        $topic->removeVote($user);
+        $user->removeVote($topic);
 
         $this->em->flush();
     }

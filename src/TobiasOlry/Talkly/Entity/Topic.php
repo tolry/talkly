@@ -163,7 +163,7 @@ class Topic
     /**
      * @param User $user
      */
-    public function removeVoting(User $user)
+    public function removeVote(User $user)
     {
         if ($this->hasVote($user)) {
             $this->votes->removeElement($user);
@@ -173,7 +173,7 @@ class Topic
     /**
      * @param User $user
      */
-    public function addVoting(User $user)
+    public function addVote(User $user)
     {
         if (! $this->hasVote($user)) {
             $this->votes->add($user);

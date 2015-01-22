@@ -210,7 +210,7 @@ class User implements UserInterface
     /**
      * @param Topic $topic
      */
-    public function removeVoting(Topic $topic)
+    public function removeVote(Topic $topic)
     {
         if ($this->hasVoted($topic)) {
             $this->votes->removeElement($topic);
@@ -220,7 +220,7 @@ class User implements UserInterface
     /**
      * @param Topic $topic
      */
-    public function addVoting(Topic $topic)
+    public function addVote(Topic $topic)
     {
         if (! $this->hasVoted($topic)) {
             $this->votes->add($topic);
