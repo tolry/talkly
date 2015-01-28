@@ -58,14 +58,15 @@ class TopicController
                 'comment_count' => count($topic->getComments()),
                 'lecture_date'  => $topic->getLectureDate() ? $topic->getLectureDate()->format('Y-m-d') : null,
                 'created_at'    => $topic->getCreatedAt() ? $topic->getCreatedAt()->format('Y-m-d') : null,
+                'created_by'    => (int) $topic->getCreatedBy()->getId(),
                 '_links'        => [
                     'self' => [
                         'show'           => $this->urlGenerator->generate('topic-show', $params),
                         'edit'           => $this->urlGenerator->generate('topic-edit', $params),
                         'cast_vote'      => $this->urlGenerator->generate('topic-cast-vote', $params),
                         'retract_vote'   => $this->urlGenerator->generate('topic-retract-vote', $params),
-                        'add-speaker'    => $this->urlGenerator->generate('topic-add-speaker', $params),
-                        'remove-speaker' => $this->urlGenerator->generate('topic-remove-speaker', $params),
+                        'add_speaker'    => $this->urlGenerator->generate('topic-add-speaker', $params),
+                        'remove_speaker' => $this->urlGenerator->generate('topic-remove-speaker', $params),
                     ]
                 ]
             ];

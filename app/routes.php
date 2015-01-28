@@ -81,7 +81,11 @@ $app
 ;
 
 $app
-    ->match('/api/topics', 'api.topic.controller:listAction')
+    ->get('/api/topics', 'api.topic.controller:listAction')
     ->bind('api-topics')
 ;
 
+$app
+    ->get('/api/security/user', 'api.security.controller:userAction')
+    ->bind('api-security-user')
+;

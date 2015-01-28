@@ -49,4 +49,8 @@ $app['api.topic.controller'] = $app->share(
     }
 );
 
-
+$app['api.security.controller'] = $app->share(
+    function () use ($app) {
+        return new Api\SecurityController($app['security.token']);
+    }
+);
