@@ -42,11 +42,11 @@ class TopicController
 
             $votes = array_map(function (User $user) {
                 return ['id' => $user->getId(), 'name' => (string) $user];
-            }, $topic->getVotes()->toArray());
+            }, $topic->getVotes());
 
             $speakers = array_map(function (User $user) {
                 return ['id' => $user->getId(), 'name' => (string) $user];
-            }, $topic->getSpeakers()->toArray());
+            }, $topic->getSpeakers());
 
             $params = ['id' => $topic->getId()];
 

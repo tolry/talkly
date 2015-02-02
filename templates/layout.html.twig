@@ -91,7 +91,9 @@
         <script src="{{ app.request.baseUrl }}/js/services.js"></script>
         <script src="{{ app.request.baseUrl }}/js/directives.js"></script>
         <script src="{{ app.request.baseUrl }}/js/app.js"></script>
-        <script>
+        <script type="text/javascript">
+            angular.module('talklyApp').constant('BASE_URL', '{{ url('homepage') }}');
+
             var doc = document.documentElement;
             doc.setAttribute('data-useragent', navigator.userAgent);
         </script>
