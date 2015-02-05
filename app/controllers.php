@@ -4,6 +4,7 @@ use TobiasOlry\Talkly\Controller\Api;
 use TobiasOlry\Talkly\Controller\IndexController;
 use TobiasOlry\Talkly\Controller\TopicController;
 use TobiasOlry\Talkly\Controller\UserController;
+use TobiasOlry\Talkly\Controller\AjaxController;
 
 $app['index.controller'] = $app->share(
     function () use ($app) {
@@ -52,5 +53,13 @@ $app['api.topic.controller'] = $app->share(
 $app['api.security.controller'] = $app->share(
     function () use ($app) {
         return new Api\SecurityController($app['security.token']);
+    }
+);
+
+$app['ajax.controller'] = $app->share(
+    function () use ($app) {
+        return new AjaxController(
+            $app['markdown']
+        );
     }
 );
