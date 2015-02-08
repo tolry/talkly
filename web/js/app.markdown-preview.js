@@ -3,10 +3,17 @@ $(document).ready(function() {
         .each(function() {
             console.log(this);
             var $textarea = $(this);
-            var $previewDiv = $('<div />').html('PREVIEW');
+            var $previewDiv = $('<div />')
+                .addClass('panel')
+                .html('preview loading')
+            ;
+            var $panel = $('<div />')
+                .append('<label>markdown preview</label>')
+                .append($previewDiv)
+            ;
 
             $textarea
-                .after($previewDiv)
+                .after($panel)
                 .data('previewDiv', $previewDiv)
             ;
         })
