@@ -57,10 +57,7 @@ class TopicController
     {
         $topic = $this->topicService->getTopic($request->get('id'));
 
-        $form = $this->formFactory->create(
-            new LectureTopicType(),
-            $topic
-        );
+        $form = $this->formFactory->create(new LectureTopicType(), $topic);
 
         return new Response(
             $this->twig->render(

@@ -80,3 +80,12 @@ $app
     ->bind('user-notification-read-all')
 ;
 
+$app
+    ->get('/api/topics', 'api.topic.controller:listAction')
+    ->bind('api-topics')
+;
+
+$app
+    ->get('/api/security/user', 'api.security.controller:userAction')
+    ->bind('api-security-user')
+;

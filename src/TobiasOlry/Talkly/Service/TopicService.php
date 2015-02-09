@@ -107,10 +107,7 @@ class TopicService
 
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
-            Events::TOPIC_SPEAKER_FOUND,
-            new TopicEvent($topic)
-        );
+        $this->eventDispatcher->dispatch(Events::TOPIC_SPEAKER_FOUND, new TopicEvent($topic));
     }
 
     /**
@@ -165,6 +162,9 @@ class TopicService
         $this->eventDispatcher->dispatch(Events::TOPIC_TALK_UNSCHEDULED, new TopicEvent($topic));
     }
 
+    /**
+     * @return array|Topic[]
+     */
     public function findNonArchivedMostVotesFirst()
     {
         return $this->topicRepository->findNonArchivedMostVotesFirst();

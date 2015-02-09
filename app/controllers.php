@@ -1,5 +1,6 @@
 <?php
 
+use TobiasOlry\Talkly\Controller\Api;
 use TobiasOlry\Talkly\Controller\IndexController;
 use TobiasOlry\Talkly\Controller\TopicController;
 use TobiasOlry\Talkly\Controller\UserController;
@@ -39,4 +40,17 @@ $app['user.controller'] = $app->share(
     }
 );
 
+$app['api.topic.controller'] = $app->share(
+    function () use ($app) {
+        return new Api\TopicController(
+            $app['service.topic'],
+            $app['url_generator']
+        );
+    }
+);
 
+$app['api.security.controller'] = $app->share(
+    function () use ($app) {
+        return new Api\SecurityController($app['security.token']);
+    }
+);

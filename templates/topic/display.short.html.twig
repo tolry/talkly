@@ -1,21 +1,25 @@
 <div id="topic-{{ topic.id }}" class="clearfix highlight-target">
 
     {% for message in app.session.getFlashBag.get('topic-' ~ topic.id ~ '-success') %}
-    <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
+        <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
     {% endfor %}
 
     {% if not topic.lectureHeld %}
-    <div class="right">
-        {% include 'topic/controls.html.twig' %}
-    </div>
+        <div class="right">
+            {% include 'topic/controls.html.twig' %}
+        </div>
     {% endif %}
 
-    <h4 class="one-line" data-tooltip title="{{ topic.title }}"><a href="{{ path('topic-show', {id: topic.id}) }}">
+    <h4 class="one-line" data-tooltip title="{{ topic.title }}">
+        <a href="{{ path('topic-show', {id: topic.id}) }}">
             {{ topic.title }}
-    </a></h4>
+        </a>
+    </h4>
+
     <div class="quiet">
         {% include 'topic/details.html.twig' %}
     </div>
 
-</div> <hr/>
+</div>
+<hr/>
 
