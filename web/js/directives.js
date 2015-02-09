@@ -14,7 +14,7 @@ angular.module('talklyApp.directives', [])
                     $scope.speaker = false;
                     $scope.created = false;
 
-                    User.getCurrent().then(function (user) {
+                    User.get(function (user) {
                         angular.forEach($scope.topic.votes, function (vote) {
                             if (user.id === vote.id) {
                                 $scope.voted = true;

@@ -107,10 +107,7 @@ class TopicService
 
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
-            Events::TOPIC_SPEAKER_FOUND,
-            new TopicEvent($topic)
-        );
+        $this->eventDispatcher->dispatch(Events::TOPIC_SPEAKER_FOUND, new TopicEvent($topic));
     }
 
     /**
