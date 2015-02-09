@@ -56,7 +56,7 @@ angular.module('talklyApp', ['talklyApp.services', 'talklyApp.directives', 'head
             $scope.topics = [];
             $scope.sorting = [
                 {label: 'votes', order: 'votes'},
-                {label: 'schedule date', order: 'lecture_date'},
+                {label: 'scheduled date', order: 'lecture_date'},
                 {label: 'date of submission', order: 'created_at'}
             ];
             $scope.order = $scope.sorting[0];

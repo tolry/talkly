@@ -14,12 +14,14 @@
                     <select ng-model="order" ng-options="opt as opt.label for opt in sorting"></select>
                 </div>
                 <div class="large-1 columns">
-                    <a class="button postfix" ng-click="reverse=false" ng-class="{'secondary': reverse}">
+                    <a class="button postfix" ng-click="reverse=false" ng-class="{'secondary': reverse}"
+                       data-tooltip title="ascending">
                         <i class="fa fa-sort-asc"></i>
                     </a>
                 </div>
                 <div class="large-1 columns">
-                    <a class="button postfix" ng-click="reverse=true" ng-class="{'secondary': !reverse}">
+                    <a class="button postfix" ng-click="reverse=true" ng-class="{'secondary': !reverse}"
+                       data-tooltip title="descending">
                         <i class="fa fa-sort-desc"></i>
                     </a>
                 </div>
