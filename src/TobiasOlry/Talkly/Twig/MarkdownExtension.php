@@ -12,13 +12,11 @@ use Ciconia\Ciconia;
 class MarkdownExtension extends \Twig_Extension
 {
     /**
-     *
      * @var Ciconia
      */
     protected $engine;
 
     /**
-     *
      * @param Ciconia $engine
      */
     public function __construct(Ciconia $engine)
@@ -27,7 +25,6 @@ class MarkdownExtension extends \Twig_Extension
     }
 
     /**
-     *
      * @return array
      */
     public function getFunctions()
@@ -38,7 +35,6 @@ class MarkdownExtension extends \Twig_Extension
     }
 
     /**
-     *
      * @param string $string
      * @return string
      */
@@ -54,7 +50,6 @@ class MarkdownExtension extends \Twig_Extension
     }
 
     /**
-     *
      * @return string
      */
     public function getName()
@@ -62,4 +57,3 @@ class MarkdownExtension extends \Twig_Extension
         return 'markdown';
     }
 }
-

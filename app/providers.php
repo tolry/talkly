@@ -27,6 +27,7 @@ $app->register(new Provider\TranslationServiceProvider(), array('locale_fallback
 $app->register(new Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../templates'));
 $app->register(new Provider\SwiftmailerServiceProvider());
 
+// should we move this to services.php?
 $app['markdown'] = $app->share(function() use ($app) {
     $ciconia = new Ciconia();
     $ciconia->addExtension(new Gfm\FencedCodeBlockExtension());

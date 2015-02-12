@@ -46,7 +46,9 @@ var app = {
 
         // todo - events are not applied
 
-    }
+    },
+
+    baseUrl: function () { return $('body').data('baseurl'); }
 };
 
 angular.module('talklyApp', ['talklyApp.services', 'talklyApp.directives', 'headroom', 'angularMoment'])

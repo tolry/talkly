@@ -89,3 +89,9 @@ $app
     ->get('/api/security/user', 'api.security.controller:userAction')
     ->bind('api-security-user')
 ;
+
+$app
+    ->match('/ajax/markdown', 'ajax.controller:markdownAction')
+    ->bind('ajax-markdown')
+;
+
