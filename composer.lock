@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "11dca0bbf01ec5fbb58bb39c21177502",
+    "hash": "b4f3cea23e606103c1e446f684c0454d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -873,6 +873,55 @@
                 "orm"
             ],
             "time": "2014-12-16 13:45:01"
+        },
+        {
+            "name": "gremo/ciconia-bundle",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gremo/CiconiaBundle.git",
+                "reference": "7bad852db07f5edc6d1bfd57e3fdad1829e11519"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gremo/CiconiaBundle/zipball/7bad852db07f5edc6d1bfd57e3fdad1829e11519",
+                "reference": "7bad852db07f5edc6d1bfd57e3fdad1829e11519",
+                "shasum": ""
+            },
+            "require": {
+                "kzykhys/ciconia": "~1.0",
+                "php": ">5.4.0",
+                "symfony/framework-bundle": "~2.3"
+            },
+            "require-dev": {
+                "twig/twig": "~1.10"
+            },
+            "suggest": {
+                "twig/twig": ""
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Gremo\\CiconiaBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Polichetti",
+                    "email": "gremo1982@gmail.com"
+                }
+            ],
+            "description": "Symfony 2 bundle for Ciconia Markdown parser for PHP",
+            "keywords": [
+                "cli",
+                "markdown",
+                "parser"
+            ],
+            "time": "2015-03-06 18:18:13"
         },
         {
             "name": "incenteev/composer-parameter-handler",

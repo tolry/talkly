@@ -1,19 +1,5 @@
 <?php
 
-$app
-    ->get('/', 'index.controller:dashboardAction')
-    ->bind('homepage')
-;
-
-$app
-    ->get('/archive', 'index.controller:archiveAction')
-    ->bind('archive')
-;
-
-$app
-    ->get('/calendar', 'index.controller:calendarAction')
-    ->bind('calendar')
-;
 
 $app
     ->post('/topic/create', 'topic.controller:createAction')
@@ -60,38 +46,5 @@ $app
     ->bind('topic-remove-speaker')
 ;
 
-$app
-    ->get('/user-notifications', 'user.controller:userNotificationsAction')
-    ->bind('user-notifications')
-;
 
-$app
-    ->match('/user-profile', 'user.controller:userProfileAction')
-    ->bind('user-profile')
-;
-
-$app
-    ->match('/notification/{id}/mark-read', 'user.controller:markNotificationReadAction')
-    ->bind('user-notification-read')
-;
-
-$app
-    ->match('/user/mark-all-notifications-read', 'user.controller:markAllNotificationsReadAction')
-    ->bind('user-notification-read-all')
-;
-
-$app
-    ->get('/api/topics', 'api.topic.controller:listAction')
-    ->bind('api-topics')
-;
-
-$app
-    ->get('/api/security/user', 'api.security.controller:userAction')
-    ->bind('api-security-user')
-;
-
-$app
-    ->match('/ajax/markdown', 'ajax.controller:markdownAction')
-    ->bind('ajax-markdown')
-;
 

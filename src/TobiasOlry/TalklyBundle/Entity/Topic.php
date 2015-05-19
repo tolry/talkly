@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="TobiasOlry\Talkly\Repository\TopicRepository")
+ * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\TopicRepository")
  * @ORM\Table()
  */
 class Topic

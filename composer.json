@@ -17,7 +17,8 @@
         "kzykhys/ciconia": "~1.0.0",
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "gremo/ciconia-bundle": "~1.0"
     },
     "autoload": {
         "psr-0": {"": "src/"}

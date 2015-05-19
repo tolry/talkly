@@ -23,7 +23,7 @@ $(document).ready(function() {
 
             $previewDiv.html('loading preview');
 
-            $.ajax(app.baseUrl() + "/ajax/markdown", {
+            $.ajax(app.baseUrl() + "ajax/markdown/", {
                 data: {
                     text: $textarea.val()
                 },

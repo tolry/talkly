@@ -1,6 +1,6 @@
 <?php
 
-namespace TobiasOlry\Talkly\Twig;
+namespace TobiasOlry\TalklyBundle\Twig;
 
 use Ciconia\Ciconia;
 
@@ -36,6 +36,7 @@ class MarkdownExtension extends \Twig_Extension
 
     /**
      * @param string $string
+     *
      * @return string
      */
     public function renderMarkdown($string, $inline = false)

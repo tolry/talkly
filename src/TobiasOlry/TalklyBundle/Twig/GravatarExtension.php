@@ -1,8 +1,8 @@
 <?php
 
-namespace TobiasOlry\Talkly\Twig;
+namespace TobiasOlry\TalklyBundle\Twig;
 
-use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\TalklyBundle\Entity\User;
 
 /**
  *
@@ -30,6 +30,7 @@ class GravatarExtension extends \Twig_Extension
     /**
      *
      * @param User $user
+     *
      * @return string
      */
     public function gravatar(User $user, $size = 80)

@@ -17,7 +17,7 @@
 
     <script src="{{ asset('js/foundation/vendor/modernizr.js') }}"></script>
 </head>
-<body data-baseurl="{{ url('homepage') }}">
+<body data-baseurl="{{ path('homepage') }}">
 
 <a class="show-for-large-up" href="https://github.com/tolry/talkly">
     <img style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;"
@@ -32,7 +32,10 @@
         <div class="row">
             <ul class="text-center">
                 <li class="{{ (active_menu == 'homepage') ? 'active' : '' }} small-3 columns">
-                    <a href="{{ path('homepage') }}"><i class="fa fa-home"></i><span><span class="hide-for-small-only"> Home</span></span></a>
+                    <a href="{{ path('homepage') }}">
+                        <i class="fa fa-home"></i>
+                        <span><span class="hide-for-small-only"> Home</span></span>
+                    </a>
                 </li>
                 <li class="{{ (active_menu == 'calendar') ? 'active' : '' }} small-3 columns">
                     <a href="{{ path('calendar') }}">
@@ -41,16 +44,19 @@
                     </a>
                 </li>
                 <li class="{{ (active_menu == 'archive') ? 'active' : '' }} small-3 columns">
-                    <a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i><span><span class="hide-for-small-only">  Archive</span></span></a>
+                    <a href="{{ path('archive') }}">
+                        <i class="fa fa-file-archive-o"></i>
+                        <span><span class="hide-for-small-only"> Archive</span></span>
+                    </a>
                 </li>
                 <li class="{{ (active_menu == 'user-profile') ? 'active' : '' }} small-3 columns one-line">
                     <a href="{{ path('user-notifications') }}">
                         <i class="fa fa-user"></i>
-                        <span><span class="hide-for-small-only">  {{ security.user }}</span></span>
-                        {% if security.user.unreadNotifications|length > 0 %}
+                        <span><span class="hide-for-small-only"> {{ app.user }}</span></span>
+                        {% if app.user.unreadNotifications|length > 0 %}
                             <span class="label info round" data-tooltip
-                                  title="{{ security.user.unreadNotifications|length }} unread notification(s)">
-                            {{ security.user.unreadNotifications|length }}
+                                  title="{{ app.user.unreadNotifications|length }} unread notification(s)">
+                                {{ app.user.unreadNotifications|length }}
                             </span>
                         {% endif %}
                     </a>
@@ -105,7 +111,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/app.markdown-preview.js') }}"></script>
 <script type="text/javascript">
-    angular.module('talklyApp').constant('BASE_URL', '{{ url('homepage') }}');
+    angular.module('talklyApp').constant('BASE_URL', '{{ path('homepage') }}');
 
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);

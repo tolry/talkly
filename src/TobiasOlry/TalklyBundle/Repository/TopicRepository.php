@@ -3,11 +3,11 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace TobiasOlry\Talkly\Repository;
+namespace TobiasOlry\TalklyBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use TobiasOlry\Talkly\Criteria\TopicCriteria;
-use TobiasOlry\Talkly\Entity\Topic;
+use TobiasOlry\TalklyBundle\Entity\Topic;
 
 class TopicRepository extends EntityRepository
 {

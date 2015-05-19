@@ -1,42 +1,25 @@
 <?php
 
-namespace TobiasOlry\Talkly\Controller\Api;
+namespace TobiasOlry\TalklyBundle\Controller\Api;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use TobiasOlry\Talkly\Entity\Topic;
-use TobiasOlry\Talkly\Entity\User;
-use TobiasOlry\Talkly\Service\TopicService;
+use TobiasOlry\TalklyBundle\Entity\Topic;
+use TobiasOlry\TalklyBundle\Entity\User;
 
-class TopicController
+class TopicController extends Controller
 {
     /**
-     * @var TopicService
-     */
-    private $topicService;
-
-    /**
-     * @var UrlGenerator
-     */
-    private $urlGenerator;
-
-    /**
-     * @param TopicService $topicService
-     * @param UrlGenerator $urlGenerator
-     */
-    public function __construct(TopicService $topicService, UrlGenerator $urlGenerator)
-    {
-        $this->topicService = $topicService;
-        $this->urlGenerator = $urlGenerator;
-    }
-
-    /**
+     * @Route("/api/topics/", name="api_topics")
+     *
      * @return JsonResponse
      */
     public function listAction()
     {
-        $topics = iterator_to_array($this->topicService->findNonArchivedMostVotesFirst());
+        $repository = $this->get('talkly.repository.topic');
+        $topics     = iterator_to_array($repository->findNonArchivedMostVotesFirst());
 
         $result = (new ArrayCollection($topics))->map(function (Topic $topic) {
 
@@ -61,12 +44,12 @@ class TopicController
                 'created_by'    => (int) $topic->getCreatedBy()->getId(),
                 '_links'        => [
                     'self' => [
-                        'show'           => $this->urlGenerator->generate('topic-show', $params),
-                        'edit'           => $this->urlGenerator->generate('topic-edit', $params),
-                        'cast_vote'      => $this->urlGenerator->generate('topic-cast-vote', $params),
-                        'retract_vote'   => $this->urlGenerator->generate('topic-retract-vote', $params),
-                        'add_speaker'    => $this->urlGenerator->generate('topic-add-speaker', $params),
-                        'remove_speaker' => $this->urlGenerator->generate('topic-remove-speaker', $params),
+//                        'show'           => $this->generateUrl('topic-show', $params),
+//                        'edit'           => $this->generateUrl('topic-edit', $params),
+//                        'cast_vote'      => $this->generateUrl('topic-cast-vote', $params),
+//                        'retract_vote'   => $this->generateUrl('topic-retract-vote', $params),
+//                        'add_speaker'    => $this->generateUrl('topic-add-speaker', $params),
+//                        'remove_speaker' => $this->generateUrl('topic-remove-speaker', $params),
                     ]
                 ]
             ];

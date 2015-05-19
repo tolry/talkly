@@ -53,3 +53,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+gremo_ciconia:
+    renderer: html
+    extensions: ~
