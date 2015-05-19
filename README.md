@@ -15,11 +15,9 @@ what the first version should deliver:
 
 As said before: this is not meant for everyone and far from stable. But if you like the idea and like to contribute or use it, go ahead.
 
-Also this is a testbed for me, to get a little bit more familiar with silex.
-
 technologies used:
 - zurb foundation 5
-- silex
+- symfony 2
 - doctrine orm
 - jquery
 

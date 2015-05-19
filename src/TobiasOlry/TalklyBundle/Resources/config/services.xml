@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="talkly.user_provider" class="TobiasOlry\TalklyBundle\Security\TalklyUserProvider"/>
+
+        <service id="talkly.security.authentication.ntlm_provider"
+                 class="TobiasOlry\TalklyBundle\Security\Authentication\NtlmUserProvider" public="false">
+            <argument type="service" id="talkly.user_provider"/>
+        </service>
+
+        <service id="talkly.security.authentication.ntlm_listener"
+                 class="TobiasOlry\TalklyBundle\Security\Firewall\NtlmListener" public="false">
+            <argument type="string">%debug%</argument>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="security.authentication.manager"/>
+        </service>
+    </services>
+
+</container>

@@ -1,0 +1,49 @@
+{% extends 'TobiasOlryTalklyBundle::layout.html.twig' %}
+
+{% block content %}
+
+    {% include 'TobiasOlryTalklyBundle:Index:dashboard.create.html.twig' with {form: form} %}
+
+    <div class="row" ng-controller="IndexController">
+
+        <div class="column">
+            <h3>Open Topics</h3>
+
+            <div class="row collapse">
+                <div class="large-3 columns">
+                    <select ng-model="order" ng-options="opt as opt.label for opt in sorting"></select>
+                </div>
+                <div class="large-1 columns">
+                    <ul class="button-group">
+                        <li>
+                            <a class="button postfix" ng-click="reverse=false" ng-class="{'secondary': reverse}"
+                               data-tooltip title="ascending">
+                                <i class="fa fa-sort-asc"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="button postfix" ng-click="reverse=true" ng-class="{'secondary': !reverse}"
+                               data-tooltip title="descending">
+                                <i class="fa fa-sort-desc"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="large-4 columns">
+                    <input class="pull-right" type="search" ng-model="search" placeholder="search">
+                </div>
+            </div>
+
+            <hr>
+
+            <div ng-repeat="topic in topics | filter:search | orderBy:order.order:reverse">
+                <topic-short topic="topic"></topic-short>
+            </div>
+            <div class="alert-box secondary" ng-hide="topics.length">
+                no topics
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
