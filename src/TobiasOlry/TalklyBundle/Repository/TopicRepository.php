@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 

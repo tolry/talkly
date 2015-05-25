@@ -6,19 +6,16 @@
 namespace TobiasOlry\Talkly\Event\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use TobiasOlry\Talkly\Service\TopicService;
-use TobiasOlry\Talkly\Service\UserService;
-use TobiasOlry\Talkly\Security\Security;
-
-use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\NotificationMessage;
 use TobiasOlry\Talkly\Event\NotificationTransport\TransportInterface;
-
-use TobiasOlry\Talkly\Entity\User;
-use TobiasOlry\Talkly\Entity\Topic;
+use TobiasOlry\Talkly\Event\TopicEvent;
+use TobiasOlry\Talkly\Security\Security;
+use TobiasOlry\TalklyBundle\Entity\Topic;
+use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Service\TopicService;
+use TobiasOlry\TalklyBundle\Service\UserService;
 
 class NotificationSubscriber implements EventSubscriberInterface
 {
@@ -69,7 +66,10 @@ class NotificationSubscriber implements EventSubscriberInterface
     public function onTopicUpdated(TopicEvent $event)
     {
         $message = NotificationMessage::create(
-            sprintf("Information on Topic #%d has been updated by %s", $event->getTopic()->getId(), $this->security->getUser()),
+            sprintf("Information on Topic #%d has been updated by %s",
+                $event->getTopic()->getId(),
+                $this->security->getUser()
+            ),
             $event->getTopic()->getDescription()
         );
 
@@ -100,7 +100,8 @@ class NotificationSubscriber implements EventSubscriberInterface
     public function onTalkScheduled(TopicEvent $event)
     {
         $message = NotificationMessage::create(
-            sprintf("Topic #%d got scheduled for %s.", $event->getTopic()->getId(), $event->getTopic()->getLectureDate()->format('Y-m-d')),
+            sprintf("Topic #%d got scheduled for %s.", $event->getTopic()->getId(),
+                $event->getTopic()->getLectureDate()->format('Y-m-d')),
             "Talk was scheduled by " . $this->security->getUser()
         );
 

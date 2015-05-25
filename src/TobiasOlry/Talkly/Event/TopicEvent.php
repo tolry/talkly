@@ -5,9 +5,8 @@
 
 namespace TobiasOlry\Talkly\Event;
 
-use TobiasOlry\Talkly\Entity\Topic;
-use TobiasOlry\Talkly\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
+use TobiasOlry\TalklyBundle\Entity\Topic;
 
 class TopicEvent extends Event
 {

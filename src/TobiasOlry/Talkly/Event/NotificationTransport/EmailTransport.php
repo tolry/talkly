@@ -1,13 +1,12 @@
 <?php
-/*
+/**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
 namespace TobiasOlry\Talkly\Event\NotificationTransport;
 
-use \Swift_Mailer;
-use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Event\NotificationMessage;
+use TobiasOlry\TalklyBundle\Entity\User;
 
 class EmailTransport implements TransportInterface
 {
@@ -16,7 +15,7 @@ class EmailTransport implements TransportInterface
     private $twig;
 
     public function __construct(
-        Swift_Mailer $mailer,
+        \Swift_Mailer $mailer,
         \Twig_Environment $twig,
         $emailSender
     ) {
@@ -39,12 +38,12 @@ class EmailTransport implements TransportInterface
             'mail/notification.html.twig',
             ['user' => $user, 'message' => $message]
         );
-
+        
         $message = \Swift_Message::newInstance()
-            ->setSubject('[talkly] ' . $message->subject)
-            ->setBody($html, 'text/html')
             ->setFrom([$this->emailSender => 'Talkly Mailbot'])
-            ->setTo([$user->getEmail() => (string) $user]);
+            ->setTo([$user->getEmail() => (string) $user])
+            ->setSubject('[talkly] ' . $message->subject)
+            ->setBody($html, 'text/html');
 
         $this->mailer->send($message);
     }

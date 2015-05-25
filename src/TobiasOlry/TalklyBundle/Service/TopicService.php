@@ -1,17 +1,17 @@
 <?php
 
-namespace TobiasOlry\Talkly\Service;
+namespace TobiasOlry\TalklyBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TobiasOlry\Talkly\Entity\Topic;
-use TobiasOlry\Talkly\Entity\User;
 use TobiasOlry\Talkly\Event\CommentEvent;
 use TobiasOlry\Talkly\Event\Events;
 use TobiasOlry\Talkly\Event\TopicEvent;
-use TobiasOlry\Talkly\Repository\TopicRepository;
+use TobiasOlry\TalklyBundle\Entity\Topic;
+use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Repository\TopicRepository;
 
 /**
  *
@@ -31,7 +31,7 @@ class TopicService
     {
         $this->em              = $em;
         $this->eventDispatcher = $eventDispatcher;
-        $this->topicRepository = $em->getRepository('TobiasOlry\Talkly\Entity\Topic');
+        $this->topicRepository = $em->getRepository('TobiasOlry\TalklyBundle\Entity\Topic');
     }
 
     public function checkUserCanEditTopic(Topic $topic, User $user)

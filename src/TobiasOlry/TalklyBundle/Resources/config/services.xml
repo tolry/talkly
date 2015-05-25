@@ -24,6 +24,15 @@
             <argument type="string">TobiasOlry\TalklyBundle\Entity\Topic</argument>
         </service>
 
+        <service id="talkly.service.topic" class="TobiasOlry\TalklyBundle\Service\TopicService">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="talkly.service.user" class="TobiasOlry\TalklyBundle\Service\UserService">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+        </service>
+
         <service id="talkly.twig.gravatar_extension"
                  class="TobiasOlry\TalklyBundle\Twig\GravatarExtension"
                  public="false">
@@ -38,8 +47,8 @@
         </service>
 
         <service id="salavert.twig.time_ago" class="Salavert\Twig\Extension\TimeAgoExtension">
-            <tag name="twig.extension" />
-            <argument type="service" id="translator" />
+            <tag name="twig.extension"/>
+            <argument type="service" id="translator"/>
         </service>
     </services>
 

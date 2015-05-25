@@ -44,12 +44,12 @@ class TopicController extends Controller
                 'created_by'    => (int) $topic->getCreatedBy()->getId(),
                 '_links'        => [
                     'self' => [
-//                        'show'           => $this->generateUrl('topic-show', $params),
-//                        'edit'           => $this->generateUrl('topic-edit', $params),
-//                        'cast_vote'      => $this->generateUrl('topic-cast-vote', $params),
-//                        'retract_vote'   => $this->generateUrl('topic-retract-vote', $params),
-//                        'add_speaker'    => $this->generateUrl('topic-add-speaker', $params),
-//                        'remove_speaker' => $this->generateUrl('topic-remove-speaker', $params),
+                        'show'           => $this->generateUrl('topic-show', $params),
+                        'edit'           => $this->generateUrl('topic-edit', $params),
+                        'cast_vote'      => $this->generateUrl('topic-cast-vote', $params),
+                        'retract_vote'   => $this->generateUrl('topic-retract-vote', $params),
+                        'add_speaker'    => $this->generateUrl('topic-add-speaker', $params),
+                        'remove_speaker' => $this->generateUrl('topic-remove-speaker', $params),
                     ]
                 ]
             ];

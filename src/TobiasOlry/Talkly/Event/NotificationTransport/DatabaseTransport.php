@@ -1,13 +1,13 @@
 <?php
-/*
+/**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
 namespace TobiasOlry\Talkly\Event\NotificationTransport;
 
-use TobiasOlry\Talkly\Entity\User;
-use TobiasOlry\Talkly\Service\UserService;
 use TobiasOlry\Talkly\Event\NotificationMessage;
+use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Service\UserService;
 
 class DatabaseTransport implements TransportInterface
 {

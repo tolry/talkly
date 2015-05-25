@@ -1,10 +1,10 @@
-{% if topic.createdBy == security.user %}
+{% if topic.createdBy == app.user %}
     <a class="button tiny radius secondary" href="{{ path('topic-edit', {id: topic.id, view: view|default('list')}) }}">
         edit
     </a>
 {% endif %}
 
-{% if topic.hasVote(security.user) %}
+{% if topic.hasVote(app.user) %}
     <a data-tooltip title="retract your vote" class="button tiny radius"
        href="{{ path('topic-retract-vote', {id: topic.id, view: view|default('list')}) }}">
         <i class="fa fa-thumbs-up"></i>
@@ -17,7 +17,7 @@
 {% endif %}
 
 
-{% if topic.hasSpeaker(security.user) %}
+{% if topic.hasSpeaker(app.user) %}
     <a data-tooltip title="unregister as speaker" class="button tiny radius"
        href="{{ path('topic-remove-speaker', {id: topic.id, view: view|default('list')}) }}">
         <i class="fa fa-microphone"></i>
