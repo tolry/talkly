@@ -9,4 +9,5 @@ app/config/parameters.yml
 var/
 !var/.gitkeep
 web/bundles
-
+!bin/console
+bin/

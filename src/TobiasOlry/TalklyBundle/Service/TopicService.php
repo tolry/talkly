@@ -6,11 +6,11 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TobiasOlry\Talkly\Event\CommentEvent;
-use TobiasOlry\Talkly\Event\Events;
-use TobiasOlry\Talkly\Event\TopicEvent;
 use TobiasOlry\TalklyBundle\Entity\Topic;
 use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Event\CommentEvent;
+use TobiasOlry\TalklyBundle\Event\Events;
+use TobiasOlry\TalklyBundle\Event\TopicEvent;
 use TobiasOlry\TalklyBundle\Repository\TopicRepository;
 
 /**

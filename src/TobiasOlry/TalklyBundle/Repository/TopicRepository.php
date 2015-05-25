@@ -6,7 +6,7 @@
 namespace TobiasOlry\TalklyBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use TobiasOlry\Talkly\Criteria\TopicCriteria;
+use TobiasOlry\TalklyBundle\Criteria\TopicCriteria;
 use TobiasOlry\TalklyBundle\Entity\Topic;
 
 class TopicRepository extends EntityRepository

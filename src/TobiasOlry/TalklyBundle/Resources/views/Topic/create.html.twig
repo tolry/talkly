@@ -1,4 +1,4 @@
-<form action="{#{ path('topic-create') }#}" method="post" data-abide>
+<form action="{{ path('topic-create') }}" method="post" data-abide>
     <div>
         {{ form_widget(form.title, {attr: {placeholder: 'title'}}) }}
         <small class="error">you need to enter a title</small>

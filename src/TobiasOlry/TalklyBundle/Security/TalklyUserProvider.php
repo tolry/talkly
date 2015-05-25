@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
@@ -7,20 +7,45 @@ namespace TobiasOlry\TalklyBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Manager\UserManager;
 
 class TalklyUserProvider implements UserProviderInterface
 {
-    public function loadUserByUsername($username)
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+
+    public function __construct(UserManager $userManager)
     {
-        return new User($username);
+        $this->userManager = $userManager;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return \TobiasOlry\TalklyBundle\Entity\User
+     */
+    public function loadUserByUsername($username)
+    {
+        return $this->userManager->findOrCreate($username);
+    }
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return \TobiasOlry\TalklyBundle\Entity\User
+     */
     public function refreshUser(UserInterface $user)
     {
         return $this->loadUserByUsername($user->getUsername());
     }
 
+    /**
+     * @param string $class
+     *
+     * @return bool
+     */
     public function supportsClass($class)
     {
         return $class == 'TobiasOlry\TalklyBundle\Entity\User';

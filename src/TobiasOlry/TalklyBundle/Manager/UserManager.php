@@ -1,9 +1,9 @@
 <?php
 
-namespace TobiasOlry\Talkly\Security;
+namespace TobiasOlry\TalklyBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use TobiasOlry\Talkly\Entity\User;
+use TobiasOlry\TalklyBundle\Entity\User;
 
 /**
  *
@@ -30,11 +30,12 @@ class UserManager
     /**
      *
      * @param string $username
+     *
      * @return User
      */
     public function findOrCreate($username)
     {
-        $repo = $this->em->getRepository('TobiasOlry\Talkly\Entity\User');
+        $repo = $this->em->getRepository('TobiasOlry\TalklyBundle\Entity\User');
 
         if ($user = $repo->findOneBy(['username' => $username])) {
             return $user;

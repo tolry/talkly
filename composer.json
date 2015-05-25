@@ -3,6 +3,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
+        "php": ">=5.4.0",
         "symfony/symfony": "~2.7@beta",
         "doctrine/orm": "~2.4,<2.5",
         "doctrine/dbal": "<2.5",
@@ -17,7 +18,6 @@
         "kzykhys/ciconia": "~1.0.0",
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
-        "php": ">=5.4.0",
         "gremo/ciconia-bundle": "~1.0"
     },
     "autoload": {

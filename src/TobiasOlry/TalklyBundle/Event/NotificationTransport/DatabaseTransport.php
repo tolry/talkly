@@ -3,10 +3,10 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace TobiasOlry\Talkly\Event\NotificationTransport;
+namespace TobiasOlry\TalklyBundle\Event\NotificationTransport;
 
-use TobiasOlry\Talkly\Event\NotificationMessage;
 use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Event\NotificationMessage;
 use TobiasOlry\TalklyBundle\Service\UserService;
 
 class DatabaseTransport implements TransportInterface

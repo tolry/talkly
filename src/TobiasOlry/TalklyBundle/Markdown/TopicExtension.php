@@ -3,7 +3,7 @@
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
 
-namespace TobiasOlry\Talkly\Markdown;
+namespace TobiasOlry\TalklyBundle\Markdown;
 
 use Ciconia\Common\Text;
 use Ciconia\Extension\ExtensionInterface;
@@ -35,15 +35,12 @@ class TopicExtension implements ExtensionInterface
      */
     public function processMentions(Text $text)
     {
-        $urlGenerator = $this->urlGenerator;
-        $topicService = $this->topicService;
-
         // Turn #123 into [@username](http://example.com/user/username)
         $text->replace('/(?:^|[^a-zA-Z0-9])#([0-9]+)/',
-            function (Text $w, Text $topicId) use ($urlGenerator, $topicService) {
-                $topic      = $topicService->getTopic($topicId);
+            function (Text $w, Text $topicId) {
+                $topic      = $this->topicService->getTopic($topicId);
                 $topicTitle = $topic->getTitle();
-                $url        = $urlGenerator->generate(
+                $url        = $this->urlGenerator->generate(
                     'topic-show',
                     ['id' => $topicId],
                     UrlGeneratorInterface::ABSOLUTE_URL
