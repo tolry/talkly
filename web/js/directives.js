@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('talklyApp.directives', [])
-    .directive('topicShort', ['User',
-        function (User) {
+    .directive('topicShort', ['User', 'TEMPLATE_TOPIC_SHORT',
+        function (User, TEMPLATE_TOPIC_SHORT) {
             return {
                 restrict: 'E',
                 scope: {
                     topic: '='
                 },
-                templateUrl: 'js/templates/topic-short.html',
+                templateUrl: TEMPLATE_TOPIC_SHORT,
                 controller: function ($scope) {
                     $scope.voted = false;
                     $scope.speaker = false;

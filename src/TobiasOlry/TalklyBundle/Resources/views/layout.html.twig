@@ -111,7 +111,9 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/app.markdown-preview.js') }}"></script>
 <script type="text/javascript">
-    angular.module('talklyApp').constant('BASE_URL', '{{ path('homepage') }}');
+    angular.module('talklyApp')
+            .constant('BASE_URL', '{{ path('homepage') }}')
+            .constant('TEMPLATE_TOPIC_SHORT', '{{ asset('js/templates/topic-short.html') }}');
 
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);
