@@ -78,7 +78,7 @@ class TopicController extends Controller
             $service->markAsUpdated($topic);
             $this->addFlash('topic-' . $topic->getId() . '-success', 'topic data updated');
 
-            return $this->redirect($topic, $request->get('view', 'list'));
+            return $this->redirectToView($topic, $request->get('view', 'list'));
         }
 
         return ['topic' => $topic, 'form' => $form->createView()];

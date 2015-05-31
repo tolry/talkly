@@ -10,8 +10,19 @@ use TobiasOlry\TalklyBundle\Event\NotificationMessage;
 
 class EmailTransport implements TransportInterface
 {
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
+
+    /**
+     * @var string
+     */
     private $emailSender;
+
+    /**
+     * @var \Twig_Environment
+     */
     private $twig;
 
     public function __construct(
@@ -35,7 +46,7 @@ class EmailTransport implements TransportInterface
         }
 
         $html = $this->twig->render(
-            'mail/notification.html.twig',
+            'TobiasOlryTalklyBundle:Mail:notification.html.twig',
             ['user' => $user, 'message' => $message]
         );
 

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TobiasOlry\TalklyBundle\Entity\Notification;
 use TobiasOlry\TalklyBundle\Form\UserProfileType;
+use TobiasOlry\TalklyBundle\Service\UserService;
 
 /**
  * @author Tobias Olry <olry@gmail.com>
@@ -31,7 +32,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->userService->update($user);
+            $this->getUserService()->update($user);
             $this->addFlash('success', 'user-profile updated');
 
             return $this->redirectToRoute('user-profile');
@@ -63,7 +64,7 @@ class UserController extends Controller
             $notification->markAsDone();
         }
 
-        $this->userService->update($user);
+        $this->getUserService()->update($user);
 
         return $this->redirectToRoute('user-notifications');
     }
@@ -79,7 +80,7 @@ class UserController extends Controller
         $notification = $this->getNotification($request->get('id'));
         $notification->markAsDone();
 
-        $this->userService->update($this->getUser());
+        $this->getUserService()->update($this->getUser());
 
         return $this->redirectToRoute('user-notifications');
     }
@@ -100,6 +101,14 @@ class UserController extends Controller
         }
 
         throw $this->createNotFoundException();
+    }
+
+    /**
+     * @return UserService
+     */
+    protected function getUserService()
+    {
+        return $this->get('talkly.service.user');
     }
 }
 
