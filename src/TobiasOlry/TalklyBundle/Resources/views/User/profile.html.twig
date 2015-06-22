@@ -1,0 +1,67 @@
+{% extends 'TobiasOlryTalklyBundle::layout.html.twig' %}
+
+{% block navigation %}
+    {% set active_menu = 'user-profile' %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="small-12 large-offset-2 large-8 end columns">
+            {% for message in app.session.getFlashBag.get('success') %}
+                <div data-alert class="alert-box success">{{ message }}<a class="close" href="#">&times;</a></div>
+            {% endfor %}
+
+            <ul class="breadcrumbs">
+                <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>
+                <li class="current one-line"><a href="#">User {{ app.request.user }}</a></li>
+            </ul>
+
+            <form action="{{ path('user-profile') }}" method="post" data-abide>
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="columns small-6 medium-2">
+                        <img class="th" src="{{ gravatar(app.user, 96) }}" alt="">
+                    </div>
+                    <div class="columns small-6 medium-5">
+                        <dl>
+                            <dt>Username</dt>
+                            <dd>{{ user.username }}</dd>
+                        </dl>
+                    </div>
+                    <div class="columns small-6 medium-5">
+                        <dl>
+                            <dt>Activity</dt>
+                            <dd>
+                                <ul class="inline-list">
+                                    <li data-tooltip title="participated in talks"><span><i
+                                                    class="fa fa-microphone"></i> {{ user.speakingTopics|length }}</span>
+                                    </li>
+                                    <li data-tooltip title="commented on topics"><span><i
+                                                    class="fa fa-comments-o"></i> {{ user.comments|length }}</span></li>
+                                    <li data-tooltip title="voted on topics"><span><i
+                                                    class="fa fa-thumbs-o-up"></i> {{ user.votes|length }}</span></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <hr/>
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.email) }}
+
+                {{ form_rest(form) }}
+
+                <button class="button radius small right radius"><i class="fa fa-plus-square"></i> submit</button>
+            </form>
+        </div>
+
+    </div>
+
+{% endblock %}
+

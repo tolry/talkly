@@ -1,42 +1,54 @@
 {
+    "name": "tolry/talkly",
+    "license": "MIT",
+    "type": "project",
     "require": {
-        "silex/silex": "~1.2",
-        "symfony/form": "~2.5",
-        "symfony/validator": "~2.5",
-        "symfony/config": "~2.5",
-        "symfony/translation": "~2.5",
-        "symfony/yaml": "~2.5",
-        "symfony/console": "~2.5",
-        "monolog/monolog": "~1.0",
-        "twig/twig": "~1.15",
-        "symfony/twig-bridge": "~2.5",
-        "dflydev/doctrine-orm-service-provider": "~1.0.4",
-        "deralex/yaml-config-service-provider": "1.0.x-dev",
-        "silex/web-profiler": "~1.0",
-        "symfony/doctrine-bridge": "~2.5",
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.7",
+        "doctrine/orm": "~2.4,<2.5",
+        "doctrine/dbal": "<2.5",
+        "doctrine/doctrine-bundle": "~1.4",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/distribution-bundle": "~3.0,>=3.0.12",
+        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
+        "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         "kzykhys/ciconia": "~1.0.0",
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "swiftmailer/swiftmailer": "@stable",
-        "php": ">=5.4.0"
+        "gremo/ciconia-bundle": "~1.0"
     },
     "autoload": {
         "psr-0": {"": "src/"}
     },
+    "config": {
+        "bin-dir": "bin"
+    },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
     "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/config.yml",
-            "dist-file": "app/config/config.dist.yml"
+            "file": "app/config/parameters.yml",
+            "dist-file": "app/config/parameters.dist.yml"
         }
     },
     "minimum-stability": "stable"

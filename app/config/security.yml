@@ -1,0 +1,16 @@
+security:
+    encoders:
+        TobiasOlry\TalklyBundle\Entity\User: plain
+
+    providers:
+        talky_user_provider:
+            id: talkly.user_provider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+            security: false
+
+        default:
+            pattern: ^/
+            ntlm: true

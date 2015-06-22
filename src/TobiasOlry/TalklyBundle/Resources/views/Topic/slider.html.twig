@@ -1,0 +1,22 @@
+{% if topics|length > 0 %}
+    <div class="large-12">
+        <ul class="content-orbit" data-orbit>
+            {% for topic in topics %}
+                <li data-orbit-slide="headline-{{ loop.index }}">
+                    <div>
+                        <h2 class="one-line">
+                    <span class="fa-stack">
+                        <i class="fa fa-star fa-stack-2x"></i>
+                        <strong class="fa-stack-1x star-text">{{ loop.index }}</strong>
+                    </span>
+                            {{ topic.title }}
+                        </h2>
+
+                        <p class="right">{% include 'topic/details.html.twig' %}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+

@@ -1,0 +1,20 @@
+<ul class="inline-list">
+    <li data-tooltip title="{% if topic.votes|length %}{{ topic.votes|join(', ') }}{% else %}no votes{% endif %}"
+        class="{{ topic.votes|length > 4 ? 'text-highlight' : '' }}">
+        <span><i class="fa fa-thumbs-o-up"></i> {{ topic.votes|length }}</span>
+    </li>
+
+    <li class="{{ topic.comments|length > 4 ? 'text-highlight' : '' }}">
+        <span><i class="fa fa-comments-o"></i> {{ topic.comments|length }}</span>
+    </li>
+
+    <li class="{{ topic.speakers|length > 0 ? 'text-highlight' : '' }}">
+        <span><i class="fa fa-microphone"></i> {{ topic.speakers|default(['no speaker yet'])|join(', ') }}</span>
+    </li>
+
+    {% if topic.lectureDate %}
+        <li class="text-highlight">
+            <span><i class="fa fa-calendar"></i> {{ topic.lectureDate|date('Y-m-d') }}</span>
+        </li>
+    {% endif %}
+</ul>

@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="small-12 medium-8 medium-centered large-6 large-centered columns text-center">
+        <a class="button radius" data-toggle data-toggle-target="create-topic-form">
+            <div class="data-toggle-closed">
+                <i class="fa fa-angle-double-down"></i>
+                add a suggestion
+                <i class="fa fa-angle-double-down"></i>
+            </div>
+
+            <div class="data-toggle-open">
+                <i class="fa fa-angle-double-up"></i>
+                cancel suggestion
+                <i class="fa fa-angle-double-up"></i>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="bg-secondary hide" id="create-topic-form">
+    <div class="row">
+        <div class="small-12 medium-8 medium-centered large-6 large-centered columns">
+            <h5>new suggestion</h5>
+            {% include 'TobiasOlryTalklyBundle:Topic:create.html.twig' with {form: form} %}
+        </div>
+    </div>
+</div>
+

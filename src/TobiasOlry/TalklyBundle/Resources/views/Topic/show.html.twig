@@ -1,0 +1,53 @@
+{% extends 'TobiasOlryTalklyBundle::layout.html.twig' %}
+
+{% block navigation %}
+    {% if topic.lectureHeld %}
+        {% set active_menu = 'archive' %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <ul class="breadcrumbs">
+            {% if topic.lectureHeld %}
+                <li><a href="{{ path('archive') }}"><i class="fa fa-file-archive-o"></i> Archive</a></li>
+            {% else %}
+                <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> Home</a></li>
+            {% endif %}
+            <li class="current one-line"><a href="#">{{ topic.title }}</a></li>
+        </ul>
+
+        <div class="small-12 large-3 columns">
+            <h4>Speaker(s)</h4>
+            <hr/>
+            {% for speaker in topic.speakers %}
+                <div class="text-center">
+                    <img src="{{ gravatar(speaker, 96) }}" alt="" class="th"/><br/>
+
+                    <p class="one-line">{{ speaker }}</p>
+                </div>
+            {% else %}
+                <div class="panel">no speakers volunteered yet</div>
+            {% endfor %}
+
+            <h4>Vote(s)</h4><br/>
+            {% for voter in topic.votes %}
+                <p class="one-line">
+                    <img src="{{ gravatar(voter, 16) }}" alt="" class="th"/>
+                    {{ voter }}
+                </p>
+            {% else %}
+                <div class="panel">there are no votes for this talk yet</div>
+            {% endfor %}
+        </div>
+
+        <div class="small-12 large-9 columns">
+            {% include 'TobiasOlryTalklyBundle:Topic:display.long.html.twig' with {topic: topic} %}
+        </div>
+
+    </div>
+
+{% endblock %}
