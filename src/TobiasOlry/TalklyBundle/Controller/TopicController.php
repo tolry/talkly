@@ -36,7 +36,7 @@ class TopicController extends Controller
 
         $this->addFlash('topic-' . $topic->getId() . '-success', 'topic created');
 
-        return $this->redirectToView($topic, 'list');
+        return $this->redirectToView($topic, 'show');
     }
 
     /**
