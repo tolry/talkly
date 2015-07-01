@@ -41,6 +41,7 @@ class TopicController extends Controller
 
     /**
      * @Route("/{id}/", name="topic-show")
+     * @Route("/{id}/show", name="topic-show-legacy")
      * @Template()
      *
      * @param Request $request
