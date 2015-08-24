@@ -50,21 +50,3 @@ var app = {
 
     baseUrl: function () { return $('body').data('baseurl'); }
 };
-
-angular.module('talklyApp', ['talklyApp.services', 'talklyApp.directives', 'headroom', 'angularMoment'])
-
-    .controller('IndexController', ['$scope', 'Topics',
-        function ($scope, Topics, User) {
-            $scope.topics = [];
-            $scope.sorting = [
-                {label: 'votes', order: 'votes'},
-                {label: 'scheduled date', order: 'lecture_date'},
-                {label: 'date of submission', order: 'created_at'}
-            ];
-            $scope.order = $scope.sorting[0];
-            $scope.reverse = true;
-
-            Topics.query(function (data) {
-                $scope.topics = data;
-            });
-        }]);

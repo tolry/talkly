@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use TobiasOlry\TalklyBundle\Entity\Topic;
 use TobiasOlry\TalklyBundle\Entity\User;
+use TobiasOlry\TalklyBundle\Form\LectureTopicType;
 
 class TopicController extends Controller
 {
@@ -20,40 +21,27 @@ class TopicController extends Controller
     {
         $repository = $this->get('talkly.repository.topic');
         $topics     = iterator_to_array($repository->findNonArchivedMostVotesFirst());
+        $twig       = $this->get('templating');
 
-        $result = (new ArrayCollection($topics))->map(function (Topic $topic) {
+        $result = array_map(function (Topic $topic) use ($twig) {
 
-            $votes = array_map(function (User $user) {
-                return ['id' => $user->getId(), 'name' => (string) $user];
-            }, $topic->getVotes());
-
-            $speakers = array_map(function (User $user) {
-                return ['id' => $user->getId(), 'name' => (string) $user];
-            }, $topic->getSpeakers());
-
-            $params = ['id' => $topic->getId()];
+            $form = $this->createForm(new LectureTopicType(), $topic);
 
             return [
-                'id'            => $topic->getId(),
-                'title'         => $topic->getTitle(),
-                'votes'         => $votes,
-                'speakers'      => $speakers,
-                'comment_count' => count($topic->getComments()),
-                'lecture_date'  => $topic->getLectureDate() ? $topic->getLectureDate()->format('Y-m-d') : null,
-                'created_at'    => $topic->getCreatedAt() ? $topic->getCreatedAt()->format('Y-m-d') : null,
-                'created_by'    => (int) $topic->getCreatedBy()->getId(),
-                '_links'        => [
-                    'self' => [
-                        'show'           => $this->generateUrl('topic-show', $params),
-                        'edit'           => $this->generateUrl('topic-edit', $params),
-                        'cast_vote'      => $this->generateUrl('topic-cast-vote', $params),
-                        'retract_vote'   => $this->generateUrl('topic-retract-vote', $params),
-                        'add_speaker'    => $this->generateUrl('topic-add-speaker', $params),
-                        'remove_speaker' => $this->generateUrl('topic-remove-speaker', $params),
-                    ]
-                ]
+                'id'           => $topic->getId(),
+                'title'        => $topic->getTitle(),
+                'votes'        => count($topic->getVotes()),
+                'speakers'     => count($topic->getSpeakers()) > 0,
+                'comments'     => count($topic->getComments()),
+                'lecture_date' => $topic->getLectureDate() ? $topic->getLectureDate()->format('Y-m-d') : null,
+                'created_at'   => $topic->getCreatedAt() ? $topic->getCreatedAt()->format('Y-m-d') : null,
+                'created_by'   => (string) $topic->getCreatedBy(),
+                'html'         => [
+                    'short' => $twig->render('TobiasOlryTalklyBundle:Topic:display.short.html.twig', ['topic' => $topic]),
+                    'long' => $twig->render('TobiasOlryTalklyBundle:Topic:display.long.html.twig', ['topic' => $topic, 'form' => $form->createView()]),
+                ],
             ];
-        })->toArray();
+        }, $topics);
 
         return new JsonResponse(array_values($result));
     }
