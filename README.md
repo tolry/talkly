@@ -20,4 +20,4 @@ technologies used:
 - symfony 2
 - doctrine orm
 - jquery
-
+- angularjs
