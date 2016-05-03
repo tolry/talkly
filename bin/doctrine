@@ -1,6 +1,1 @@
-#!/usr/bin/env php
-<?php
-
-chdir(__DIR__);
-
-include(__DIR__ . '/../vendor/doctrine/orm/bin/doctrine.php');
+../vendor/doctrine/orm/bin/doctrine
