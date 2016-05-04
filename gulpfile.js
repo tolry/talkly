@@ -1,14 +1,14 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     concat = require('gulp-concat'),
-    minifyCSS = require('gulp-minify-css'),
+    minifyCSS = require('gulp-clean-css'),
     browserSync = require('browser-sync').create()
     ;
 
 gulp.task('default', ['css', 'js', 'fonts']);
 
 gulp.task('css', function () {
-    gulp.src(['src/scss/app.scss'])
+    return gulp.src(['src/scss/app.scss'])
         .pipe(concat('app.scss'))
         .pipe(sass({includePaths: [
             'bower_components/foundation/scss/',
@@ -20,7 +20,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('js', function () {
-    gulp.src([
+    return gulp.src([
             'bower_components/modernizr/modernizr.js',
             'bower_components/angular/angular.min.js',
             'bower_components/angular-resource/angular-resource.min.js',
@@ -38,14 +38,10 @@ gulp.task('js', function () {
         .pipe(concat('app.js'))
         .pipe(gulp.dest('web/js/'))
         .pipe(browserSync.stream());
-
-    // copy jquery.min.map
-    gulp.src('node_modules/jquery/dist/jquery.min.map')
-        .pipe(gulp.dest('web/js/'));
 });
 
 gulp.task('fonts', function () {
-    gulp.src('bower_components/font-awesome/fonts/*')
+    return gulp.src('bower_components/font-awesome/fonts/*')
         .pipe(gulp.dest('web/fonts/font-awesome'));
 });
 
