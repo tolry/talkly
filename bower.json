@@ -1,6 +1,5 @@
 {
-  "name": "talkly-foundation-app",
-  "version": "0.0.1",
+  "name": "talkly",
   "private": "true",
   "dependencies": {
     "font-awesome":     "~4.1.0",

@@ -2,9 +2,6 @@
 @import "foundation";
 @import "font-awesome";
 @import "mixins";
-@import "compass/css3/transform";
-@import "compass/css3/transition";
-
 
 body {
     overflow-y: scroll;
@@ -88,16 +85,6 @@ textarea {
 
 [data-toggle].toggle-open .data-toggle-open { display: inherit; }
 [data-toggle].toggle-open .data-toggle-closed { display: none; }
-
-.headroom {
-    @include transition(transform 200ms linear);
-}
-.headroom--pinned {
-    @include transform(translateY(0%));
-}
-.headroom--unpinned {
-    @include transform(translateY(-100%));
-}
 
 .markdown pre { margin-bottom: 1em; }
 

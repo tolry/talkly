@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('textarea')
         .each(function() {
-            console.log(this);
             var $textarea = $(this);
             var $previewDiv = $('<div />')
                 .addClass('panel')
