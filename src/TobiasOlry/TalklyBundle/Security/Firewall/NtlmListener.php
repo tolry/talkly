@@ -75,11 +75,6 @@ class NtlmListener implements ListenerInterface
         } catch (AuthenticationException $failed) {
             $this->logger->error((string) $failed);
         }
-
-        $response = new Response();
-        $response->setStatusCode(Response::HTTP_FORBIDDEN);
-        $event->setResponse($response);
-
     }
 
     /**

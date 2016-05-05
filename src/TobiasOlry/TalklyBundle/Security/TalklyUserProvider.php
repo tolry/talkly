@@ -48,6 +48,6 @@ class TalklyUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class == 'TobiasOlry\TalklyBundle\Entity\User';
+        return $class === 'TobiasOlry\TalklyBundle\Entity\User';
     }
 }
