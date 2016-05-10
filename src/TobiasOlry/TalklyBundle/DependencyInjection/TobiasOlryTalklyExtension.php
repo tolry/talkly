@@ -13,10 +13,10 @@ class TobiasOlryTalklyExtension extends Extension
     {
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config/service')
         );
 
+        $loader->load('general.xml');
         $loader->load('security.xml');
-        $loader->load('services.xml');
     }
 }

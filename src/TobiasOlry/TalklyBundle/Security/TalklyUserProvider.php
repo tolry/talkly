@@ -7,6 +7,7 @@ namespace TobiasOlry\TalklyBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use TobiasOlry\TalklyBundle\Entity\User;
 use TobiasOlry\TalklyBundle\Manager\UserManager;
 
 class TalklyUserProvider implements UserProviderInterface
@@ -48,6 +49,6 @@ class TalklyUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'TobiasOlry\TalklyBundle\Entity\User';
+        return $class === User::class;
     }
 }
