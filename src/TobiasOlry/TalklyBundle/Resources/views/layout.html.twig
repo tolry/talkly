@@ -1,21 +1,6 @@
-<!doctype html>
-<!--[if IE 9]>
-<html class="lt-ie10" lang="en" ng-app="talklyApp">
-<![endif]-->
-<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)"
-      ng-app="talklyApp">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>talkly</title>
+{% extends 'TobiasOlryTalklyBundle::base.html.twig' %}
 
-    <meta name="description" content=""/>
-    <meta name="author" content="Tobias Olry <tobias.olry@gmail.com>"/>
-
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
-    <link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/sunburst.min.css">
-</head>
-<body data-baseurl="{{ path('homepage') }}">
+{% block body %}
 
 <a class="show-for-large-up" href="https://github.com/tolry/talkly">
     <img style="position: absolute; top: 0; right: 0; border: 0; z-index: 9999;"
@@ -94,16 +79,4 @@
     </div>
 </footer>
 
-<script src="//yandex.st/highlightjs/8.0/highlight.min.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
-<script type="text/javascript">
-    angular.module('talklyApp')
-            .constant('BASE_URL', '{{ path('homepage') }}')
-            .constant('TEMPLATE_TOPIC_SHORT', '{{ asset('js/templates/topic-short.html') }}');
-
-    var doc = document.documentElement;
-    doc.setAttribute('data-useragent', navigator.userAgent);
-</script>
-</body>
-</html>
-
+{% endblock %}

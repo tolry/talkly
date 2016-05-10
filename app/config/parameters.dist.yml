@@ -1,17 +1,24 @@
 parameters:
-    debug:         true
-    user_provider: debug
-    user_provider_ntlm_domain: ~
-    notification_email_sender: ~
     database_driver:     pdo_mysql
     database_host:       localhost
     database_port:       ~
     database_name:       talkly
     database_user:       talkly
     database_password:
-    database_charset:    UTF8
+
     secret:              secure
+
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+
+    # security
+    debug:                      false
+    ntlm:                       false
+    user_provider_ntlm_domain:  ~
+    ldap_url:                   "ldap.forumsys.com"
+    ldap_dn_string:             "cn=read-only-admin,dc=example,dc=com"
+
+    # app config
+    notification_email_sender: ~
