@@ -1,3 +1,16 @@
+import 'babel-polyfill';
+import "../../bower_components/angular/angular.min.js";
+import "../../bower_components/angular-resource/angular-resource.min.js";
+import "../../bower_components/moment/min/moment.min.js";
+import "../../bower_components/angular-moment/angular-moment.min.js";
+import "../../bower_components/jquery/dist/jquery.min.js";
+import "../../bower_components/foundation/js/foundation.min.js";
+import "../../bower_components/headroom.js/dist/headroom.js";
+import "../../bower_components/headroom.js/dist/angular.headroom.js";
+import "./services.js";
+import "./directives.js";
+import "./app.markdown-preview.js";
+
 // Foundation JavaScript
 // Documentation can be found at: http://foundation.zurb.com/docs
 $(document).foundation({
