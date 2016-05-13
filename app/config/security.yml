@@ -17,6 +17,7 @@ security:
 
         default:
             pattern: ^/
+            anonymous: ~
             logout:
                 path:   logout
                 target: login

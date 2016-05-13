@@ -1,94 +1,130 @@
 @import "settings";
-@import "foundation";
-@import "font-awesome";
+@import "../../node_modules/zurb-foundation-5/scss/foundation";
+@import "../../node_modules/font-awesome/css/font-awesome.css";
 @import "mixins";
 
 body {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 
-meta.foundation-data-attribute-namespace { font-family: false; }
+meta.foundation-data-attribute-namespace {
+  font-family: false;
+}
 
 .one-line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bg-secondary {
-    background:$secondary-color;
+  background: $secondary-color;
 }
 
-nav { background-color: $topbar-bg-color; }
-nav ul { list-style-type: none; }
-nav ul li a { color: white; line-height: 3em; display: block; }
-nav ul li.active a,
-nav ul li.active a:hover { background: white; color: black; }
-nav ul li a:hover { background: lighten($topbar-bg-color, 10%); color: white; }
+nav {
+  background-color: $topbar-bg-color;
+}
 
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li a {
+  color: white;
+  line-height: 3em;
+  display: block;
+}
+
+nav ul li.active a,
+nav ul li.active a:hover {
+  background: white;
+  color: black;
+}
+
+nav ul li a:hover {
+  background: lighten($topbar-bg-color, 10%);
+  color: white;
+}
 
 body {
-    background-color: $topbar-bg-color;
-    padding-top: 3em;
+  background-color: $topbar-bg-color;
+  padding-top: 3em;
 }
 
 main {
-    background-color: white;
-    padding-top: 30px;
+  background-color: white;
+  padding-top: 30px;
 }
 
 header {
-    background:$secondary-color;
+  background: #ff0000;
 }
 
 footer {
+  color: white;
+  padding: 10px 0 30px 0;
+
+  a {
     color: white;
-    padding: 10px 0 30px 0;
+    font-weight: bold;
 
-    a {
-        color: white;
-        font-weight: bold;
-
-        :hover {
-            color: white;
-            text-decoration: underline;
-        }
+    :hover {
+      color: white;
+      text-decoration: underline;
     }
+  }
 }
 
 .highlight-target:target {
-    border-left: 4px solid #008cba;
-    padding-left: 1em;
+  border-left: 4px solid #008cba;
+  padding-left: 1em;
 }
 
-.quiet { color: gray; }
-.star-text { color: darken($primary-color, 20%); }
+.quiet {
+  color: gray;
+}
+
+.star-text {
+  color: darken($primary-color, 20%);
+}
 
 .votes {
-    font-size: 1.5em;
-    margin-top: 25px;
+  font-size: 1.5em;
+  margin-top: 25px;
 }
 
 .votes-text {
-    padding-top: 0.2em;
-    font-size: 0.7em;
-    text-align: right;
-    padding-right: 0.8em;
+  padding-top: 0.2em;
+  font-size: 0.7em;
+  text-align: right;
+  padding-right: 0.8em;
 }
 
 textarea {
-    height: auto;
+  height: auto;
 }
 
-[data-toggle] .data-toggle-open { display: none; }
-[data-toggle] .data-toggle-closed { display: inherit; }
+[data-toggle] .data-toggle-open {
+  display: none;
+}
 
-[data-toggle].toggle-open .data-toggle-open { display: inherit; }
-[data-toggle].toggle-open .data-toggle-closed { display: none; }
+[data-toggle] .data-toggle-closed {
+  display: inherit;
+}
 
-.markdown pre { margin-bottom: 1em; }
+[data-toggle].toggle-open .data-toggle-open {
+  display: inherit;
+}
+
+[data-toggle].toggle-open .data-toggle-closed {
+  display: none;
+}
+
+.markdown pre {
+  margin-bottom: 1em;
+}
 
 .text-highlight {
-    color: $warning-color;
-    font-weight: bold;
+  color: $warning-color;
+  font-weight: bold;
 }

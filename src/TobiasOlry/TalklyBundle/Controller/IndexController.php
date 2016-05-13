@@ -18,9 +18,7 @@ class IndexController extends Controller
      */
     public function dashboardAction()
     {
-        $form = $this->createForm(new CreateTopicType(), new Topic($this->getUser()));
-
-        return ['form' => $form->createView()];
+        return $this->render('@TobiasOlryTalkly/base.html.twig');
     }
 
     /**
