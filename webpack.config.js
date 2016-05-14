@@ -6,7 +6,8 @@ module.exports = {
 
     output: {
         filename: 'app.js',
-        path: 'web/build'
+        path: 'web/build',
+        publicPath: '/talkly/web/build/'
     },
 
     plugins: [
