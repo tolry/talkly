@@ -1,5 +1,6 @@
 import React from 'react';
 import Client from '../services/Client';
+import Topic from '../partials/Topic';
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -32,19 +33,15 @@ export default class Index extends React.Component {
 
     render() {
         return (
-            <ul>
+            <div>
                 {this.state.data.map(this.renderElement.bind(this))}
-            </ul>
+            </div>
         );
     }
 
     renderElement(data) {
-        console.log(data);
-
         return (
-            <li>
-                {data.title}
-            </li>
+            <Topic key={data.id} data={data} />
         );
     }
 }
