@@ -27,7 +27,6 @@ export default ({children}) => {
 
     return (
         <span>
-            <List foo="bar">{children}</List>
             <i className="fa fa-microphone"/>
             <ul>
                 {html}
