@@ -10,6 +10,11 @@ export default class Index extends React.Component {
             speakers: this.props.data.speakers,
             votes: this.props.data.votes
         };
+
+        this.user = {
+            id: 999,
+            name: 'test'
+        };
     }
 
     componentWillMount() {
@@ -21,21 +26,51 @@ export default class Index extends React.Component {
     componentWillUnmount() {
     }
 
-    foo() {
+    registerSpeaker() {
         var speakers = this.state.speakers;
-        speakers.push({
-            'name': 'test'
-        });
+
+        speakers.push(this.user);
 
         this.setState({
             speakers: speakers
         });
     }
 
+    unregisterSpeaker() {
+        var speakers = this.state.speakers;
+
+        speakers = speakers.filter(function (el) {
+            return el.id != this.user.id;
+        }.bind(this));
+
+        this.setState({
+            speakers: speakers
+        });
+    }
+
+    vote() {
+        var votes = this.state.votes;
+
+        votes.push(this.user);
+
+        this.setState({
+            votes: votes
+        });
+    }
+
+    unvote() {
+        var votes = this.state.votes;
+
+        votes = votes.filter(function (el) {
+            return el.id != this.user.id;
+        }.bind(this));
+
+        this.setState({
+            votes: votes
+        });
+    }
+
     render() {
-
-        console.log(this.props.data);
-
         var id = "topic-" + this.props.data.id;
 
         return (
@@ -53,22 +88,8 @@ export default class Index extends React.Component {
                         <a className="button tiny radius secondary">
                             edit
                         </a>
-
-                        <a data-tooltip title="retract your vote" className="button tiny radius" onClick={this.foo.bind(this)}>
-                            <i className="fa fa-thumbs-up" />
-                        </a>
-
-                        <a data-tooltip title="vote" className="button tiny radius secondary">
-                            <i className="fa fa-thumbs-up" />
-                        </a>
-
-                        <a data-tooltip title="unregister as speaker" className="button tiny radius">
-                            <i className="fa fa-microphone" />
-                        </a>
-
-                        <a data-tooltip title="register as speaker" className="button tiny radius secondary">
-                            <i className="fa fa-microphone" />
-                        </a>
+                        {this.renderVoteButton()}
+                        {this.renderSpeakerButton()}
                     </div>
                 </div>
 
@@ -76,7 +97,7 @@ export default class Index extends React.Component {
                     <div className="large-6 columns quiet">
                         <ul className="inline-list">
                             <li><Votes>{this.state.votes}</Votes></li>
-                            <li><span><i className="fa fa-comments-o" /> {this.props.data.comment_count}</span></li>
+                            <li><span><i className="fa fa-comments-o"/> {this.props.data.comment_count}</span></li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
                             <li><span><i className="fa fa-calendar"/> {this.props.data.lecture_date}</span></li>
                         </ul>
@@ -87,5 +108,48 @@ export default class Index extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    renderVoteButton() {
+        var hasVote = this.state.votes.find(function (el) {
+            return el.id == this.user.id;
+        }.bind(this));
+
+        if (hasVote) {
+            return (
+                <a title="retract your vote" className="button tiny radius"
+                   onClick={this.unvote.bind(this)}>
+                    <i className="fa fa-thumbs-up"/>
+                </a>
+            );
+        }
+
+        return (
+            <a title="vote" className="button tiny radius secondary" onClick={this.vote.bind(this)}>
+                <i className="fa fa-thumbs-up"/>
+            </a>
+        );
+    }
+
+    renderSpeakerButton() {
+        var isSpeaker = this.state.speakers.find(function (el) {
+            return el.id == this.user.id;
+        }.bind(this));
+
+        if (isSpeaker) {
+            return (
+                <a title="unregister as speaker" className="button tiny radius"
+                   onClick={this.unregisterSpeaker.bind(this)}>
+                    <i className="fa fa-microphone"/>
+                </a>
+            )
+        }
+
+        return (
+            <a title="register as speaker" className="button tiny radius secondary"
+               onClick={this.registerSpeaker.bind(this)}>
+                <i className="fa fa-microphone"/>
+            </a>
+        )
     }
 }
