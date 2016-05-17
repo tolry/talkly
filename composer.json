@@ -17,11 +17,12 @@
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
         "gremo/ciconia-bundle": "~1.0",
-        "davidbadura/faker-markdown-generator": "^1.0"
+        "jms/serializer-bundle": "^1.1"
     },
     "require-dev": {
         "hautelook/alice-bundle": "^1.3",
-        "doctrine/data-fixtures": "^1.2"
+        "doctrine/data-fixtures": "^1.2",
+        "davidbadura/faker-markdown-generator": "^1.0"
     },
     "autoload": {
         "psr-4": { "": "src/" },

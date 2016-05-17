@@ -5,6 +5,7 @@ namespace TobiasOlry\TalklyBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,26 @@ use TobiasOlry\TalklyBundle\Form\LectureTopicType;
  */
 class TopicController extends Controller
 {
+    /**
+     * @Route("/", name="topics")
+     *
+     * @return JsonResponse
+     */
+    public function listAction()
+    {
+        $repository = $this->get('talkly.repository.topic');
+        $topics     = $repository->findNonArchivedMostVotesFirst();
+
+
+        $serializer = $this->get('jms_serializer');
+        $json = $serializer->serialize($topics, 'json');
+
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+
+
     /**
      * @Route("/create", name="topic-create")
      *
@@ -51,9 +72,13 @@ class TopicController extends Controller
     public function showAction(Request $request)
     {
         $topic = $this->getTopicService()->getTopic($request->get('id'));
-        $form  = $this->createForm(new LectureTopicType(), $topic);
 
-        return ['topic' => $topic, 'form' => $form->createView()];
+        $serializer = $this->get('jms_serializer');
+        $json = $serializer->serialize($topic, 'json');
+
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
     /**

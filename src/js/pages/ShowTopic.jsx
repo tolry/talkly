@@ -1,10 +1,12 @@
 import React from 'react';
 import Client from '../services/Client';
-import Topic from '../partials/Topic';
+import Gravatar from '../components/Gravatar';
 
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
+
+        this.id = this.props.params.id;
 
         this.state = {
             data: []
@@ -24,27 +26,26 @@ export default class Index extends React.Component {
     }
 
     loadData() {
-        Client.get('/topic/').then(function (response) {
+        Client.get('/topic/' + this.id).then(function (response) {
             this.setState({
                 data: response.data
             });
+
+            console.log(response.data);
         }.bind(this));
     }
 
     render() {
         return (
-            <div>
-                {this.state.data.map(this.renderElement.bind(this))}
+            <div class="row">
+
+              <Gravatar size="400">d.a.badura@gmail.com</Gravatar>
+
             </div>
         );
     }
-
-    renderElement(data) {
-
-        console.log(data);
-
-        return (
-            <Topic key={data.id} data={data} />
-        );
-    }
 }
+
+
+
+

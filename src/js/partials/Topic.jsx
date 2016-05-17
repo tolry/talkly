@@ -1,6 +1,8 @@
 import React from "react";
+import {Link} from "react-router";
 import Speakers from "../components/Speakers";
 import Votes from "../components/Votes";
+import Date from "../components/Date";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -13,7 +15,7 @@ export default class Index extends React.Component {
 
         this.user = {
             id: 999,
-            name: 'test'
+            username: 'test'
         };
     }
 
@@ -72,6 +74,7 @@ export default class Index extends React.Component {
 
     render() {
         var id = "topic-" + this.props.data.id;
+        var link = this.props.data.id + "/show";
 
         return (
             <div id={id} className="clearfix highlight-target">
@@ -79,9 +82,9 @@ export default class Index extends React.Component {
                 <div className="row">
                     <div className="large-8 columns">
                         <h4 className="one-line" data-tooltip title={this.props.data.title }>
-                            <a>
+                            <Link to={link}>
                                 {this.props.data.title}
-                            </a>
+                            </Link>
                         </h4>
                     </div>
                     <div className="large-4 columns text-right">
@@ -99,11 +102,13 @@ export default class Index extends React.Component {
                             <li><Votes>{this.state.votes}</Votes></li>
                             <li><span><i className="fa fa-comments-o"/> {this.props.data.comment_count}</span></li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
-                            <li><span><i className="fa fa-calendar"/> {this.props.data.lecture_date}</span></li>
+                            <li>
+                                <i className="fa fa-calendar"/> <Date>{this.props.data.lecture_date}</Date>
+                            </li>
                         </ul>
                     </div>
                     <div className="large-6 columns text-right">
-                        <span className="quiet">{this.props.data.created_at}</span>
+                        <span className="quiet"><Date>{this.props.data.created_at}</Date></span>
                     </div>
                 </div>
             </div>

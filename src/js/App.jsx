@@ -1,9 +1,10 @@
-import 'babel-polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import "babel-polyfill";
+import React from "react";
+import ReactDOM from "react-dom";
 import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import Layout from "./Layout";
 import Index from "./pages/Index";
+import ShowTopic from "./pages/ShowTopic";
 
 // ID of the DOM element to mount app on
 const DOM_APP_EL_ID = 'app';
@@ -12,7 +13,8 @@ const DOM_APP_EL_ID = 'app';
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Layout}>
-            <IndexRoute component={Index} />
+            <IndexRoute component={Index}/>
+            <Route name="show" path=":id/show" component={ShowTopic}/>
         </Route>
     </Router>
 ), document.getElementById(DOM_APP_EL_ID));

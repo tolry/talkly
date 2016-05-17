@@ -38,10 +38,12 @@ class TopicRepository extends EntityRepository
 
         $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
 
-        return $topics
+        $result = $topics
             ->orderByDescending(function (Topic $topic) {
                 return count($topic->getVotes());
-            });
+            })->asArray();
+        
+        return array_values($result);
     }
 
     public function findArchivedGroupByMonth()
