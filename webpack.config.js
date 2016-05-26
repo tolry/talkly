@@ -1,5 +1,9 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var fs = require('fs');
+var yaml = require('yaml-js');
+
+var config = yaml.load(fs.readFileSync('./app/config/parameters.yml').toString());
 
 module.exports = {
     entry: './src/js/App',
@@ -7,7 +11,7 @@ module.exports = {
     output: {
         filename: 'app.js',
         path: 'web/build',
-        publicPath: '/talkly/web/build/'
+        publicPath: (config.parameters.public_path || '/') + 'build/'
     },
 
     plugins: [
