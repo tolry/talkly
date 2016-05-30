@@ -25,6 +25,19 @@ export default class Date extends React.Component {
     }
 
     render() {
+        if (! this.props.children) {
+            if (this.props.showIcon) {
+                return (<span title={this.props.children}><i className="fa fa-calendar"/> --</span>);
+            }
+            return (<span title={this.props.children}>--</span>);
+        }
+
+        if (this.props.showIcon) {
+            return (
+                <span title={this.props.children}><i className="fa fa-calendar"/> {this.state.date}</span>
+            );
+        }
+
         return (
             <span title={this.props.children}>{this.state.date}</span>
         );

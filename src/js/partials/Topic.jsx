@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import Speakers from "../components/Speakers";
 import Votes from "../components/Votes";
 import Date from "../components/Date";
+import Client from '../services/Client';
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -51,6 +52,9 @@ export default class Index extends React.Component {
     }
 
     vote() {
+        console.log(this);
+        console.log(this.state);
+        Client.post('/topic/' + this.props.data.id + '/cast-vote');
         var votes = this.state.votes;
 
         votes.push(this.user);
@@ -78,7 +82,6 @@ export default class Index extends React.Component {
 
         return (
             <div id={id} className="clearfix highlight-target">
-
                 <div className="row">
                     <div className="large-8 columns">
                         <h4 className="one-line" data-tooltip title={this.props.data.title }>
@@ -102,15 +105,14 @@ export default class Index extends React.Component {
                             <li><Votes>{this.state.votes}</Votes></li>
                             <li><span><i className="fa fa-comments-o"/> {this.props.data.comment_count}</span></li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
-                            <li>
-                                <i className="fa fa-calendar"/> <Date>{this.props.data.lecture_date}</Date>
-                            </li>
+                            <li><Date showIcon={true}>{this.props.data.lecture_date}</Date></li>
                         </ul>
                     </div>
                     <div className="large-6 columns text-right">
                         <span className="quiet"><Date>{this.props.data.created_at}</Date></span>
                     </div>
                 </div>
+                <hr/>
             </div>
         );
     }

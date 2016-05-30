@@ -3,34 +3,24 @@ import User from "./User";
 
 export default ({children}) => {
 
-    var html;
+    var html, css;
 
     if (children.length > 0) {
-
-        var users = children.slice(0, 4);
-
-        html = users.map(function (el) {
-            return (
-                <li>
-                    <User key={el.id}>{el}</User>
-                </li>
-            );
+        var users = children.map(function(el) {
+            return el.username;
         });
 
-        if (children.length > 4) {
-            html.push(<li key="more">...</li>);
-        }
-
+        html = users.join();
+        css = "text-highlight";
     } else {
-        html = <li key="empty">no speaker yet</li>
+        html = "no speaker yet";
+        css = "";
     }
 
     return (
-        <span>
-            <i className="fa fa-microphone"/>
-            <ul>
+        <span className={css}>
+            <i className="fa fa-microphone"/>&nbsp;
                 {html}
-            </ul>
         </span>
     );
 }

@@ -123,9 +123,8 @@ class TopicController extends Controller
         $topic   = $service->getTopic($request->get('id'));
 
         $service->addVote($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'vote cast');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
+        return new JsonResponse('success');
     }
 
     /**
