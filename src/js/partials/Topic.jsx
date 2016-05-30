@@ -54,7 +54,15 @@ export default class Index extends React.Component {
     vote() {
         console.log(this);
         console.log(this.state);
-        Client.post('/topic/' + this.props.data.id + '/cast-vote');
+        Client.post('/topic/' + this.props.data.id + '/cast-vote')
+        .then(function (response) {
+            console.log("then");
+            console.log(response);
+        })
+        .catch(function (response) {
+            console.log("catch");
+            console.log(response);
+        })
         var votes = this.state.votes;
 
         votes.push(this.user);
