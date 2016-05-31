@@ -61,3 +61,9 @@ swiftmailer:
 gremo_ciconia:
     renderer: html
     extensions: ~
+
+lexik_jwt_authentication:
+    private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path
+    public_key_path:  %kernel.root_dir%/../var/jwt/public.pem    # ssh public key path
+    pass_phrase:  ''                                      # ssh key pass phrase
+    token_ttl:        86400

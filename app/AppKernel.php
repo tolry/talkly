@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Gremo\CiconiaBundle\GremoCiconiaBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new TobiasOlry\TalklyBundle\TobiasOlryTalklyBundle(),
         );
 
