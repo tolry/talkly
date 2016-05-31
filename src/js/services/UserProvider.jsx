@@ -1,8 +1,6 @@
 export default class UserProvider {
-    getUser() {
-        return {
-            id: 1,
-            name: 'test'
-        };
+    constructor() {
+        this.token = null;
+        this.user = null;
     }
 }

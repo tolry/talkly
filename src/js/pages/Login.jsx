@@ -1,5 +1,7 @@
-import React from 'react';
-import Client from '../services/Client';
+import React from "react";
+import Client from "../services/Client";
+import UserProvider from "../services/UserProvider";
+import {hashHistory} from "react-router";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -10,30 +12,30 @@ export default class Index extends React.Component {
         };
     }
 
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-    }
-
-    componentWillUnmount() {
-
-    }
-
     submit(event) {
-        console.log('submit');
-
-        Client.post('/login_check').then(function (response) {
-
-
-
-            console.log(response.data);
-        }.bind(this)).catch(function (response) {
-            console.log(response);
-        });
-
         event.preventDefault();
+
+        Client.post('/login_check', {
+            _username: this.refs.username.value,
+            _password: this.refs.password.value
+        }, {
+            transformRequest: function (data, headers) {
+                var str = [];
+                for (var p in data)
+                    if (data.hasOwnProperty(p) && data[p]) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
+                    }
+                return str.join("&");
+            }
+        }).then(function (response) {
+
+            UserProvider.token = response.data.token;
+            console.log('push');
+            hashHistory.push('/');
+
+        }.bind(this)).catch(function (response) {
+
+        });
     }
 
     render() {
@@ -46,10 +48,10 @@ export default class Index extends React.Component {
                             <div className="row column log-in-form">
                                 <h4 className="text-center">Log in with you email account</h4>
                                 <label htmlFor="username">Username / E-Mail:</label>
-                                <input type="text" id="username" name="_username"/>
+                                <input ref="username" type="text" id="username" name="_username"/>
 
                                 <label htmlFor="password">Password:</label>
-                                <input type="password" id="password" name="_password"/>
+                                <input ref="password" type="password" id="password" name="_password"/>
 
                                 <button type="submit">Log In</button>
                             </div>

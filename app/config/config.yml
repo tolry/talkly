@@ -65,5 +65,5 @@ gremo_ciconia:
 lexik_jwt_authentication:
     private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path
     public_key_path:  %kernel.root_dir%/../var/jwt/public.pem    # ssh public key path
-    pass_phrase:  ''                                      # ssh key pass phrase
+    pass_phrase:      'talkly'                                   # ssh key pass phrase
     token_ttl:        86400
