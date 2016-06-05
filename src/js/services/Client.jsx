@@ -8,9 +8,8 @@ var instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-
-    if (UserProvider.token) {
-        config.headers.Authorization = 'Bearer ' + UserProvider.token;
+    if (UserProvider.getToken()) {
+        config.headers.Authorization = 'Bearer ' + UserProvider.getToken();
     }
 
     return config;

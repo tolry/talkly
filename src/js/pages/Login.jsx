@@ -2,7 +2,7 @@ import React from "react";
 import Client from "../services/Client";
 import UserProvider from "../services/UserProvider";
 import {hashHistory} from "react-router";
-import jwtDecode from "jwt-decode";
+
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -29,18 +29,10 @@ export default class Index extends React.Component {
                 return str.join("&");
             }
         }).then(function (response) {
-
-            var decodedToken = jwtDecode(response.data.token);
-
-            UserProvider.token = response.data.token;
-            UserProvider.user = decodedToken.user;
-            console.log('push');
-            console.log(UserProvider.user);
-
+            UserProvider.setToken(response.data.token);
             hashHistory.push('/');
-
         }.bind(this)).catch(function (response) {
-
+            UserProvider.clear();
         });
     }
 
