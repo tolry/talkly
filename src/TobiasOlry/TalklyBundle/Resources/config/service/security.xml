@@ -53,6 +53,12 @@
                  class="Symfony\Component\Ldap\LdapClient" public="true">
             <argument type="string">%security_ldap_url%</argument>
         </service>
+
+        <service id="talkly.security.jwt.event_listener"
+                 class="TobiasOlry\TalklyBundle\Security\Jwt\EventListener" public="true">
+            <argument type="service" id="security.token_storage" />
+            <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_jwt_created" method="onJwtCreated" />
+        </service>
     </services>
 
 </container>
