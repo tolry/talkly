@@ -29,7 +29,9 @@ class EventListener
         $payload['user'] = [
             'id' => $this->user->getId(),
             'username' => $this->user->getUsername(),
-            'name' => $this->user->getName(),
+            'name' => ($this->user->getName() == '')
+                ? $this->user->getName()
+                : $this->user->getUsername(),
         ];
 
         $event->setData($payload);

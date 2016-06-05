@@ -1,6 +1,9 @@
 import React from "react";
+import UserProvider from "../services/UserProvider";
 
 export default ({children}) => {
+    var user = UserProvider.getUser();
+
     return (
         <nav className="fixed" headroom>
             <div className="row">
@@ -26,7 +29,7 @@ export default ({children}) => {
                     <li className="xx (active_menu == 'user-profile') ? 'active' : '' xx small-3 columns one-line">
                         <a href="xx path('user-notifications') xx">
                             <i className="fa fa-user"></i>
-                            <span><span className="hide-for-small-only"> User</span></span>
+                            <span><span className="hide-for-small-only"> {user.name}</span></span>
 
                             <span className="label info round" data-tooltip
                                   title="xx app.user.unreadNotifications|length xx unread notification(s)">

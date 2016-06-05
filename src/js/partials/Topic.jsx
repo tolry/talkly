@@ -4,6 +4,7 @@ import Speakers from "../components/Speakers";
 import Votes from "../components/Votes";
 import Date from "../components/Date";
 import Client from '../services/Client';
+import UserProvider from "../services/UserProvider";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -14,10 +15,8 @@ export default class Index extends React.Component {
             votes: this.props.data.votes
         };
 
-        this.user = {
-            id: 999,
-            username: 'test'
-        };
+        this.user = UserProvider.getUser();
+        console.log(this.user);
     }
 
     componentWillMount() {
@@ -52,8 +51,6 @@ export default class Index extends React.Component {
     }
 
     vote() {
-        console.log(this);
-        console.log(this.state);
         Client.post('/topic/' + this.props.data.id + '/cast-vote')
         .then(function (response) {
             var votes = this.state.votes;
@@ -61,26 +58,30 @@ export default class Index extends React.Component {
             this.setState({
                 votes: votes
             });
-            console.log("success");
-            console.log(response);
+            //console.log(response);
         }.bind(this))
         .catch(function (response) {
-            console.log("failure");
-            console.log(response);
+            //console.log(response);
         }.bind(this));
-
     }
 
     unvote() {
-        var votes = this.state.votes;
+        Client.post('/topic/' + this.props.data.id + '/retract-vote')
+        .then(function (response) {
+            var votes = this.state.votes;
 
-        votes = votes.filter(function (el) {
-            return el.id != this.user.id;
+            votes = votes.filter(function (el) {
+                return el.id != this.user.id;
+            }.bind(this));
+
+            this.setState({
+                votes: votes
+            });
+            //console.log(response);
+        }.bind(this))
+        .catch(function (response) {
+            //console.log(response);
         }.bind(this));
-
-        this.setState({
-            votes: votes
-        });
     }
 
     render() {
