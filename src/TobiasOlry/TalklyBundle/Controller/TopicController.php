@@ -142,7 +142,7 @@ class TopicController extends Controller
         $service->removeVote($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'vote retracted');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
+        return new JsonResponse('success');
     }
 
     /**
@@ -211,7 +211,7 @@ class TopicController extends Controller
         $service->addSpeaker($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'add you as a speaker');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
+        return new JsonResponse('success');
     }
 
     /**
@@ -229,7 +229,7 @@ class TopicController extends Controller
         $service->removeSpeaker($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
+        return new JsonResponse('success');
     }
 
     /**

@@ -29,25 +29,36 @@ export default class Index extends React.Component {
     }
 
     registerSpeaker() {
-        var speakers = this.state.speakers;
+        Client.post('/topic/' + this.props.data.id + '/add-speaker')
+        .then(function (response) {
+            var speakers = this.state.speakers;
+            speakers.push(this.user);
 
-        speakers.push(this.user);
-
-        this.setState({
-            speakers: speakers
-        });
+            this.setState({
+                speakers: speakers
+            });
+        }.bind(this))
+        .catch(function (response) {
+            //console.log(response);
+        }.bind(this));
     }
 
     unregisterSpeaker() {
-        var speakers = this.state.speakers;
+        Client.post('/topic/' + this.props.data.id + '/remove-speaker')
+        .then(function (response) {
+            var speakers = this.state.speakers;
 
-        speakers = speakers.filter(function (el) {
-            return el.id != this.user.id;
+            speakers = speakers.filter(function (el) {
+                return el.id != this.user.id;
+            }.bind(this));
+
+            this.setState({
+                speakers: speakers
+            });
+        }.bind(this))
+        .catch(function (response) {
+            //console.log(response);
         }.bind(this));
-
-        this.setState({
-            speakers: speakers
-        });
     }
 
     vote() {
