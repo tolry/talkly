@@ -9,27 +9,27 @@ export default ({children}) => {
         <nav className="fixed" headroom>
             <div className="row">
                 <ul className="text-center">
-                    <li className="xx (active_menu == 'homepage') ? 'active' : '' xx small-3 columns">
-                        <Link to="/">
-                            <i className="fa fa-home"></i>
+                    <li className="small-3 columns">
+                        <Link to="/" activeClassName="active" onlyActiveOnIndex={true}>
+                            <i className="fa fa-home" />
                             <span><span className="hide-for-small-only"> Home</span></span>
                         </Link>
                     </li>
-                    <li className="xx (active_menu == 'calendar') ? 'active' : '' xx small-3 columns">
-                        <a href="xx path('calendar') xx">
-                            <i className="fa fa-calendar"></i>
+                    <li className="small-3 columns">
+                        <Link to="/calendar" activeClassName="active">
+                            <i className="fa fa-calendar" />
                             <span><span className="hide-for-small-only"> Calendar</span></span>
-                        </a>
+                        </Link>
                     </li>
-                    <li className="xx (active_menu == 'archive') ? 'active' : '' xx small-3 columns">
-                        <a href="xx path('archive') xx">
-                            <i className="fa fa-file-archive-o"></i>
+                    <li className="small-3 columns">
+                        <Link to="/archive" activeClassName="active">
+                            <i className="fa fa-file-archive-o" />
                             <span><span className="hide-for-small-only"> Archive</span></span>
-                        </a>
+                        </Link>
                     </li>
-                    <li className="xx (active_menu == 'user-profile') ? 'active' : '' xx small-3 columns one-line">
-                        <Link to="/profile">
-                            <i className="fa fa-user"></i>
+                    <li className="small-3 columns one-line">
+                        <Link to="/profile" activeClassName="active">
+                            <i className="fa fa-user" />
                             <span><span className="hide-for-small-only"> {user ? user.name || user.username : ''}</span></span>
 
                             <span className="label info round" data-tooltip

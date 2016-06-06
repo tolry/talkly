@@ -35,8 +35,8 @@ nav ul li a {
     display: block;
 }
 
-nav ul li.active a,
-nav ul li.active a:hover {
+nav ul li a.active,
+nav ul li a.active:hover {
     background: white;
     color: black;
 }
