@@ -11,9 +11,20 @@ class UserProvider {
 
     getUser() {
         var token = this.getToken();
-        var decodedToken = jwtDecode(token);
 
-        return decodedToken.user;
+        if (!token) {
+            return null;
+        }
+
+        try {
+            var decodedToken = jwtDecode(token);
+
+            return decodedToken.user;
+        } catch (e) {
+            this.clear();
+
+            return null;
+        }
     }
 
     clear() {

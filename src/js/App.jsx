@@ -5,7 +5,7 @@ import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import Layout from "./Layout";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
-import User from "./pages/User";
+import Profile from "./pages/Profile";
 import ShowTopic from "./pages/ShowTopic";
 
 // ID of the DOM element to mount app on
@@ -18,7 +18,7 @@ ReactDOM.render((
         <Route path="/" component={Layout}>
             <IndexRoute component={Index}/>
             <Route name="show" path=":id/show" component={ShowTopic}/>
-            <Route name="show" path="profile" component={User}/>
+            <Route name="profile" path="profile" component={Profile}/>
         </Route>
     </Router>
 ), document.getElementById(DOM_APP_EL_ID));

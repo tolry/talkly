@@ -5,8 +5,6 @@ import UserProvider from "../services/UserProvider";
 export default ({children}) => {
     var user = UserProvider.getUser();
 
-    console.log(user);
-
     return (
         <nav className="fixed" headroom>
             <div className="row">
@@ -32,7 +30,7 @@ export default ({children}) => {
                     <li className="xx (active_menu == 'user-profile') ? 'active' : '' xx small-3 columns one-line">
                         <Link to="/profile">
                             <i className="fa fa-user"></i>
-                            <span><span className="hide-for-small-only"> {user.name || user.username}</span></span>
+                            <span><span className="hide-for-small-only"> {user ? user.name || user.username : ''}</span></span>
 
                             <span className="label info round" data-tooltip
                                   title="xx app.user.unreadNotifications|length xx unread notification(s)">

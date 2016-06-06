@@ -16,7 +16,6 @@ export default class Index extends React.Component {
         };
 
         this.user = UserProvider.getUser();
-        console.log(this.user);
     }
 
     componentWillMount() {
