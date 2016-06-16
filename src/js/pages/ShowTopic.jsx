@@ -1,6 +1,7 @@
-import React from 'react';
-import Client from '../services/Client';
-import Gravatar from '../components/Gravatar';
+import React from "react";
+import Client from "../services/Client";
+import Gravatar from "../components/Gravatar";
+import Form from "../components/TopicForm";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -39,7 +40,8 @@ export default class Index extends React.Component {
         return (
             <div class="row">
 
-              <Gravatar size="400">d.a.badura@gmail.com</Gravatar>
+                <Form/>
+                <Gravatar size="400">d.a.badura@gmail.com</Gravatar>
 
             </div>
         );
