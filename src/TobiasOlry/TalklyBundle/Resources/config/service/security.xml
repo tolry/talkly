@@ -6,6 +6,7 @@
 
     <services>
         <service id="talkly.security.ntlm_authenticator" class="TobiasOlry\TalklyBundle\Security\NtlmAuthenticator">
+            <argument type="string">%ntlm%</argument>
             <argument type="string">%user_provider_ntlm_domain%</argument>
             <argument type="string">%debug%</argument>
         </service>

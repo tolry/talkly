@@ -16,6 +16,11 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class NtlmAuthenticator extends AbstractGuardAuthenticator
 {
     /**
+     * @var bool
+     */
+    private $enable;
+
+    /**
      * @var string
      */
     private $domain;
@@ -26,11 +31,13 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
     private $debug;
 
     /**
+     * @param bool $enable
      * @param string $domain
      * @param bool $debug
      */
-    public function __construct($domain, $debug = false)
+    public function __construct($enable, $domain, $debug = false)
     {
+        $this->enable = $enable;
         $this->domain = $domain;
         $this->debug = $debug;
     }
@@ -51,6 +58,10 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
+        if (!$this->enable) {
+            return null;
+        }
+
         if ($this->debug) {
             return [
                 'username' => 'musterman'
