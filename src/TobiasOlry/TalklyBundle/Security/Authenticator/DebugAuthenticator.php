@@ -1,6 +1,6 @@
 <?php
 
-namespace TobiasOlry\TalklyBundle\Security;
+namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,33 +13,19 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 /**
  * @author David Badura <david.badura@i22.de>
  */
-class NtlmAuthenticator extends AbstractGuardAuthenticator
+class DebugAuthenticator extends AbstractGuardAuthenticator
 {
-    /**
-     * @var bool
-     */
-    private $enabled;
-
     /**
      * @var string
      */
-    private $domain;
+    private $username;
 
     /**
-     * @var bool
+     * @param $username
      */
-    private $debug;
-
-    /**
-     * @param bool $enabled
-     * @param string $domain
-     * @param bool $debug
-     */
-    public function __construct($enabled, $domain, $debug = false)
+    public function __construct($username)
     {
-        $this->enabled = $enabled;
-        $this->domain = $domain;
-        $this->debug = $debug;
+        $this->username = $username;
     }
 
     /**
@@ -58,22 +44,8 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if (!$this->enabled) {
-            return null;
-        }
-
-        if ($this->debug) {
-            return [
-                'username' => 'musterman'
-            ];
-        }
-
-        if (!$username = $request->server->get('REMOTE_USER')) {
-            return null;
-        }
-
         return [
-            'username' => $username
+            'username' => $this->username
         ];
     }
 
@@ -84,9 +56,7 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $username = str_replace($this->domain . '\\', '', $credentials['username']);
-
-        return $userProvider->loadUserByUsername($username);
+        return $userProvider->loadUserByUsername($credentials['username']);
     }
 
     /**
@@ -96,18 +66,6 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        if ($this->debug) {
-            return true;
-        }
-
-        if (!$credentials['username']) {
-            return false;
-        }
-
-        if (strpos($credentials['username'], $this->domain . '\\') !== 0) {
-            return false;
-        }
-
         return true;
     }
 

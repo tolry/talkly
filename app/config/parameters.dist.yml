@@ -1,5 +1,4 @@
 parameters:
-    database_driver:     pdo_mysql
     database_host:       localhost
     database_port:       ~
     database_name:       talkly
@@ -12,13 +11,3 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
-
-    # security
-    debug:                      false
-    ntlm:                       false
-    user_provider_ntlm_domain:  ~
-    ldap_url:                   "ldap.forumsys.com"
-    ldap_dn_string:             "cn=read-only-admin,dc=example,dc=com"
-
-    # app config
-    notification_email_sender: ~

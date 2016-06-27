@@ -1,0 +1,8 @@
+parameters:
+  security_type: 'ldap' # debug, ntlm, ldap
+  security_ldap_url: 'ldap.forumsys.com'
+  security_ldap_dn_string: 'cn=read-only-admin,dc=example,dc=com' # {username}
+  security_ntlm_domain: 'workspace'
+  security_debug_username: 'mustermann'
+
+  notification_email_sender: ~

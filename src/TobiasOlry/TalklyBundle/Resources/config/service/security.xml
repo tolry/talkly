@@ -5,15 +5,39 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="talkly.security.ntlm_authenticator" class="TobiasOlry\TalklyBundle\Security\NtlmAuthenticator">
-            <argument type="string">%ntlm%</argument>
-            <argument type="string">%user_provider_ntlm_domain%</argument>
-            <argument type="string">%debug%</argument>
+        <service id="talkly.security.authenticator" class="TobiasOlry\TalklyBundle\Security\Authenticator\AuthenticatorStrategy">
+            <argument type="string">%security_type%</argument>
+            <call method="addAuthenticator">
+                <argument type="string">ntlm</argument>
+                <argument type="service" id="talkly.security.authenticator.ntlm" />
+            </call>
+            <call method="addAuthenticator">
+                <argument type="string">debug</argument>
+                <argument type="service" id="talkly.security.authenticator.debug" />
+            </call>
+            <call method="addAuthenticator">
+                <argument type="string">ldap</argument>
+                <argument type="service" id="talkly.security.authenticator.ldap" />
+            </call>
         </service>
 
-        <service id="talkly.security.authentication.ldap"
+        <service id="talkly.security.authenticator.ntlm" class="TobiasOlry\TalklyBundle\Security\Authenticator\NtlmAuthenticator">
+            <argument type="string">%security_ntlm_domain%</argument>
+        </service>
+
+        <service id="talkly.security.authenticator.debug" class="TobiasOlry\TalklyBundle\Security\Authenticator\DebugAuthenticator">
+            <argument type="string">%security_debug_username%</argument>
+        </service>
+
+        <service id="talkly.security.authenticator.ldap" class="TobiasOlry\TalklyBundle\Security\Authenticator\LdapAuthenticator">
+            <argument type="service" id="talkly.security.ldap" />
+            <argument type="string">%security_ldap_dn_string%</argument>
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="talkly.security.ldap"
                  class="Symfony\Component\Ldap\LdapClient" public="true">
-            <argument type="string">%ldap_url%</argument>
+            <argument type="string">%security_ldap_url%</argument>
         </service>
     </services>
 
