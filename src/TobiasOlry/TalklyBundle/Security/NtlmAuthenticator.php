@@ -18,7 +18,7 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
     /**
      * @var bool
      */
-    private $enable;
+    private $enabled;
 
     /**
      * @var string
@@ -31,13 +31,13 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
     private $debug;
 
     /**
-     * @param bool $enable
+     * @param bool $enabled
      * @param string $domain
      * @param bool $debug
      */
-    public function __construct($enable, $domain, $debug = false)
+    public function __construct($enabled, $domain, $debug = false)
     {
-        $this->enable = $enable;
+        $this->enabled = $enabled;
         $this->domain = $domain;
         $this->debug = $debug;
     }
@@ -58,7 +58,7 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if (!$this->enable) {
+        if (!$this->enabled) {
             return null;
         }
 
