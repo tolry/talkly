@@ -20,7 +20,9 @@ security:
             logout:
                 path:   logout
                 target: login
-            ntlm: "%ntlm%"
+            guard:
+                authenticators:
+                    - talkly.security.ntlm_authenticator
             form_login_ldap:
                 service: talkly.security.authentication.ldap
                 dn_string: "%ldap_dn_string%"
