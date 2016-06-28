@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @author David Badura <d.a.badura@gmail.com>
  * @author Tobias Olry <tobias.olry@gmail.com>
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\UserRepository")
  * @ORM\Table(name="UserProfil")
  */
 class User implements UserInterface
