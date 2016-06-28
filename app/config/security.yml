@@ -1,6 +1,6 @@
 security:
     encoders:
-        TobiasOlry\TalklyBundle\Entity\User: plain
+        TobiasOlry\TalklyBundle\Entity\User: bcrypt
 
     providers:
         talky_user_provider:

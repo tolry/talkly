@@ -8,6 +8,10 @@
         <service id="talkly.security.authenticator" class="TobiasOlry\TalklyBundle\Security\Authenticator\AuthenticatorStrategy">
             <argument type="string">%security_type%</argument>
             <call method="addAuthenticator">
+                <argument type="string">db</argument>
+                <argument type="service" id="talkly.security.authenticator.db" />
+            </call>
+            <call method="addAuthenticator">
                 <argument type="string">ntlm</argument>
                 <argument type="service" id="talkly.security.authenticator.ntlm" />
             </call>
@@ -19,6 +23,11 @@
                 <argument type="string">ldap</argument>
                 <argument type="service" id="talkly.security.authenticator.ldap" />
             </call>
+        </service>
+
+        <service id="talkly.security.authenticator.db" class="TobiasOlry\TalklyBundle\Security\Authenticator\DbAuthenticator">
+            <argument type="service" id="router" />
+            <argument type="service" id="security.password_encoder" />
         </service>
 
         <service id="talkly.security.authenticator.ntlm" class="TobiasOlry\TalklyBundle\Security\Authenticator\NtlmAuthenticator">
