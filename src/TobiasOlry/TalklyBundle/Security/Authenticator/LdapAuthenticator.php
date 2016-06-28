@@ -123,7 +123,7 @@ class LdapAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;
+        return new RedirectResponse($this->router->generate('homepage'));
     }
 
     /**
