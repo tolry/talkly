@@ -2,7 +2,7 @@ TobiasOlry\TalklyBundle\Entity\Topic:
   topic_{1..50}:
     __construct: [@user*]
     title: <sentence()>
-    description: <text()>
+    description: <markdown()>
     votes: <numberBetween(0, 15)>x @user*
     speakers: <numberBetween(0, 3)>x @user*
     lectureDate: 50%? <dateTimeBetween('now', '+2years')>
@@ -10,7 +10,7 @@ TobiasOlry\TalklyBundle\Entity\Topic:
   topic_{51..100}:
     __construct: [@user*]
     title: <sentence()>
-    description: <text()>
+    description: <markdown()>
     votes: <numberBetween(0, 15)>x @user*
     speakers: <numberBetween(0, 3)>x @user*
     lectureDate: <dateTimeBetween('-2years', 'now')>

@@ -16,7 +16,8 @@
         "kzykhys/ciconia": "~1.0.0",
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
-        "gremo/ciconia-bundle": "~1.0"
+        "gremo/ciconia-bundle": "~1.0",
+        "davidbadura/faker-markdown-generator": "^1.0"
     },
     "require-dev": {
         "hautelook/alice-bundle": "^1.3",

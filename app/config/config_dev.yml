@@ -43,3 +43,11 @@ hautelook_alice:
     locale: en_US       # Locale to used for faker; must be a valid Faker locale otherwise will fallback to en_EN
     seed: 1             # A seed to make sure faker generates data consistently across runs, set to null to disable
     persist_once: false # Only persist objects once if multiple files are passed
+
+services:
+    faker.provider.markdown:
+        class: DavidBadura\FakerMarkdownGenerator\FakerProvider
+        arguments:
+          - "@hautelook_alice.faker"
+        tags:
+          - { name: hautelook_alice.faker.provider }
