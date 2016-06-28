@@ -12,8 +12,8 @@
                 <argument type="service" id="talkly.security.authenticator.ntlm" />
             </call>
             <call method="addAuthenticator">
-                <argument type="string">debug</argument>
-                <argument type="service" id="talkly.security.authenticator.debug" />
+                <argument type="string">demo</argument>
+                <argument type="service" id="talkly.security.authenticator.demo" />
             </call>
             <call method="addAuthenticator">
                 <argument type="string">ldap</argument>
@@ -25,14 +25,14 @@
             <argument type="string">%security_ntlm_domain%</argument>
         </service>
 
-        <service id="talkly.security.authenticator.debug" class="TobiasOlry\TalklyBundle\Security\Authenticator\DebugAuthenticator">
-            <argument type="string">%security_debug_username%</argument>
+        <service id="talkly.security.authenticator.demo" class="TobiasOlry\TalklyBundle\Security\Authenticator\DemoAuthenticator">
+            <argument type="service" id="router" />
         </service>
 
         <service id="talkly.security.authenticator.ldap" class="TobiasOlry\TalklyBundle\Security\Authenticator\LdapAuthenticator">
+            <argument type="service" id="router" />
             <argument type="service" id="talkly.security.ldap" />
             <argument type="string">%security_ldap_dn_string%</argument>
-            <argument type="service" id="router" />
         </service>
 
         <service id="talkly.security.ldap"

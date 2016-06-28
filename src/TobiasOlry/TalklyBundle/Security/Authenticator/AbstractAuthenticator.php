@@ -2,10 +2,13 @@
 
 namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -13,19 +16,21 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 /**
  * @author David Badura <david.badura@i22.de>
  */
-class DebugAuthenticator extends AbstractGuardAuthenticator
+abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
 {
-    /**
-     * @var string
-     */
-    private $username;
+    const REDIRECT = 'app.security.redirect';
 
     /**
-     * @param $username
+     * @var RouterInterface
      */
-    public function __construct($username)
+    protected $router;
+
+    /**
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
     {
-        $this->username = $username;
+        $this->router = $router;
     }
 
     /**
@@ -35,7 +40,9 @@ class DebugAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return null;
+        $request->getSession()->set(self::REDIRECT, $request->getPathInfo());
+
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     /**
@@ -44,8 +51,13 @@ class DebugAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
+        if (!$request->request->has('_username') || !$request->request->get('_password')) {
+            return null;
+        }
+
         return [
-            'username' => $this->username
+            'username' => $request->request->get('_username'),
+            'password' => $request->request->get('_password')
         ];
     }
 
@@ -60,22 +72,15 @@ class DebugAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     * @param mixed $credentials
-     * @param UserInterface $user
-     * @return bool
-     */
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return true;
-    }
-
-    /**
      * @param Request $request
      * @param AuthenticationException $exception
      * @return null
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        $session = $request->getSession();
+        $session->set(Security::AUTHENTICATION_ERROR, $exception);
+
         return null;
     }
 
@@ -87,7 +92,13 @@ class DebugAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;
+        $url = $request->getSession()->get(self::REDIRECT);
+
+        if (!$url || $url === $this->router->generate('login') || $url === $this->router->generate('login_check')) {
+            $url = $this->router->generate('homepage');
+        }
+
+        return new RedirectResponse($request->getBaseUrl() . $url);
     }
 
     /**
@@ -95,6 +106,6 @@ class DebugAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return false;
+        return true;
     }
 }
