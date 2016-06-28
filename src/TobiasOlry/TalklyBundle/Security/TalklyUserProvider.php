@@ -18,11 +18,18 @@ class TalklyUserProvider implements UserProviderInterface
     private $userRepository;
 
     /**
-     * @param UserRepository $userRepository
+     * @var string
      */
-    public function __construct(UserRepository $userRepository)
+    private $type;
+
+    /**
+     * @param UserRepository $userRepository
+     * @param string $type
+     */
+    public function __construct(UserRepository $userRepository, $type = 'db')
     {
         $this->userRepository = $userRepository;
+        $this->type = $type;
     }
 
     /**
@@ -32,6 +39,12 @@ class TalklyUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
+        if ($this->type === 'db') {
+            return $this->userRepository->findOneBy([
+                'username' => $username
+            ]);
+        }
+
         return $this->userRepository->findOrCreate($username);
     }
 

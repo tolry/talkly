@@ -4,7 +4,7 @@ security:
 
     providers:
         talky_user_provider:
-            id: talkly.user_provider
+            id: talkly.security.user_provider
 
     firewalls:
         dev:
