@@ -10,6 +10,7 @@ use Symfony\Component\Ldap\LdapClient;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -112,6 +113,9 @@ class LdapAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        $session = $request->getSession();
+        $session->set(Security::AUTHENTICATION_ERROR, $exception);
+
         return null;
     }
 
