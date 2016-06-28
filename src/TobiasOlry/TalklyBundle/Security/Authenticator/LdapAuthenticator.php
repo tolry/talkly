@@ -8,7 +8,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @author David Badura <david.badura@i22.de>
+ * @author David Badura <d.a.badura@gmail.com>
  */
 class LdapAuthenticator extends AbstractAuthenticator
 {

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 /**
- * @author David Badura <david.badura@i22.de>
+ * @author David Badura <d.a.badura@gmail.com>
  */
 class AuthenticatorStrategy extends AbstractGuardAuthenticator
 {
