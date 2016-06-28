@@ -22,9 +22,4 @@ security:
                 target: login
             guard:
                 authenticators:
-                    - talkly.security.ntlm_authenticator
-            form_login_ldap:
-                service: talkly.security.authentication.ldap
-                dn_string: "%ldap_dn_string%"
-                login_path: login
-                check_path: login_check
+                    - talkly.security.authenticator
