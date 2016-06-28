@@ -21,3 +21,9 @@ technologies used:
 - doctrine orm
 - jquery
 - angularjs
+
+## Development
+
+```
+bin/console d:d:d --force && bin/console d:d:c && bin/console do:mi:mi -n && bin/console h:d:f:l -n
+```
