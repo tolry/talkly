@@ -38,8 +38,6 @@ class UserCreateCommand extends ContainerAwareCommand
         $user = new User($username);
         $user->setPassword($encoder->encodePassword($user, $password));
 
-        dump($user->getPassword());
-
         $entityManager->persist($user);
         $entityManager->flush();
     }
