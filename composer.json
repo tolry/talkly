@@ -17,7 +17,9 @@
         "salavert/time-ago-in-words": "~1.0",
         "timetoogo/pinq": "~2.1",
         "gremo/ciconia-bundle": "~1.0",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "lexik/jwt-authentication-bundle": "^1.5",
+        "zendframework/zend-code": "3.0.2"
     },
     "require-dev": {
         "hautelook/alice-bundle": "^1.3",
