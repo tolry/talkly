@@ -1,6 +1,6 @@
 import React from "react";
 import Client from "../services/Client";
-import UserProvider from "../services/UserProvider";
+import TokenStorage from "../services/TokenStorage";
 import {hashHistory} from "react-router";
 
 
@@ -17,22 +17,13 @@ export default class Index extends React.Component {
         event.preventDefault();
 
         Client.post('/login_check', {
-            _username: this.refs.username.value,
-            _password: this.refs.password.value
-        }, {
-            transformRequest: function (data, headers) {
-                var str = [];
-                for (var p in data)
-                    if (data.hasOwnProperty(p) && data[p]) {
-                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
-                    }
-                return str.join("&");
-            }
+            username: this.refs.username.value,
+            password: this.refs.password.value
         }).then(function (response) {
-            UserProvider.setToken(response.data.token);
+            TokenStorage.setToken(response.data.token);
             hashHistory.push('/');
         }.bind(this)).catch(function (response) {
-            UserProvider.clear();
+            TokenStorage.clear();
         });
     }
 

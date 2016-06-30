@@ -4,10 +4,12 @@ namespace TobiasOlry\TalklyBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TobiasOlry\TalklyBundle\Entity\Notification;
+use TobiasOlry\TalklyBundle\Entity\User;
 use TobiasOlry\TalklyBundle\Form\UserProfileType;
 use TobiasOlry\TalklyBundle\Service\UserService;
 
@@ -16,6 +18,19 @@ use TobiasOlry\TalklyBundle\Service\UserService;
  */
 class UserController extends Controller
 {
+    /**
+     * @Route("/user/current")
+     *
+     * @return JsonResponse
+     */
+    public function currentAction()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return new JsonResponse(['id' => $user->getId(), 'name' => $user->getUsername()]);
+    }
+
     /**
      * @Route("/user/profile", name="user-profile")
      * @Template()

@@ -1,34 +1,20 @@
-import jwtDecode from "jwt-decode";
+import Client from "../services/Client";
 
 class UserProvider {
-    setToken(token) {
-        localStorage.setItem("token", token);
-    }
-
-    getToken() {
-        return localStorage.getItem("token");
-    }
-
     getUser() {
-        var token = this.getToken();
-
-        if (!token) {
-            return null;
+        if (this.user) {
+            return this.user;
         }
 
-        try {
-            var decodedToken = jwtDecode(token);
+        Client.get('/user/current').then(function (response) {
+            this.user = response.data;
+        }.bind(this));
 
-            return decodedToken.user;
-        } catch (e) {
-            this.clear();
-
-            return null;
-        }
+        return this.user;
     }
 
     clear() {
-        localStorage.removeItem("token");
+        this.user = null;
     }
 }
 

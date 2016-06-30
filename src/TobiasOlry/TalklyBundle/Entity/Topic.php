@@ -6,6 +6,7 @@ namespace TobiasOlry\TalklyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JSON;
 
 /**
  * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\TopicRepository")
@@ -22,43 +23,58 @@ class Topic
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
+     *
+     * @JSON\MaxDepth(2)
      */
     private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      */
     private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="votes")
      * @ORM\JoinTable(name="vote")
+     *
+     * @JSON\MaxDepth(2)
      */
     private $votes;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
+     *
+     * @JSON\MaxDepth(2)
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="speakingTopics")
      * @ORM\JoinTable(name="speaker")
+     *
+     * @JSON\MaxDepth(2)
      */
     private $speakers;
 

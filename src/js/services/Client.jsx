@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {hashHistory} from "react-router";
-import UserProvider from "./UserProvider";
+import TokenStorage from "./TokenStorage";
 
 var instance = axios.create({
     baseURL: window.location.pathname,
@@ -8,8 +8,8 @@ var instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-    if (UserProvider.getToken()) {
-        config.headers.Authorization = 'Bearer ' + UserProvider.getToken();
+    if (TokenStorage.getToken()) {
+        config.headers.Authorization = 'Bearer ' + TokenStorage.getToken();
     }
 
     return config;

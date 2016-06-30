@@ -24,7 +24,9 @@ export default class Index extends React.Component {
     }
 
     loadData() {
-        Client.get('/topic/').then(function (response) {
+        Client.get('/topic/', {
+            
+        }).then(function (response) {
             this.setState({
                 data: response.data
             });

@@ -2,6 +2,7 @@
 
 namespace TobiasOlry\TalklyBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,11 +29,13 @@ class TopicController extends Controller
     public function listAction()
     {
         $repository = $this->get('talkly.repository.topic');
-        $topics     = $repository->findNonArchivedMostVotesFirst();
-
-
-        $serializer = $this->get('jms_serializer');
-        $json = $serializer->serialize($topics, 'json');
+        $topics = $repository->findNonArchivedMostVotesFirst();
+        
+        $json = $this->get('jms_serializer')->serialize(
+            $topics,
+            'json',
+            SerializationContext::create()->enableMaxDepthChecks()
+        );
 
         return new Response($json, 200, [
             'Content-Type' => 'application/json'
@@ -50,7 +53,7 @@ class TopicController extends Controller
     public function createAction(Request $request)
     {
         $topic = new Topic($this->getUser());
-        $form  = $this->createForm(new CreateTopicType(), $topic);
+        $form = $this->createForm(new CreateTopicType(), $topic);
 
         $form->handleRequest($request);
         $this->getTopicService()->add($topic);
@@ -92,7 +95,7 @@ class TopicController extends Controller
     public function editAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
         $service->checkUserCanEditTopic($topic, $this->getUser());
 
         $form = $this->createForm(new EditTopicType(), $topic);
@@ -120,7 +123,7 @@ class TopicController extends Controller
     public function castVoteAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->addVote($topic, $this->getUser());
 
@@ -137,7 +140,7 @@ class TopicController extends Controller
     public function retractVoteAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->removeVote($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'vote retracted');
@@ -155,8 +158,8 @@ class TopicController extends Controller
     public function commentAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
-        $user    = $this->getUser();
+        $topic = $service->getTopic($request->get('id'));
+        $user = $this->getUser();
         $comment = $request->get('comment');
 
         $service->comment($topic, $user, $comment);
@@ -174,8 +177,8 @@ class TopicController extends Controller
      */
     public function archiveAction(Request $request)
     {
-        $service    = $this->getTopicService();
-        $topic      = $service->getTopic($request->get('id'), $allowArchived = true);
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'), $allowArchived = true);
         $dateBefore = $topic->getLectureDate();
 
         $form = $this->createForm(new LectureTopicType(), $topic);
@@ -206,7 +209,7 @@ class TopicController extends Controller
     public function addSpeakerAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->addSpeaker($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'add you as a speaker');
@@ -224,7 +227,7 @@ class TopicController extends Controller
     public function removeSpeakerAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->removeSpeaker($topic, $this->getUser());
         $this->addFlash('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
@@ -233,7 +236,7 @@ class TopicController extends Controller
     }
 
     /**
-     * @param Topic  $topic
+     * @param Topic $topic
      * @param string $view
      *
      * @return RedirectResponse
@@ -249,7 +252,7 @@ class TopicController extends Controller
 
         if ($view == 'show') {
             $route = 'topic-show';
-            $url   = $this->generateUrl($route, ['id' => $topic->getId()]);
+            $url = $this->generateUrl($route, ['id' => $topic->getId()]);
         }
 
         return new RedirectResponse($url);
