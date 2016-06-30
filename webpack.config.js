@@ -3,7 +3,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var fs = require('fs');
 var yaml = require('yaml-js');
 
-var config = yaml.load(fs.readFileSync('./app/config/parameters.yml').toString());
+var config = yaml.load(fs.readFileSync('./app/config/local.yml').toString());
 
 module.exports = {
     entry: './src/js/App',

@@ -4,4 +4,6 @@ parameters:
   security_ldap_dn_string: 'cn=read-only-admin,dc=example,dc=com' # {username}
   security_ntlm_domain: 'workspace'
 
+  public_path: '/'
+
   notification_email_sender: ~
