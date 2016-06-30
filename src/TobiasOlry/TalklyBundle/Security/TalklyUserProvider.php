@@ -5,7 +5,7 @@ namespace TobiasOlry\TalklyBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use TobiasOlry\TalklyBundle\Entity\User;
-use TobiasOlry\TalklyBundle\Manager\UserManager;
+use TobiasOlry\TalklyBundle\Repository\UserRepository;
 
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>
@@ -13,16 +13,23 @@ use TobiasOlry\TalklyBundle\Manager\UserManager;
 class TalklyUserProvider implements UserProviderInterface
 {
     /**
-     * @var UserManager
+     * @var UserRepository
      */
-    private $userManager;
+    private $userRepository;
 
     /**
-     * @param UserManager $userManager
+     * @var string
      */
-    public function __construct(UserManager $userManager)
+    private $type;
+
+    /**
+     * @param UserRepository $userRepository
+     * @param string $type
+     */
+    public function __construct(UserRepository $userRepository, $type = 'db')
     {
-        $this->userManager = $userManager;
+        $this->userRepository = $userRepository;
+        $this->type = $type;
     }
 
     /**
@@ -32,7 +39,13 @@ class TalklyUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        return $this->userManager->findOrCreate($username);
+        if ($this->type === 'db') {
+            return $this->userRepository->findOneBy([
+                'username' => $username
+            ]);
+        }
+
+        return $this->userRepository->findOrCreate($username);
     }
 
     /**

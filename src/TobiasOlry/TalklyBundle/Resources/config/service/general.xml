@@ -5,13 +5,14 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="talkly.user_provider" class="TobiasOlry\TalklyBundle\Security\TalklyUserProvider">
-            <argument type="service" id="talkly.user_manager"/>
-        </service>
-
         <service id="talkly.repository.topic" class="TobiasOlry\TalklyBundle\Repository\TopicRepository">
             <factory service="doctrine.orm.default_entity_manager" method="getRepository"/>
             <argument type="string">TobiasOlry\TalklyBundle\Entity\Topic</argument>
+        </service>
+
+        <service id="talkly.repository.user" class="TobiasOlry\TalklyBundle\Repository\UserRepository">
+            <factory service="doctrine.orm.default_entity_manager" method="getRepository"/>
+            <argument type="string">TobiasOlry\TalklyBundle\Entity\User</argument>
         </service>
 
         <service id="talkly.service.topic" class="TobiasOlry\TalklyBundle\Service\TopicService">
@@ -45,10 +46,6 @@
             <argument type="service" id="router"/>
             <argument type="service" id="talkly.service.topic"/>
             <tag name="ciconia.extension"/>
-        </service>
-
-        <service id="talkly.user_manager" class="TobiasOlry\TalklyBundle\Manager\UserManager">
-            <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
 
         <service id="talkly.event.email_transport"

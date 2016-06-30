@@ -12,12 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @author David Badura <d.a.badura@gmail.com>
  * @author Tobias Olry <tobias.olry@gmail.com>
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\UserRepository")
  * @ORM\Table(name="UserProfil")
  */
 class User implements UserInterface
 {
-
     /**
      * @var int
      *
@@ -30,9 +29,16 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $password;
 
     /**
      * @var string
@@ -42,14 +48,14 @@ class User implements UserInterface
     protected $name;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $notifyByEmail;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -84,19 +90,20 @@ class User implements UserInterface
     protected $topics;
 
     /**
+     * @var ArrayCollection|Topic[]
      *
      * @ORM\ManyToMany(targetEntity="Topic", mappedBy="speakers")
      */
     protected $speakingTopics;
 
     /**
+     * @var ArrayCollection|Topic[]
      *
      * @ORM\ManyToMany(targetEntity="Topic", mappedBy="votes")
      */
     protected $votes;
 
     /**
-     *
      * @param string $username
      */
     public function __construct($username)
@@ -115,7 +122,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return int
      */
     public function getId()
@@ -124,7 +130,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getUsername()
@@ -133,7 +138,22 @@ class User implements UserInterface
     }
 
     /**
-     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
      * @param string $email
      */
     public function setEmail($email)
@@ -142,7 +162,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return string
      */
     public function getEmail()
@@ -151,7 +170,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return Topic[]
      */
     public function getSpeakingTopics()
@@ -190,7 +208,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return Topic[]
      */
     public function getVotes()
@@ -247,7 +264,6 @@ class User implements UserInterface
     }
 
     /**
-     *
      * @return Comment[]
      */
     public function getComments()
@@ -255,34 +271,76 @@ class User implements UserInterface
         return $this->comments;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return bool
+     */
     public function getNotifyByEmail()
     {
         return $this->notifyByEmail;
     }
 
+    /**
+     * @param bool $notifyByEmail
+     */
     public function setNotifyByEmail($notifyByEmail)
     {
-        $this->notifyByEmail = (boolean) $notifyByEmail;
+        $this->notifyByEmail = (bool) $notifyByEmail;
     }
 
+    /**
+     * @return bool
+     */
     public function getNotifyInApplication()
     {
         return $this->notifyInApplication;
     }
 
+    /**
+     * @param bool $notifyInApplication
+     */
     public function setNotifyInApplication($notifyInApplication)
     {
-        $this->notifyInApplication = (boolean) $notifyInApplication;
+        $this->notifyInApplication = (bool) $notifyInApplication;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return '';
+    }
+
+    /**
+     *
+     */
+    public function eraseCredentials()
+    {
+        // do nothing
     }
 
     /**
@@ -297,22 +355,5 @@ class User implements UserInterface
         }
 
         return $this->username;
-    }
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function getPassword()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-
-    public function eraseCredentials()
-    {
     }
 }

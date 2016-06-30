@@ -1,10 +1,10 @@
 security:
     encoders:
-        TobiasOlry\TalklyBundle\Entity\User: plain
+        TobiasOlry\TalklyBundle\Entity\User: bcrypt
 
     providers:
         talky_user_provider:
-            id: talkly.user_provider
+            id: talkly.security.user_provider
 
     firewalls:
         dev:

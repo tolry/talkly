@@ -1,6 +1,7 @@
 TobiasOlry\TalklyBundle\Entity\User:
   test:
     __construct: [test]
+    password: "$2y$13$Kv1oKukGIBl0bUJ/2L9Lu.RzkpskEkbVW.pfL4DFV1/KDkDGayiHu" # test
     name (unique): Test
     email (unique): mail@example.com
     notifyByEmail: true

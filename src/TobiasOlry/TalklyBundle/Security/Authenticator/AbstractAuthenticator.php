@@ -92,13 +92,14 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $url = $request->getSession()->get(self::REDIRECT);
+        $path = $request->getSession()->get(self::REDIRECT);
+        $request->getSession()->remove(self::REDIRECT);
 
-        if (!$url || $url === $this->router->generate('login') || $url === $this->router->generate('login_check')) {
-            $url = $this->router->generate('homepage');
+        if (!$path || $path === $this->router->generate('login') || $path === $this->router->generate('login_check')) {
+            $path = $this->router->generate('homepage');
         }
 
-        return new RedirectResponse($request->getBaseUrl() . $url);
+        return new RedirectResponse($request->getUriForPath($path));
     }
 
     /**

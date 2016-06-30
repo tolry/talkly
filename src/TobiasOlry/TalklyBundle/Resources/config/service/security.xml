@@ -5,8 +5,17 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="talkly.security.user_provider" class="TobiasOlry\TalklyBundle\Security\TalklyUserProvider">
+            <argument type="service" id="talkly.repository.user"/>
+            <argument type="string">%security_type%</argument>
+        </service>
+
         <service id="talkly.security.authenticator" class="TobiasOlry\TalklyBundle\Security\Authenticator\AuthenticatorStrategy">
             <argument type="string">%security_type%</argument>
+            <call method="addAuthenticator">
+                <argument type="string">db</argument>
+                <argument type="service" id="talkly.security.authenticator.db" />
+            </call>
             <call method="addAuthenticator">
                 <argument type="string">ntlm</argument>
                 <argument type="service" id="talkly.security.authenticator.ntlm" />
@@ -19,6 +28,11 @@
                 <argument type="string">ldap</argument>
                 <argument type="service" id="talkly.security.authenticator.ldap" />
             </call>
+        </service>
+
+        <service id="talkly.security.authenticator.db" class="TobiasOlry\TalklyBundle\Security\Authenticator\DbAuthenticator">
+            <argument type="service" id="router" />
+            <argument type="service" id="security.password_encoder" />
         </service>
 
         <service id="talkly.security.authenticator.ntlm" class="TobiasOlry\TalklyBundle\Security\Authenticator\NtlmAuthenticator">
