@@ -3,6 +3,7 @@
 namespace TobiasOlry\TalklyBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -18,8 +19,30 @@ class UserCreateCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('talkly:user:create');
+        $this
+            ->setName('talkly:user:create')
+            ->addArgument('username', null, '', null)
+            ->addArgument('password', null,  '', null)
+        ;
     }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        if (!$username = $input->hasArgument('username')) {
+            $input->setArgument('username', $io->ask('username'));
+        }
+
+        if (!$password = $input->hasArgument('password')) {
+            $input->setArgument('password', $io->askHidden('password'));
+        }
+    }
+
 
     /**
      * @param InputInterface $input
@@ -29,8 +52,8 @@ class UserCreateCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
 
-        $username = $io->ask('username');
-        $password = $io->askHidden('password');
+        $username = $input->getArgument('username');
+        $password = $input->getArgument('password');
 
         $encoder = $this->getContainer()->get('security.password_encoder');
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -40,5 +63,7 @@ class UserCreateCommand extends ContainerAwareCommand
 
         $entityManager->persist($user);
         $entityManager->flush();
+
+        $io->success('user created');
     }
 }
