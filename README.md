@@ -22,8 +22,11 @@ technologies used:
 - jquery
 - angularjs
 
-## Development
+## Setup
 
 ```
-bin/console d:d:d --force && bin/console d:d:c && bin/console do:mi:mi -n && bin/console h:d:f:l -n
+git clone https://github.com/tolry/talkly.git
+cd talkly
+composer install
+bin/console talkly:setup
 ```
