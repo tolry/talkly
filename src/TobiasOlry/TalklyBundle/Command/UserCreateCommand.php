@@ -30,17 +30,30 @@ class UserCreateCommand extends ContainerAwareCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        if (!$username = $input->hasArgument('username')) {
+            $input->setArgument('username', $io->ask('username'));
+        }
+
+        if (!$password = $input->hasArgument('password')) {
+            $input->setArgument('password', $io->askHidden('password'));
+        }
+    }
+
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (!$username = $input->getArgument('username')) {
-            $username = $io->ask('username');
-        }
-
-        if (!$password = $input->getArgument('password')) {
-            $password = $io->askHidden('password');
-        }
+        $username = $input->getArgument('username');
+        $password = $input->getArgument('password');
 
         $encoder = $this->getContainer()->get('security.password_encoder');
         $entityManager = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -50,5 +63,7 @@ class UserCreateCommand extends ContainerAwareCommand
 
         $entityManager->persist($user);
         $entityManager->flush();
+
+        $io->success('user created');
     }
 }

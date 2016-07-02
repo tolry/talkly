@@ -76,14 +76,14 @@ class SetupCommand extends ContainerAwareCommand
      */
     private function setupDatabase(OutputStyle $io, $env)
     {
-        $io->section('Setup database');
+        $io->section('Setting up database');
 
         $dbal = $this->getContainer()->get('doctrine.dbal.default_connection');
 
         try {
             $dbal->connect();
         } catch (\Exception $e) {
-            throw new \RuntimeException('Database Server Connection fail! Please check your app/config/parameters.yml');
+            throw new \RuntimeException('Database Server Connection failed! Please check your app/config/parameters.yml');
         }
 
         $database = $dbal->getDatabase();
@@ -183,7 +183,7 @@ class SetupCommand extends ContainerAwareCommand
     {
         $io->section('Create user');
 
-        if (!$io->confirm('do you want create an user?')) {
+        if (!$io->confirm('do you want create a user?')) {
             return;
         }
 
