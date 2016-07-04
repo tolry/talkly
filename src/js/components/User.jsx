@@ -1,7 +1,7 @@
 import React from "react";
 
-export default ({children}) => {
-    return (
-        <a href="#">{children.username}</a>
-    );
+export default class User extends React.Component {
+    render() {
+        return (<span>{this.props.children.name}</span>);
+    }
 }

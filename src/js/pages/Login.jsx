@@ -1,6 +1,6 @@
 import React from "react";
 import Client from "../services/Client";
-import TokenStorage from "../services/TokenStorage";
+import AuthorizationStorage from "../services/AuthorizationStorage";
 import {hashHistory} from "react-router";
 
 
@@ -20,10 +20,17 @@ export default class Index extends React.Component {
             username: this.refs.username.value,
             password: this.refs.password.value
         }).then(function (response) {
-            TokenStorage.setToken(response.data.token);
-            hashHistory.push('/');
-        }.bind(this)).catch(function (response) {
-            TokenStorage.clear();
+            AuthorizationStorage.setToken(response.data.token);
+
+            Client.get('/user/current').then(function (response) {
+                AuthorizationStorage.setUser(response.data);
+                hashHistory.push('/');
+            }).catch(function (response) {
+                AuthorizationStorage.clear();
+            });
+
+        }).catch(function (response) {
+            AuthorizationStorage.clear();
         });
     }
 

@@ -4,7 +4,7 @@ import Speakers from "../components/Speakers";
 import Votes from "../components/Votes";
 import Date from "../components/Date";
 import Client from '../services/Client';
-import UserProvider from "../services/UserProvider";
+import AuthorizationStorage from "../services/AuthorizationStorage";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class Index extends React.Component {
             votes: this.props.data.votes
         };
 
-        this.user = UserProvider.getUser();
+        this.user = AuthorizationStorage.getUser();
     }
 
     componentWillMount() {

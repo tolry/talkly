@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from 'react-router'
-import UserProvider from "../services/UserProvider";
+import AuthorizationStorage from "../services/AuthorizationStorage";
 
 export default ({children}) => {
-    var user = UserProvider.getUser();
+    var user = AuthorizationStorage.getUser();
+
+    console.log(user);
 
     return (
         <nav className="fixed" headroom>

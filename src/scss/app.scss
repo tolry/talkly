@@ -128,3 +128,21 @@ textarea {
     color: $warning-color;
     font-weight: bold;
 }
+
+.taglist {
+    margin-left: 2px;
+    display: inline;
+    list-style: none;
+}
+
+.taglist li {
+    display: inline;
+}
+
+.taglist li:after {
+    content: ", ";
+}
+
+.taglist li:last-child:after {
+    content: "";
+}
