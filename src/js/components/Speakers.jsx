@@ -2,10 +2,10 @@ import React from "react";
 import User from "./User";
 
 export default ({children}) => {
-    let users = children.map(function (el) {
+    let users = children.map(function (user) {
         return (
-            <li>
-                <User>{el}</User>
+            <li key={user.id}>
+                <User>{user}</User>
             </li>
         );
     });

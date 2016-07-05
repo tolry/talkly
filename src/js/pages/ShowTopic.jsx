@@ -38,7 +38,7 @@ export default class Index extends React.Component {
 
     render() {
         return (
-            <div class="row">
+            <div className="row">
 
                 <Form/>
                 <Gravatar size="400">d.a.badura@gmail.com</Gravatar>

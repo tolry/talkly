@@ -2,7 +2,7 @@ import React from 'react';
 import Client from '../services/Client';
 import Topic from '../partials/Topic';
 
-export default class Calendar extends React.Component {
+export default class Archive extends React.Component {
     constructor(props) {
         super(props);
 
@@ -16,17 +16,26 @@ export default class Calendar extends React.Component {
     }
 
     loadData() {
-        Client.get('/topic/').then(function (response) {
+        Client.get('/topic/', {
+
+        }).then((response) => {
+            console.log('begin');
             this.setState({
                 data: response.data
             });
-        }.bind(this));
+        });
     }
 
     render() {
+        let topics = this.state.data.map((topic) => {
+            return (
+                <Topic key={topic.id} data={topic} />
+            );
+        });
+
         return (
             <div>
-                Calendar
+                {topics}
             </div>
         );
     }

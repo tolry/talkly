@@ -16,17 +16,25 @@ export default class Archive extends React.Component {
     }
 
     loadData() {
-        Client.get('/topic/').then(function (response) {
+        Client.get('/topic/', {
+
+        }).then((response) => {
             this.setState({
                 data: response.data
             });
-        }.bind(this));
+        });
     }
 
     render() {
+        let topics = this.state.data.map((topic) => {
+            return (
+                <Topic key={topic.id} data={topic} />
+            );
+        });
+
         return (
             <div>
-                Archive
+                {topics}
             </div>
         );
     }

@@ -8,7 +8,7 @@ export default ({children}) => {
     console.log(user);
 
     return (
-        <nav className="fixed" headroom>
+        <nav className="fixed">
             <div className="row">
                 <ul className="text-center">
                     <li className="small-3 columns">
