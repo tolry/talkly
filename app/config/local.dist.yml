@@ -6,4 +6,7 @@ parameters:
 
   public_path: '/'
 
-  notification_email_sender: ~
+  notification_email_sender: info@example.com
+
+  dev_delivery_address: ~
+  dev_disable_delivery: true

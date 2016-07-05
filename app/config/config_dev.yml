@@ -34,8 +34,9 @@ monolog:
             channels: ["doctrine"]
 
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: %dev_delivery_address%
+    disable_delivery: %dev_disable_delivery%
 
 hautelook_alice:
     db_drivers:
