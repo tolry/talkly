@@ -7,6 +7,10 @@ framework:
         strict_requirements: true
     profiler: { only_exceptions: false }
 
+    assets:
+        base_urls:
+            - '//localhost:8080'
+
 web_profiler:
     toolbar: true
     intercept_redirects: false

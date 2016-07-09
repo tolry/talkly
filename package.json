@@ -2,7 +2,7 @@
   "name": "talkly",
   "scripts": {
     "postinstall": "./node_modules/.bin/webpack",
-    "start": "./node_modules/.bin/webpack --watch",
+    "start": "node server.js",
     "build": "./node_modules/.bin/webpack"
   },
   "dependencies": {
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.10.0",
+    "react-hot-loader": "^1.3.0",
     "webpack-dev-server": "^1.14.1"
   },
   "private": true

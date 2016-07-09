@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var fs = require('fs');
@@ -6,15 +7,22 @@ var yaml = require('yaml-js');
 var config = yaml.load(fs.readFileSync('./app/config/local.yml').toString());
 
 module.exports = {
-    entry: './src/js/App',
+    devtool: 'eval',
+
+    entry: [
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server',
+        './src/js/App'
+    ],
 
     output: {
         filename: 'app.js',
-        path: 'web/build',
-        publicPath: (config.parameters.public_path || '/') + 'build/'
+        path: path.join(__dirname, 'web/build'),
+        publicPath: 'http://localhost:8080/build/'
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin('style.css', {allChunks: true})
     ],
 
@@ -22,8 +30,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loaders: ["babel-loader"]
+                include: path.join(__dirname, 'src'),
+                loaders: ["react-hot", "babel"]
             },
             {
                 test: /\.scss$/,

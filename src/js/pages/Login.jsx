@@ -42,7 +42,7 @@ export default class Index extends React.Component {
 
                         <form onSubmit={this.submit.bind(this)}>
                             <div className="row column log-in-form">
-                                <h4 className="text-center">Log in with you email account</h4>
+                                <h4 className="text-center">Log in with you email account test</h4>
                                 <label htmlFor="username">Username / E-Mail:</label>
                                 <input ref="username" type="text" id="username" name="_username"/>
 
