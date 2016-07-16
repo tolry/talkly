@@ -2,7 +2,7 @@ import React from 'react';
 import Client from '../services/Client';
 import Topic from '../partials/Topic';
 
-export default class Archive extends React.Component {
+export default class Calendar extends React.Component {
     constructor(props) {
         super(props);
 

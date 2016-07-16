@@ -14,10 +14,6 @@ export default class Index extends React.Component {
     }
 
     componentDidMount() {
-        this.loadData();
-    }
-
-    loadData() {
         Client.get('/topic/').then((response) => {
             this.setState({
                 loading: false,

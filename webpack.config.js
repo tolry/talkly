@@ -10,9 +10,10 @@ module.exports = {
     devtool: 'eval',
 
     entry: [
+        'react-hot-loader/patch',
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/only-dev-server',
-        './src/js/App'
+        './src/js/index'
     ],
 
     output: {
@@ -31,7 +32,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 include: path.join(__dirname, 'src'),
-                loaders: ["react-hot", "babel"]
+                loaders: ["babel"]
             },
             {
                 test: /\.scss$/,

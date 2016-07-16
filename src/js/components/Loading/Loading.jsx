@@ -7,8 +7,6 @@ export default class Loading extends React.Component {
             transform: "scale(" + (this.props.size || 1) + ")"
         };
 
-        return (
-            <div className={css.uil_ring_css} style={style}><div></div></div>
-        );
+        return <div className={css.uil_ring_css} style={style}><div></div></div>;
     }
 }
