@@ -5,41 +5,38 @@ export default class Date extends React.Component {
     constructor(props) {
         super(props);
 
-        this.date = moment(props.children);
+        this.date = props.children ? moment(props.children) : null;
 
         this.state = {
-            date: this.date.fromNow()
+            date: null
         };
     }
 
     componentDidMount() {
-        this.interval = setInterval(function() {
-            this.setState({
-                date: this.date.fromNow()
-            });
-        }.bind(this), 1000);
+        this.tick();
+        this.interval = setInterval(() => this.tick(), 1000);
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
+    tick() {
+        if (!this.date) {
+            return;
+        }
+
+        this.setState({
+            date: this.date.fromNow()
+        });
+    }
+
     render() {
-        if (! this.props.children) {
-            if (this.props.showIcon) {
-                return (<span title={this.props.children}><i className="fa fa-calendar"/> --</span>);
-            }
-            return (<span title={this.props.children}>--</span>);
-        }
-
-        if (this.props.showIcon) {
-            return (
-                <span title={this.props.children}><i className="fa fa-calendar"/> {this.state.date}</span>
-            );
-        }
-
         return (
-            <span title={this.props.children}>{this.state.date}</span>
+            <span title={this.props.children}>
+                {this.props.showIcon ? <i className="fa fa-calendar"/> : null}
+                {this.state.date ? this.state.date : '--'}
+            </span>
         );
     }
 }

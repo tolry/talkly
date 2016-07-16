@@ -1,5 +1,5 @@
 import React from "react";
-import User from "./User";
+import User from "../User/User";
 
 export default ({children}) => {
     let users = children.map(function (user) {

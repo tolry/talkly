@@ -2,14 +2,14 @@ import "babel-polyfill";
 import React from "react";
 import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import Layout from "./Layout";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Calendar from "./pages/Calendar";
-import Archive from "./pages/Archive";
-import ShowTopic from "./pages/ShowTopic";
+import Login from "../Security/Login";
+import Index from "../Topic/Index";
+import Calendar from "../Topic/Calendar";
+import Archive from "../Topic/Archive";
+import ShowTopic from "../Topic/ShowTopic";
+import Profile from "../User/Profile";
 
-export default ({children}) => {
+export default () => {
     return (
         <Router history={hashHistory}>
             <Route name="/login" path="login" component={Login}/>

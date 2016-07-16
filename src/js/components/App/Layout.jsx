@@ -1,9 +1,9 @@
 import React from "react";
-import Fork from "./components/Fork";
-import Navigation from "./partials/Navigation";
-import Header from "./partials/Header";
-import Footer from "./partials/Footer";
-import "../scss/app.scss";
+import Fork from "../Fork";
+import Navigation from "./Navigation";
+import Header from "./Header";
+import Footer from "./Footer";
+import "../../../scss/app.scss";
 
 export default ({children}) => {
     return (

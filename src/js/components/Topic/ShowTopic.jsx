@@ -1,7 +1,7 @@
 import React from "react";
-import Client from "../services/Client";
-import Gravatar from "../components/Gravatar";
-import Form from "../components/TopicForm";
+import Client from "../../services/Client";
+import Gravatar from "../User/Gravatar";
+import Form from "./TopicForm";
 
 export default class Index extends React.Component {
     constructor(props) {

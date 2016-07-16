@@ -1,6 +1,6 @@
 import React from 'react';
-import Client from '../services/Client';
-import Topic from '../partials/Topic';
+import Client from '../../services/Client';
+import Topic from './Topic';
 
 export default class Archive extends React.Component {
     constructor(props) {

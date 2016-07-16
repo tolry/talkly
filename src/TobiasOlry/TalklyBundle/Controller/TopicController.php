@@ -24,7 +24,7 @@ class TopicController extends Controller
     /**
      * @Route("/", name="topics")
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function listAction()
     {
@@ -70,7 +70,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return Response
      */
     public function showAction(Request $request)
     {

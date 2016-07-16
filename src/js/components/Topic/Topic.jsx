@@ -1,10 +1,10 @@
 import React from "react";
 import {Link} from "react-router";
-import Speakers from "../components/Speakers";
-import Votes from "../components/Votes";
-import Date from "../components/Date";
-import Client from '../services/Client';
-import AuthorizationStorage from "../services/AuthorizationStorage";
+import Speakers from "./Speakers";
+import Votes from "./Votes";
+import Date from "../Date";
+import Client from '../../services/Client';
+import AuthorizationStorage from "../../services/AuthorizationStorage";
 
 export default class Index extends React.Component {
     constructor(props) {

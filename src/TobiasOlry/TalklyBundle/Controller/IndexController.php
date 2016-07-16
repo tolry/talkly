@@ -2,11 +2,11 @@
 
 namespace TobiasOlry\TalklyBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use TobiasOlry\TalklyBundle\Entity\Topic;
-use TobiasOlry\TalklyBundle\Form\CreateTopicType;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
@@ -25,26 +25,42 @@ class IndexController extends Controller
      * @Route("/archive/", name="archive")
      * @Template()
      *
-     * @return array
+     * @return Response
      */
     public function archiveAction()
     {
         $topics = $this->getTopicRepository()->findArchivedGroupByMonth();
 
-        return ['topics' => $topics];
+        $json = $this->get('jms_serializer')->serialize(
+            $topics,
+            'json',
+            SerializationContext::create()->enableMaxDepthChecks()
+        );
+
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
     /**
      * @Route("/calendar/", name="calendar")
      * @Template()
      *
-     * @return array
+     * @return Response
      */
     public function calendarAction()
     {
         $topics = $this->getTopicRepository()->findNextGroupByMonth();
 
-        return ['topics' => $topics];
+        $json = $this->get('jms_serializer')->serialize(
+            $topics,
+            'json',
+            SerializationContext::create()->enableMaxDepthChecks()
+        );
+
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
     /**

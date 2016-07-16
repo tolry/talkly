@@ -1,5 +1,5 @@
 import React from "react";
-import Logout from "../components/Logout";
+import Logout from "../Security/Logout";
 
 export default class User extends React.Component {
     render() {

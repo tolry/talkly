@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router'
-import AuthorizationStorage from "../services/AuthorizationStorage";
+import AuthorizationStorage from "../../services/AuthorizationStorage";
 
 export default ({children}) => {
     var user = AuthorizationStorage.getUser();
