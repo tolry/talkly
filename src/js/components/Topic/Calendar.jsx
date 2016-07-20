@@ -14,14 +14,7 @@ export default class Calendar extends React.Component {
     }
 
     componentDidMount() {
-        this.loadData();
-    }
-
-    loadData() {
-        Client.get('/api/calendar/', {
-
-        }).then((response) => {
-
+        Client.get('/api/calendar/').then((response) => {
             console.log(response.data);
 
             this.setState({

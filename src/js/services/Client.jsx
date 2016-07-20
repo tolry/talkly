@@ -22,6 +22,10 @@ instance.interceptors.request.use(function (config) {
 });
 
 instance.interceptors.response.use(function (response) {
+    if (response.headers["content-type"].indexOf('json') === -1) {
+        throw "wrong content, json expected!";
+    }
+
     return response;
 }, function (error) {
     if(error.status == 401) {

@@ -1,41 +1,33 @@
 import React from 'react';
 import Client from '../../services/Client';
-import Topic from './Topic';
+import Loading from "../Loading/Loading";
+import GroupedList from './GroupedList';
 
 export default class Archive extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            loading: true,
             data: []
         };
     }
 
     componentDidMount() {
-        this.loadData();
-    }
-
-    loadData() {
-        Client.get('/topic/', {
-
-        }).then((response) => {
+        Client.get('/api/archive/').then((response) => {
+            console.log(response.data);
             this.setState({
+                loading: false,
                 data: response.data
             });
         });
     }
 
     render() {
-        let topics = this.state.data.map((topic) => {
-            return (
-                <Topic key={topic.id} data={topic} />
-            );
-        });
+        if (this.state.loading) {
+            return <Loading size="0.5"/>;
+        }
 
-        return (
-            <div>
-                {topics}
-            </div>
-        );
+        return <GroupedList data={this.state.data}/>;
     }
 }

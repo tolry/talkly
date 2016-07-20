@@ -6,7 +6,7 @@ export default ({children}) => {
             background: '#ff0000',
             color: '#fff'
         }}>
-            Route not found!
+            page not found!
         </div>
     );
 }

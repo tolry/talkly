@@ -55,25 +55,26 @@ class TopicRepository extends EntityRepository
     }
 
     /**
-     * @return \Pinq\GroupedTraversable|\Pinq\IGroupedTraversable
+     * @return array
      */
     public function findArchivedGroupByMonth()
     {
         $criteria = new TopicCriteria(true);
 
-        $topics = \Pinq\Traversable::from($this->findByCriteria($criteria));
+        $topics = $this->findByCriteria($criteria);
 
-        return $topics
-            ->orderByDescending(function (Topic $topic) {
-                return $topic->getLectureDate();
-            })
-            ->groupBy(function (Topic $topic) {
-                if ($topic->getLectureDate()) {
-                    return $topic->getLectureDate()->format('Y-m');
-                }
+        $result = [];
+        foreach ($topics as $topic) {
+            if (!$topic->getLectureDate()) {
+                continue;
+            }
 
-                return 'unknown';
-            });
+            $key = $topic->getLectureDate() ? $topic->getLectureDate()->format('Y-m') : 'unknown';
+
+            $result[$key][] = $topic;
+        }
+
+        return $result;
     }
 
     /**
