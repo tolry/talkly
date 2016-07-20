@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import Speakers from "./Speakers";
 import Votes from "./Votes";
 import Date from "../Date";
-import Client from '../../services/Client';
+import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 
 export default class Index extends React.Component {
@@ -18,33 +18,21 @@ export default class Index extends React.Component {
         this.user = AuthorizationStorage.getUser();
     }
 
-    componentWillMount() {
-    }
-
-    componentDidMount() {
-    }
-
-    componentWillUnmount() {
-    }
-
     registerSpeaker() {
-        Client.post('/topic/' + this.props.data.id + '/add-speaker')
-        .then(function (response) {
+        Client.post('/api/topic/' + this.props.data.id + '/add-speaker')
+        .then(function () {
             var speakers = this.state.speakers;
             speakers.push(this.user);
 
             this.setState({
                 speakers: speakers
             });
-        }.bind(this))
-        .catch(function (response) {
-            //console.log(response);
         }.bind(this));
     }
 
     unregisterSpeaker() {
-        Client.post('/topic/' + this.props.data.id + '/remove-speaker')
-        .then(function (response) {
+        Client.post('/api/topic/' + this.props.data.id + '/remove-speaker')
+        .then(function () {
             var speakers = this.state.speakers;
 
             speakers = speakers.filter(function (el) {
@@ -54,30 +42,25 @@ export default class Index extends React.Component {
             this.setState({
                 speakers: speakers
             });
-        }.bind(this))
-        .catch(function (response) {
-            //console.log(response);
         }.bind(this));
     }
 
     vote() {
-        Client.post('/topic/' + this.props.data.id + '/cast-vote')
-        .then(function (response) {
+        Client.post('/api/topic/' + this.props.data.id + '/cast-vote')
+        .then(function () {
+
             var votes = this.state.votes;
             votes.push(this.user);
             this.setState({
                 votes: votes
             });
-            //console.log(response);
-        }.bind(this))
-        .catch(function (response) {
-            //console.log(response);
+
         }.bind(this));
     }
 
     unvote() {
-        Client.post('/topic/' + this.props.data.id + '/retract-vote')
-        .then(function (response) {
+        Client.post('/api/topic/' + this.props.data.id + '/retract-vote')
+        .then(function () {
             var votes = this.state.votes;
 
             votes = votes.filter(function (el) {
@@ -87,16 +70,12 @@ export default class Index extends React.Component {
             this.setState({
                 votes: votes
             });
-            //console.log(response);
-        }.bind(this))
-        .catch(function (response) {
-            //console.log(response);
         }.bind(this));
     }
 
     render() {
         var id = "topic-" + this.props.data.id;
-        var link = this.props.data.id + "/show";
+        var link = "/topic/" + this.props.data.id;
 
         return (
             <div id={id} className="clearfix highlight-target">

@@ -9,7 +9,7 @@ const rootEl = document.getElementById('app');
 
 render(
     <AppContainer>
-        <App />
+        <App/>
     </AppContainer>,
     rootEl
 );
@@ -22,7 +22,7 @@ if (module.hot) {
 
         render(
             <AppContainer>
-                <NextApp />
+                <NextApp/>
             </AppContainer>,
             rootEl
         );

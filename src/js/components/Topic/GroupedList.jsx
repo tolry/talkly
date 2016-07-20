@@ -52,7 +52,7 @@ export default class GroupedList extends React.Component {
             }
 
             let list = this.props.data[month];
-            let id = '#month-' + month;
+            let id = 'month-' + month;
 
             output.push(
                 <h4 className="highlight-target" id={id} key={month}>{month}</h4>

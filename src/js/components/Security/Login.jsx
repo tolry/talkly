@@ -1,27 +1,26 @@
 import React from "react";
 import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
-import {hashHistory} from "react-router";
-
+import History from "../../services/History";
 
 export default class Index extends React.Component {
     submit(event) {
         event.preventDefault();
 
-        Client.post('/login_check', {
+        Client.post('/api/login', {
             username: this.form.username.value,
             password: this.form.password.value
         }).then(function (response) {
             AuthorizationStorage.setToken(response.data.token);
 
-            Client.get('/user/current').then(function (response) {
+            Client.get('/api/user/current').then(function (response) {
                 AuthorizationStorage.setUser(response.data);
-                hashHistory.push('/');
-            }).catch(function (response) {
+                History.push('/');
+            }).catch(function () {
                 AuthorizationStorage.clear();
             });
 
-        }).catch(function (response) {
+        }).catch(function () {
             AuthorizationStorage.clear();
         });
     }

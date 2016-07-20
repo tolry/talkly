@@ -1,12 +1,11 @@
 import React from "react";
-
 import AuthorizationStorage from "../../services/AuthorizationStorage";
-import {hashHistory} from "react-router";
+import History from "../../services/History";
 
 export default class Logout extends React.Component {
     logout() {
         AuthorizationStorage.clear();
-        hashHistory.push('/login');
+        History.push('/login');
     }
 
     render() {

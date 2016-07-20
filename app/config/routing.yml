@@ -1,9 +1,15 @@
 app:
     resource: "@TobiasOlryTalklyBundle/Controller/"
     type:     annotation
+    prefix: /api
 
-logout:
-    path: /logout
+login:
+    path: /api/login
 
-login_check:
-    path: /login_check
+catch_all:
+    path:     /{catchall}
+    defaults:
+        _controller: TobiasOlryTalklyBundle:Index:dashboard
+    requirements:
+        #catchall: "^(?!api|_)"
+        catchall: ".*"

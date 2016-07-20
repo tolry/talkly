@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {hashHistory} from "react-router";
+import {history, base} from "./History";
 import AuthorizationStorage from "./AuthorizationStorage";
 
 var instance = axios.create({
-    baseURL: window.location.pathname,
+    baseURL: base,
     timeout: 5000
 });
 
@@ -27,7 +27,7 @@ instance.interceptors.response.use(function (response) {
     if(error.status == 401) {
         console.log('401 error response');
 
-        hashHistory.push('/login');
+        history.push('/login');
     } else if(error.status == 403) {
         console.log('403 error response');
         // 403 forbidden. The user is logged in but doesn't have permission for the request.
