@@ -20,57 +20,57 @@ export default class Index extends React.Component {
 
     registerSpeaker() {
         Client.post('/api/topic/' + this.props.data.id + '/add-speaker')
-        .then(function () {
-            var speakers = this.state.speakers;
-            speakers.push(this.user);
+            .then(function () {
+                var speakers = this.state.speakers;
+                speakers.push(this.user);
 
-            this.setState({
-                speakers: speakers
-            });
-        }.bind(this));
+                this.setState({
+                    speakers: speakers
+                });
+            }.bind(this));
     }
 
     unregisterSpeaker() {
         Client.post('/api/topic/' + this.props.data.id + '/remove-speaker')
-        .then(function () {
-            var speakers = this.state.speakers;
+            .then(function () {
+                var speakers = this.state.speakers;
 
-            speakers = speakers.filter(function (el) {
-                return el.id != this.user.id;
+                speakers = speakers.filter(function (el) {
+                    return el.id != this.user.id;
+                }.bind(this));
+
+                this.setState({
+                    speakers: speakers
+                });
             }.bind(this));
-
-            this.setState({
-                speakers: speakers
-            });
-        }.bind(this));
     }
 
     vote() {
         Client.post('/api/topic/' + this.props.data.id + '/cast-vote')
-        .then(function () {
+            .then(function () {
 
-            var votes = this.state.votes;
-            votes.push(this.user);
-            this.setState({
-                votes: votes
-            });
+                var votes = this.state.votes;
+                votes.push(this.user);
+                this.setState({
+                    votes: votes
+                });
 
-        }.bind(this));
+            }.bind(this));
     }
 
     unvote() {
         Client.post('/api/topic/' + this.props.data.id + '/retract-vote')
-        .then(function () {
-            var votes = this.state.votes;
+            .then(function () {
+                var votes = this.state.votes;
 
-            votes = votes.filter(function (el) {
-                return el.id != this.user.id;
+                votes = votes.filter(function (el) {
+                    return el.id != this.user.id;
+                }.bind(this));
+
+                this.setState({
+                    votes: votes
+                });
             }.bind(this));
-
-            this.setState({
-                votes: votes
-            });
-        }.bind(this));
     }
 
     render() {
@@ -80,32 +80,31 @@ export default class Index extends React.Component {
         return (
             <div id={id} className="clearfix highlight-target">
                 <div className="row">
-                    <div className="large-8 columns">
+                    <div className="large-9 columns">
                         <h4 className="one-line" data-tooltip title={this.props.data.title }>
                             <Link to={link}>
                                 {this.props.data.title}
                             </Link>
                         </h4>
                     </div>
-                    <div className="large-4 columns text-right">
-                        <a className="button tiny radius secondary">
-                            edit
-                        </a>
+                    <div className="large-3 columns text-right">
                         {this.renderVoteButton()}
                         {this.renderSpeakerButton()}
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="large-6 columns quiet">
+                    <div className="large-9 columns quiet">
                         <ul className="inline-list">
                             <li><Votes>{this.state.votes}</Votes></li>
-                            <li><span><i className="fa fa-comments-o"/> {this.props.data.comment_count}</span></li>
+                            <li><span><i
+                                className="fa fa-comments-o"/> {this.props.data.comment_count ? this.props.data.comment_count : 0}</span>
+                            </li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
                             <li><Date showIcon={true}>{this.props.data.lecture_date}</Date></li>
                         </ul>
                     </div>
-                    <div className="large-6 columns text-right">
+                    <div className="large-3 columns text-right">
                         <span className="quiet"><Date>{this.props.data.created_at}</Date></span>
                     </div>
                 </div>
@@ -115,9 +114,9 @@ export default class Index extends React.Component {
     }
 
     renderVoteButton() {
-        var hasVote = this.state.votes.find(function (el) {
+        var hasVote = this.state.votes.find((el) => {
             return el.id == this.user.id;
-        }.bind(this));
+        });
 
         if (hasVote) {
             return (
@@ -136,9 +135,9 @@ export default class Index extends React.Component {
     }
 
     renderSpeakerButton() {
-        var isSpeaker = this.state.speakers.find(function (el) {
+        var isSpeaker = this.state.speakers.find((el) => {
             return el.id == this.user.id;
-        }.bind(this));
+        });
 
         if (isSpeaker) {
             return (

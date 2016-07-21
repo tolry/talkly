@@ -1,62 +1,29 @@
 import React from "react";
 import validator from "validator";
+import Form from "../Form";
 
-export default class TopicForm extends React.Component {
+export default class TopicForm extends Form {
+    validate(data) {
+        let errors = [];
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            errors: []
-        };
-    }
-
-    submit(event) {
-        event.preventDefault();
-
-        var form = this.refs.form;
-        var errors = [];
-
-        if (validator.isNull(form.name.value)) {
-            errors.push('Name darf nicht leer sein!');
+        if (validator.isNull(data.title)) {
+            errors.push('title can not be empty!');
         }
 
-        this.setState({
-            errors: errors
-        });
-
-        if (errors.length == 0) {
-            console.log('sende Daten!');
+        if (validator.isNull(data.description)) {
+            errors.push('description can not be empty!');
         }
+
+        return errors;
     }
 
-    render() {
+    renderForm() {
         return (
-            <form ref="form" onSubmit={this.submit.bind(this)}>
-                {this.state.errors.length ? this.renderErrors() : ''}
-
-                <input type="text" name="name"/>
-
+            <div>
+                <input type="text" name="title"/>
+                <textarea name="description"/>
                 <button type="submit">Submit</button>
-            </form>
-        );
-    }
-
-    renderErrors() {
-        console.log('Render Fehler');
-
-        return (
-            <ul>
-                {this.state.errors.map(function(error) {
-                    return (
-                      <li key={error}>{error}</li>
-                    );
-                })}
-            </ul>
+            </div>
         );
     }
 }
-
-
-
-

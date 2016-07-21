@@ -98,7 +98,7 @@ class Topic
      *
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user = null)
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
@@ -120,6 +120,8 @@ class Topic
     {
         return $this->id;
     }
+
+
 
     /**
      *
@@ -197,7 +199,7 @@ class Topic
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[]|ArrayCollection
      */
     public function getComments()
     {
@@ -207,7 +209,7 @@ class Topic
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[]|ArrayCollection
      */
     public function getFeedbackComments()
     {
@@ -291,6 +293,14 @@ class Topic
     public function getCreatedBy()
     {
         return $this->createdBy;
+    }
+
+    /**
+     * @param User $createdBy
+     */
+    public function setCreatedBy(User $createdBy)
+    {
+        $this->createdBy = $createdBy;
     }
 
     /**

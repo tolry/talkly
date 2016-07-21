@@ -1,6 +1,7 @@
 import React from "react";
 import Client from "../../services/Client";
 import Topic from "./Topic";
+import AddTopic from "./AddTopic";
 import Loading from "../Loading/Loading";
 
 export default class Index extends React.Component {
@@ -35,6 +36,7 @@ export default class Index extends React.Component {
 
         return (
             <div>
+                <AddTopic/>
                 {topics}
             </div>
         );

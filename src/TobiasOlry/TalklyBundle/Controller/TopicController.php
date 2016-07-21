@@ -2,6 +2,7 @@
 
 namespace TobiasOlry\TalklyBundle\Controller;
 
+use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -48,19 +49,37 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function createAction(Request $request)
     {
-        $topic = new Topic($this->getUser());
-        $form = $this->createForm(new CreateTopicType(), $topic);
+        dump($request->getContent());
 
-        $form->handleRequest($request);
+        /** @var Topic $topic */
+        $topic = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json',
+            DeserializationContext::create()->setSerializeNull()
+    );
+
+        $topic->setCreatedBy($this->getUser());
+
+        dump($topic);
+
+        die;
+
         $this->getTopicService()->add($topic);
 
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'topic created');
+        $json = $this->get('jms_serializer')->serialize(
+            $topic,
+            'json',
+            SerializationContext::create()->enableMaxDepthChecks()
+        );
 
-        return $this->redirectToView($topic, 'show');
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
     /**

@@ -10,6 +10,10 @@ export default ({children}) => {
         );
     });
 
+    if (users.length == 0) {
+        users.push(<li>no speaker yet</li>);
+    }
+
     return (
         <span className={children.length ? 'text-highlight' : ''}>
             <i className="fa fa-microphone"/>
