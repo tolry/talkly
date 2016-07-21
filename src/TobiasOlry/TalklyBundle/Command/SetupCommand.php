@@ -27,8 +27,7 @@ class SetupCommand extends ContainerAwareCommand
     {
         $this
             ->setName('talkly:setup')
-            ->addArgument('environment', InputArgument::OPTIONAL)
-        ;
+            ->addArgument('environment', InputArgument::OPTIONAL);
     }
 
     /**
@@ -65,6 +64,7 @@ class SetupCommand extends ContainerAwareCommand
         $this->setupConfig();
         $this->setupDatabase($io, $env);
         $this->setupAssets($io, $env);
+        $this->setupSecurity($io);
 
         if ($env === self::ENV_DEV) {
             $this->setupDevelopment($io);
@@ -246,6 +246,34 @@ class SetupCommand extends ContainerAwareCommand
         if ($io->confirm('load fixtures?')) {
             $this->executeSymfonyCommand($io, 'hautelook_alice:doctrine:fixtures:load');
         }
+    }
+
+    /**
+     * @param OutputStyle $io
+     */
+    private function setupSecurity(OutputStyle $io)
+    {
+        $io->section('Security');
+
+        $folder = __DIR__ . '/../../../../var/jwt';
+        $filesystem = new Filesystem();
+
+        if (!$filesystem->exists($folder . '/private.pem')) {
+
+            $filesystem->mkdir($folder);
+
+            $this->executeCommand(
+                $io,
+                sprintf('openssl genrsa -passout pass:talkly -out %s/private.pem -aes256 4096', $folder)
+            );
+
+            $this->executeCommand(
+                $io,
+                sprintf('openssl rsa -pubout -in %1$s/private.pem -passin pass:talkly -out %1$s/public.pem', $folder)
+            );
+        }
+
+        $io->success('Security');
     }
 
     /**
