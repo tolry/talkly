@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6c68b6dec701eb47d867076ee20376aa",
-    "content-hash": "67abbd5f1020e7caa1cd42166d9c4511",
+    "hash": "fb766d1e222b2e5c0b57b67f17a56cb3",
+    "content-hash": "e34225950c79fbcb1742f400daab4a9b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1005,6 +1005,75 @@
                 "sql"
             ],
             "time": "2014-01-12 16:20:24"
+        },
+        {
+            "name": "league/commonmark",
+            "version": "0.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
+                "reference": "b73c0b7288bd0e6f9f56bd0b20d0657214b91838",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.8"
+            },
+            "replace": {
+                "colinodell/commonmark-php": "*"
+            },
+            "require-dev": {
+                "cebe/markdown": "~1.0",
+                "erusev/parsedown": "~1.0",
+                "jgm/commonmark": "0.25",
+                "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "~1.2.0",
+                "phpunit/phpunit": "~4.3|~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
+            },
+            "bin": [
+                "bin/commonmark"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.15-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\CommonMark\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "https://www.colinodell.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Markdown parser for PHP based on the CommonMark spec",
+            "homepage": "https://github.com/thephpleague/commonmark",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "parser"
+            ],
+            "time": "2016-07-02 18:48:39"
         },
         {
             "name": "lexik/jwt-authentication-bundle",
@@ -2455,6 +2524,68 @@
                 "templating"
             ],
             "time": "2016-05-30 09:11:59"
+        },
+        {
+            "name": "webuni/commonmark-bundle",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webuni/commonmark-bundle.git",
+                "reference": "fab16f77ba22f86330f3dd050c33555e9672b129"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webuni/commonmark-bundle/zipball/fab16f77ba22f86330f3dd050c33555e9672b129",
+                "reference": "fab16f77ba22f86330f3dd050c33555e9672b129",
+                "shasum": ""
+            },
+            "require": {
+                "league/commonmark": "~0.13",
+                "php": "^5.5|^7.0",
+                "symfony/config": "^2.3|^3.0",
+                "symfony/dependency-injection": "^2.3|^3.0",
+                "symfony/http-kernel": "^2.3|^3.0"
+            },
+            "require-dev": {
+                "bossa/phpspec2-expect": "^1.0",
+                "coduo/phpspec-data-provider-extension": "^1.0",
+                "fabpot/php-cs-fixer": "^1.9",
+                "phpspec/phpspec": "^2.4",
+                "webuni/commonmark-attributes-extension": "~0.2",
+                "webuni/commonmark-table-extension": "~0.3",
+                "webuni/commonmark-twig-renderer": "~0.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webuni\\Bundle\\CommonMarkBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Hasoň",
+                    "email": "martin.hason@gmail.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "The table extension for CommonMark PHP implementation",
+            "homepage": "https://github.com/webuni/commonmark-bundle",
+            "keywords": [
+                "bundle",
+                "commonmark",
+                "markdown",
+                "symfony"
+            ],
+            "time": "2016-04-27 13:55:09"
         },
         {
             "name": "zendframework/zend-code",

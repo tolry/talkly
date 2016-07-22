@@ -50,6 +50,12 @@
                 <argument type="service" id="talkly.event.database_transport"/>
             </call>
         </service>
+
+        <service id="talkly.twig.extension.markdown"
+                 class="TobiasOlry\TalklyBundle\Twig\MarkdownExtension">
+            <argument type="service" id="webuni_commonmark.default_converter"/>
+            <tag name="twig.extension"/>
+        </service>
     </services>
 
 </container>

@@ -15,7 +15,8 @@
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "timetoogo/pinq": "~2.1",
         "lexik/jwt-authentication-bundle": "^1.5",
-        "zendframework/zend-code": "3.0.2"
+        "zendframework/zend-code": "3.0.2",
+        "webuni/commonmark-bundle": "^0.2.1"
     },
     "require-dev": {
         "hautelook/alice-bundle": "^1.3",

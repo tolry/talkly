@@ -78,8 +78,8 @@ class TopicController extends Controller
     {
         $topic = $this->getTopicService()->getTopic($request->get('id'));
 
-        $serializer = $this->get('jms_serializer');
-        $json = $serializer->serialize($topic, 'json');
+        $serializer = $this->get('serializer');
+        $json = $serializer->serialize($topic, 'json', ['groups' => ['topic_show']]);
 
         return new Response($json, 200, [
             'Content-Type' => 'application/json'
@@ -120,7 +120,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function castVoteAction(Request $request)
     {
@@ -137,7 +137,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function retractVoteAction(Request $request)
     {
@@ -206,7 +206,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function addSpeakerAction(Request $request)
     {
@@ -224,7 +224,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function removeSpeakerAction(Request $request)
     {
@@ -252,7 +252,7 @@ class TopicController extends Controller
 
         $url = $this->generateUrl($route) . '#topic-' . $topic->getId();
 
-        if ($view == 'show') {
+        if ($view === 'show') {
             $route = 'topic-show';
             $url = $this->generateUrl($route, ['id' => $topic->getId()]);
         }

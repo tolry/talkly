@@ -1,7 +1,8 @@
 import React from "react";
 import Client from "../../services/Client";
 import Gravatar from "../User/Gravatar";
-import Form from "./TopicForm";
+import Markdown from "../Markdown";
+import Loading from "../Loading/Loading";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -10,25 +11,15 @@ export default class Index extends React.Component {
         this.id = this.props.params.id;
 
         this.state = {
+            loading: true,
             data: []
         };
     }
 
-    componentWillMount() {
-
-    }
-
     componentDidMount() {
-        this.loadData();
-    }
-
-    componentWillUnmount() {
-
-    }
-
-    loadData() {
-        Client.get('/topic/' + this.id).then(function (response) {
+        Client.get('/api/topic/' + this.id).then(function (response) {
             this.setState({
+                loading: false,
                 data: response.data
             });
 
@@ -37,11 +28,15 @@ export default class Index extends React.Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return <Loading size="0.5"/>;
+        }
+
         return (
             <div className="row">
 
-                <Form/>
                 <Gravatar size="400">d.a.badura@gmail.com</Gravatar>
+                <Markdown>{this.state.data.description}</Markdown>
 
             </div>
         );

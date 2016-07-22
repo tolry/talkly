@@ -31,6 +31,7 @@ instance.interceptors.response.use(function (response) {
     if(error.status == 401) {
         console.log('401 error response');
 
+        AuthorizationStorage.clear();
         history.push('/login');
     } else if(error.status == 403) {
         console.log('403 error response');

@@ -18,41 +18,43 @@ class Topic
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $description;
 
@@ -60,14 +62,14 @@ class Topic
      * @ORM\ManyToMany(targetEntity="User", inversedBy="votes")
      * @ORM\JoinTable(name="vote")
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $votes;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $comments;
 
@@ -75,19 +77,21 @@ class Topic
      * @ORM\ManyToMany(targetEntity="User", inversedBy="speakingTopics")
      * @ORM\JoinTable(name="speaker")
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $speakers;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $lectureNote;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $lectureDate;
 
@@ -95,7 +99,7 @@ class Topic
      *
      * @ORM\Column(type="boolean")
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $lectureHeld;
 

@@ -5,17 +5,16 @@ namespace TobiasOlry\TalklyBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
-     * @Template()
-     *
      * @return array
      */
-    public function dashboardAction()
+    public function indexAction()
     {
         return $this->render('@TobiasOlryTalkly/base.html.twig');
     }
@@ -60,6 +59,21 @@ class IndexController extends Controller
         return new Response($json, 200, [
             'Content-Type' => 'application/json'
         ]);
+    }
+
+    /**
+     * @Route("/markdown", name="markdown")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function markdownAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $data['html'] = $this->get('webuni_commonmark.default_converter')->convertToHtml($data['markdown']);
+
+        return new JsonResponse($data);
     }
 
     /**
