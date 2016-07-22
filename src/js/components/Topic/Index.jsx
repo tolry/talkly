@@ -27,15 +27,6 @@ export default class Index extends React.Component {
         });
     }
 
-    add() {
-        this.setState({
-            loading: true,
-            data: []
-        });
-
-        this.load();
-    }
-
     render() {
         if (this.state.loading) {
             return <Loading size="0.5"/>;
@@ -49,8 +40,13 @@ export default class Index extends React.Component {
 
         return (
             <div>
-                <AddTopic callback={this.add.bind(this)}/>
-                {topics}
+                <AddTopic/>
+                <div className="row">
+                    <div className="small-12 columns">
+                        <h3>Open Topics</h3>
+                        {topics}
+                    </div>
+                </div>
             </div>
         );
     }

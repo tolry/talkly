@@ -13,12 +13,8 @@ export default ({children}) => {
             <Header />
 
             <main>
-                <div className="row">
-                    <div className="small-12 columns">
-                        <div id="flash"></div>
-                        {children}
-                    </div>
-                </div>
+                <div id="flash"></div>
+                {children}
             </main>
 
             <Footer />

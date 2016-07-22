@@ -62,13 +62,13 @@ export default class Form extends React.Component {
         }
 
         return (
-            <ul>
-                {this.state.errors.map(function(error) {
+            <div className="alert-box alert" style={{marginTop: 20}}>
+                {this.state.errors.map(function (error) {
                     return (
-                      <li key={error}>{error}</li>
+                        <div key={error}>{error}</div>
                     );
                 })}
-            </ul>
+            </div>
         );
     }
 }

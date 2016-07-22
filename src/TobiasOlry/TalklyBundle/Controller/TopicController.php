@@ -60,7 +60,10 @@ class TopicController extends Controller
 
         $this->getTopicService()->add($topic);
 
-        return new Response('', 200, [
+        $serializer = $this->get('serializer');
+        $json = $serializer->serialize($topic, 'json', ['groups' => ['topic_show']]);
+
+        return new Response($json, 200, [
             'Content-Type' => 'application/json'
         ]);
     }

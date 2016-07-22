@@ -20,9 +20,10 @@ export default class TopicForm extends Form {
     renderForm() {
         return (
             <div>
-                <input type="text" name="title"/>
-                <textarea name="description"/>
-                <button type="submit">Submit</button>
+                <h5>new suggestion</h5>
+                <input type="text" name="title" placeholder="title"/>
+                <textarea name="description" rows={8} placeholder="description (markdown allowed)"/>
+                <button type="submit" className="button radius small right radius"><i className="fa fa-plus-square"/> submit</button>
             </div>
         );
     }

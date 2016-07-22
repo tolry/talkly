@@ -1,6 +1,7 @@
 import React from "react";
 import TopicForm from "./TopicForm";
 import Client from '../../services/Client';
+import History from "../../services/History";
 
 export default class AddTopic extends React.Component {
     constructor(props) {
@@ -18,16 +19,8 @@ export default class AddTopic extends React.Component {
     }
 
     submit(data) {
-        Client.post('/api/topic/create', data).then(() => {
-            this.setState({
-                open: false
-            });
-
-            // todo redirect to topic
-
-            if (this.props.callback) {
-                this.props.callback(data);
-            }
+        Client.post('/api/topic/create', data).then((response) => {
+            History.push('/topic/' + response.data.id);
         });
     }
 

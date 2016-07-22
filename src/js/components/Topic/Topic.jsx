@@ -89,6 +89,7 @@ export default class Index extends React.Component {
                     </div>
                     <div className="large-3 columns text-right">
                         {this.renderVoteButton()}
+                        &nbsp;
                         {this.renderSpeakerButton()}
                     </div>
                 </div>
@@ -101,11 +102,11 @@ export default class Index extends React.Component {
                                 className="fa fa-comments-o"/> {this.props.data.comment_count ? this.props.data.comment_count : 0}</span>
                             </li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
-                            <li><Date showIcon={true}>{this.props.data.lecture_date}</Date></li>
+                            <li><Date showIcon={true}>{this.props.data.lectureDate}</Date></li>
                         </ul>
                     </div>
                     <div className="large-3 columns text-right">
-                        <span className="quiet"><Date>{this.props.data.created_at}</Date></span>
+                        <span className="quiet"><Date>{this.props.data.createdAt}</Date></span>
                     </div>
                 </div>
                 <hr/>
