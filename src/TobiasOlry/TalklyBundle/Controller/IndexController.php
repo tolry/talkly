@@ -71,7 +71,7 @@ class IndexController extends Controller
     {
         $data = json_decode($request->getContent(), true);
 
-        $data['html'] = $this->get('webuni_commonmark.default_converter')->convertToHtml($data['markdown']);
+        $data['html'] = $this->get('talkly.markdown')->convertToHtml($data['markdown']);
 
         return new JsonResponse($data);
     }

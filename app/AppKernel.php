@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
-            new Webuni\Bundle\CommonMarkBundle\WebuniCommonMarkBundle(),
             new TobiasOlry\TalklyBundle\TobiasOlryTalklyBundle(),
         );
 

@@ -23,6 +23,8 @@ export default class AddTopic extends React.Component {
                 open: false
             });
 
+            // todo redirect to topic
+
             if (this.props.callback) {
                 this.props.callback(data);
             }

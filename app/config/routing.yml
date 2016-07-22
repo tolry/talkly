@@ -13,3 +13,6 @@ catch_all:
     requirements:
         #catchall: "^(?!api|_)"
         catchall: ".*"
+
+topic:
+    path: /topic/{id}
