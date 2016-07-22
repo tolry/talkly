@@ -6,7 +6,7 @@ namespace TobiasOlry\TalklyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JSON;
+use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
  * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\TopicRepository")
@@ -24,7 +24,7 @@ class Topic
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
      *
-     * @JSON\MaxDepth(2)
+     * @JSON\Groups({"topic_list"})
      */
     private $createdBy;
 
@@ -52,6 +52,7 @@ class Topic
     /**
      * @ORM\Column(type="text", nullable=true)
      *
+     * @JSON\Groups({"topic_list"})
      */
     private $description;
 
@@ -59,14 +60,14 @@ class Topic
      * @ORM\ManyToMany(targetEntity="User", inversedBy="votes")
      * @ORM\JoinTable(name="vote")
      *
-     * @JSON\MaxDepth(2)
+     * @JSON\Groups({"topic_list"})
      */
     private $votes;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
      *
-     * @JSON\MaxDepth(2)
+     * @JSON\Groups({"topic_list"})
      */
     private $comments;
 
@@ -74,7 +75,7 @@ class Topic
      * @ORM\ManyToMany(targetEntity="User", inversedBy="speakingTopics")
      * @ORM\JoinTable(name="speaker")
      *
-     * @JSON\MaxDepth(2)
+     * @JSON\Groups({"topic_list"})
      */
     private $speakers;
 
@@ -85,12 +86,16 @@ class Topic
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     private $lectureDate;
 
     /**
      *
      * @ORM\Column(type="boolean")
+     *
+     * @JSON\Groups({"topic_list"})
      */
     private $lectureHeld;
 
@@ -364,5 +369,13 @@ class Topic
     public function isLectureHeld()
     {
         return $this->lectureHeld;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

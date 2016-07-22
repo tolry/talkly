@@ -19,11 +19,13 @@ export default class AddTopic extends React.Component {
 
     submit(data) {
         Client.post('/api/topic/create', data).then(() => {
-            console.log('done');
-        });
+            this.setState({
+                open: false
+            });
 
-        this.setState({
-            open: false
+            if (this.props.callback) {
+                this.props.callback(data);
+            }
         });
     }
 

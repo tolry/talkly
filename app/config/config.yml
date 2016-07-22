@@ -27,6 +27,9 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    serializer:
+        enabled: true
+        enable_annotations: true
 
 # Twig Configuration
 twig:
@@ -58,10 +61,6 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-gremo_ciconia:
-    renderer: html
-    extensions: ~
 
 lexik_jwt_authentication:
     private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path

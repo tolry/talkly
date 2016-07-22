@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
  *
@@ -23,6 +24,8 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"topic_list"})
      */
     protected $id;
 
@@ -30,6 +33,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", unique=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     protected $username;
 
@@ -44,6 +49,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     protected $name;
 
@@ -65,6 +72,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list"})
      */
     protected $email;
 

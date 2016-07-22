@@ -15,12 +15,25 @@ export default class Index extends React.Component {
     }
 
     componentDidMount() {
+        this.load();
+    }
+
+    load() {
         Client.get('/api/topic/').then((response) => {
             this.setState({
                 loading: false,
                 data: response.data
             });
         });
+    }
+
+    add() {
+        this.setState({
+            loading: true,
+            data: []
+        });
+
+        this.load();
     }
 
     render() {
@@ -36,7 +49,7 @@ export default class Index extends React.Component {
 
         return (
             <div>
-                <AddTopic/>
+                <AddTopic callback={this.add.bind(this)}/>
                 {topics}
             </div>
         );

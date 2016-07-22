@@ -2,7 +2,6 @@
 
 namespace TobiasOlry\TalklyBundle\Controller;
 
-use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,10 +30,10 @@ class IndexController extends Controller
     {
         $topics = $this->getTopicRepository()->findArchivedGroupByMonth();
 
-        $json = $this->get('jms_serializer')->serialize(
+        $json = $this->get('serializer')->serialize(
             $topics,
             'json',
-            SerializationContext::create()->enableMaxDepthChecks()
+            ['groups' => ['topic_list']]
         );
 
         return new Response($json, 200, [
@@ -52,10 +51,10 @@ class IndexController extends Controller
     {
         $topics = $this->getTopicRepository()->findNextGroupByMonth();
 
-        $json = $this->get('jms_serializer')->serialize(
+        $json = $this->get('serializer')->serialize(
             $topics,
             'json',
-            SerializationContext::create()->enableMaxDepthChecks()
+            ['groups' => ['topic_list']]
         );
 
         return new Response($json, 200, [

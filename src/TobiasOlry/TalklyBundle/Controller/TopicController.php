@@ -2,8 +2,6 @@
 
 namespace TobiasOlry\TalklyBundle\Controller;
 
-use JMS\Serializer\DeserializationContext;
-use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,9 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use TobiasOlry\TalklyBundle\Entity\Topic;
-use TobiasOlry\TalklyBundle\Form\CreateTopicType;
 use TobiasOlry\TalklyBundle\Form\EditTopicType;
 use TobiasOlry\TalklyBundle\Form\LectureTopicType;
 
@@ -31,11 +27,11 @@ class TopicController extends Controller
     {
         $repository = $this->get('talkly.repository.topic');
         $topics = $repository->findNonArchivedMostVotesFirst();
-        
-        $json = $this->get('jms_serializer')->serialize(
+
+        $json = $this->get('serializer')->serialize(
             $topics,
             'json',
-            SerializationContext::create()->enableMaxDepthChecks()
+            ['groups' => ['topic_list']]
         );
 
         return new Response($json, 200, [
@@ -53,31 +49,18 @@ class TopicController extends Controller
      */
     public function createAction(Request $request)
     {
-        dump($request->getContent());
-
         /** @var Topic $topic */
-        $topic = $this->get('jms_serializer')->deserialize(
+        $topic = $this->get('serializer')->deserialize(
             $request->getContent(),
             Topic::class,
-            'json',
-            DeserializationContext::create()->setSerializeNull()
-    );
+            'json'
+        );
 
         $topic->setCreatedBy($this->getUser());
 
-        dump($topic);
-
-        die;
-
         $this->getTopicService()->add($topic);
 
-        $json = $this->get('jms_serializer')->serialize(
-            $topic,
-            'json',
-            SerializationContext::create()->enableMaxDepthChecks()
-        );
-
-        return new Response($json, 200, [
+        return new Response('', 200, [
             'Content-Type' => 'application/json'
         ]);
     }
