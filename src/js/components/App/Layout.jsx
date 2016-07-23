@@ -3,6 +3,7 @@ import Fork from "../Fork";
 import Navigation from "./Navigation";
 import Header from "./Header";
 import Footer from "./Footer";
+import MessageList from "../Message/MessageList";
 import "../../../scss/app.scss";
 
 export default ({children}) => {
@@ -11,6 +12,8 @@ export default ({children}) => {
             <Fork/>
             <Navigation />
             <Header />
+
+            <MessageList/>
 
             <main>
                 <div id="flash"></div>

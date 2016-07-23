@@ -2,6 +2,7 @@ import React from "react";
 import TopicForm from "./TopicForm";
 import Client from '../../services/Client';
 import History from "../../services/History";
+import MessageBag from "../../services/MessageBag";
 
 export default class AddTopic extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class AddTopic extends React.Component {
 
     submit(data) {
         Client.post('/api/topic/create', data).then((response) => {
+            MessageBag.success('Success');
             History.push('/topic/' + response.data.id);
         });
     }

@@ -32,7 +32,7 @@ export default class GroupedList extends React.Component {
         }
 
         return (
-            <div className="large-4 small-12 columns">
+            <div className="large-3 small-12 columns">
                 <h3><i className="fa fa-calendar"/> Months</h3>
                 <hr/>
 
@@ -66,7 +66,7 @@ export default class GroupedList extends React.Component {
         }
 
         return (
-            <div className="large-8 small-12 columns">
+            <div className="large-9 small-12 columns">
                 <h3>Next Topics</h3>
                 <hr />
 

@@ -5,6 +5,7 @@ import Votes from "./Votes";
 import Date from "../Date";
 import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
+import MessageBag from "../../services/MessageBag";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -27,6 +28,8 @@ export default class Index extends React.Component {
                 this.setState({
                     speakers: speakers
                 });
+
+                MessageBag.success('Success');
             }.bind(this));
     }
 
@@ -42,6 +45,8 @@ export default class Index extends React.Component {
                 this.setState({
                     speakers: speakers
                 });
+
+                MessageBag.success('Success');
             }.bind(this));
     }
 
@@ -55,6 +60,7 @@ export default class Index extends React.Component {
                     votes: votes
                 });
 
+                MessageBag.success('Success');
             }.bind(this));
     }
 
@@ -70,6 +76,8 @@ export default class Index extends React.Component {
                 this.setState({
                     votes: votes
                 });
+
+                MessageBag.success('Success');
             }.bind(this));
     }
 
