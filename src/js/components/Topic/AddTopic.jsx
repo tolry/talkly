@@ -75,6 +75,7 @@ export default class AddTopic extends React.Component {
             <div className="bg-secondary" id="create-topic-form">
                 <div className="row">
                     <div className="small-12 medium-8 medium-centered large-8 large-centered columns">
+                        <h5>new suggestion</h5>
                         <TopicForm submit={this.submit.bind(this)}/>
                     </div>
                 </div>

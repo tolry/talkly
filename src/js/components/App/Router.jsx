@@ -8,6 +8,7 @@ import Index from "../Topic/Index";
 import Calendar from "../Topic/Calendar";
 import Archive from "../Topic/Archive";
 import ShowTopic from "../Topic/ShowTopic";
+import EditTopic from "../Topic/EditTopic";
 import Profile from "../User/Profile";
 import NotFound from "../NotFound/NotFound";
 
@@ -21,6 +22,7 @@ export default () => {
                 <Route name="calendar" path="calendar" component={Calendar}/>
                 <Route name="archive" path="archive" component={Archive}/>
                 <Route name="show" path="topic/:id" component={ShowTopic}/>
+                <Route name="edit" path="topic/:id/edit" component={EditTopic}/>
             </Route>
             <Route path="*" component={NotFound} />
         </Router>

@@ -10,6 +10,14 @@ export default class Form extends React.Component {
         };
     }
 
+    componentDidMount() {
+        console.log(this.props.data);
+
+        if (this.props.data) {
+            this.setData(this.props.data);
+        }
+    }
+
     submit(event) {
         event.preventDefault();
 
@@ -45,6 +53,16 @@ export default class Form extends React.Component {
         }
 
         return data;
+    }
+
+    setData(data) {
+        for (let el of this.form.elements) {
+            if (!el.name) {
+                continue;
+            }
+
+            el.value = data[el.name] || '';
+        }
     }
 
     reset() {

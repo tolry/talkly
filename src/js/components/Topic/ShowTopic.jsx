@@ -1,10 +1,13 @@
 import React from "react";
+import {Link} from "react-router";
 import Client from "../../services/Client";
 import Loading from "../Loading/Loading";
 import Markdown from "../Markdown/Markdown";
 import Gravatar from "../User/Gravatar";
 import User from "../User/User";
 import Speakers from "./Speakers";
+import SpeakersList from "./SpeakersList";
+import VotesList from "./VotesList";
 import Votes from "./Votes";
 import Comments from "./Comments";
 import Date from "../Date";
@@ -35,8 +38,6 @@ export default class ShowTopic extends React.Component {
                 speakers: response.data.speakers,
                 votes: response.data.votes,
             });
-
-            console.log(response.data);
         }.bind(this));
     }
 
@@ -118,19 +119,16 @@ export default class ShowTopic extends React.Component {
             <div className="row">
 
                 <div className="small-12 large-3 columns">
-                    <h4>Speaker(s)</h4>
-                    <hr/>
-                    {this.renderSpeakers()}
-
-                    <h4>Vote(s)</h4>
-                    <br/>
-                    {this.renderVotes()}
+                    <SpeakersList>{this.state.speakers}</SpeakersList>
+                    <VotesList>{this.state.votes}</VotesList>
                 </div>
 
                 <div className="small-12 large-9 columns">
                     <div id="topic-21" className="clearfix highlight-target">
 
                         <div className="right">
+                            <Link className="button tiny radius secondary" to={"/topic/" + this.id + "/edit"}>Edit</Link>
+                            &nbsp;
                             {this.renderVoteButton()}
                             &nbsp;
                             {this.renderSpeakerButton()}
@@ -175,45 +173,6 @@ export default class ShowTopic extends React.Component {
             </div>
         );
     }
-
-    renderVotes() {
-
-        if (this.state.votes.length == 0) {
-            return (
-                <div className="panel">there are no votes for this talk yet</div>
-            );
-        }
-
-        return this.state.votes.map((vote) => {
-            return (
-                <p className="one-line" key={vote.id}>
-                    <Gravatar size={16} className="th">{vote.email}</Gravatar>
-                    &nbsp;
-                    <User>{vote}</User>
-                </p>
-            );
-        });
-    }
-
-    renderSpeakers() {
-
-        if (this.state.speakers.length == 0) {
-            return (
-                <div className="panel">no speakers volunteered yet</div>
-            );
-        }
-
-        return this.state.speakers.map((speaker) => {
-            return (
-                <div className="text-center" key={speaker.id}>
-                    <Gravatar size={96} className="th">{speaker.email}</Gravatar>
-                    <br/>
-                    <p className="one-line"><User>{speaker}</User></p>
-                </div>
-            );
-        });
-    }
-
 
     renderVoteButton() {
         var hasVote = this.state.votes.find((el) => {

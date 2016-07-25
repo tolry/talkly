@@ -21,7 +21,6 @@ export default class TopicForm extends Form {
     renderForm() {
         return (
             <div>
-                <h5>new suggestion</h5>
                 <input type="text" name="title" placeholder="title"/>
                 <MarkdownTextarea name="description" rows={8} placeholder="description (markdown allowed)"/>
                 <button type="submit" className="button radius small right radius"><i className="fa fa-plus-square"/> submit</button>

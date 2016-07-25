@@ -39,7 +39,6 @@ class TopicController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/create", name="topic-create")
      *
@@ -71,7 +70,6 @@ class TopicController extends Controller
     /**
      * @Route("/{id}/", name="topic-show")
      * @Route("/{id}/show", name="topic-show-legacy")
-     * @Template()
      *
      * @param Request $request
      *
@@ -91,7 +89,6 @@ class TopicController extends Controller
 
     /**
      * @Route("/{id}/edit", name="topic-edit")
-     * @Template()
      *
      * @param Request $request
      *
@@ -100,22 +97,20 @@ class TopicController extends Controller
     public function editAction(Request $request)
     {
         $service = $this->getTopicService();
+
         $topic = $service->getTopic($request->get('id'));
-        $service->checkUserCanEditTopic($topic, $this->getUser());
 
-        $form = $this->createForm(new EditTopicType(), $topic);
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json',
+            ['object_to_populate' => $topic]
+        );
 
-        $form->handleRequest($request);
+        $service->update($topic);
+        $service->markAsUpdated($topic);
 
-        if ($form->isValid()) {
-            $service->update($topic);
-            $service->markAsUpdated($topic);
-            $this->addFlash('topic-' . $topic->getId() . '-success', 'topic data updated');
-
-            return $this->redirectToView($topic, $request->get('view', 'list'));
-        }
-
-        return ['topic' => $topic, 'form' => $form->createView()];
+        return new JsonResponse();
     }
 
     /**
@@ -178,7 +173,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function archiveAction(Request $request)
     {
@@ -201,7 +196,7 @@ class TopicController extends Controller
             $service->markAsUnscheduled($topic);
         }
 
-        return $this->redirectToView($topic, 'show');
+        return new JsonResponse();
     }
 
     /**
@@ -238,29 +233,6 @@ class TopicController extends Controller
         $this->addFlash('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
 
         return new JsonResponse('success');
-    }
-
-    /**
-     * @param Topic $topic
-     * @param string $view
-     *
-     * @return RedirectResponse
-     */
-    private function redirectToView(Topic $topic, $view = 'show')
-    {
-        $route = 'homepage';
-        if ($topic->isLectureHeld()) {
-            $route = 'archive';
-        }
-
-        $url = $this->generateUrl($route) . '#topic-' . $topic->getId();
-
-        if ($view === 'show') {
-            $route = 'topic-show';
-            $url = $this->generateUrl($route, ['id' => $topic->getId()]);
-        }
-
-        return new RedirectResponse($url);
     }
 
     /**
