@@ -1,0 +1,46 @@
+.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tab li {
+    float: left;
+}
+
+.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.tab li a:hover {
+    background-color: #ddd;
+}
+
+.tab li a:focus, .active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: none;
+}
+
+.edit {
+    composes: tabcontent;
+}
+
+.markdown {
+    composes: tabcontent;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    margin-bottom: 15px;
+}

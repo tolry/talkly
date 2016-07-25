@@ -1,6 +1,7 @@
 import React from "react";
 import validator from "validator";
 import Form from "../Form";
+import MarkdownTextarea from "../Markdown/MarkdownTextarea";
 
 export default class TopicForm extends Form {
     validate(data) {
@@ -22,7 +23,7 @@ export default class TopicForm extends Form {
             <div>
                 <h5>new suggestion</h5>
                 <input type="text" name="title" placeholder="title"/>
-                <textarea name="description" rows={8} placeholder="description (markdown allowed)"/>
+                <MarkdownTextarea name="description" rows={8} placeholder="description (markdown allowed)"/>
                 <button type="submit" className="button radius small right radius"><i className="fa fa-plus-square"/> submit</button>
             </div>
         );
