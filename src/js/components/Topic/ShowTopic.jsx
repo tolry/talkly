@@ -6,6 +6,7 @@ import Gravatar from "../User/Gravatar";
 import User from "../User/User";
 import Speakers from "./Speakers";
 import Votes from "./Votes";
+import Comments from "./Comments";
 import Date from "../Date";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 import MessageBag from "../../services/MessageBag";
@@ -140,9 +141,6 @@ export default class ShowTopic extends React.Component {
                         <div className="quiet">
                             <ul className="inline-list">
                                 <li><Votes>{this.state.votes}</Votes></li>
-                                <li><span><i
-                                    className="fa fa-comments-o"/> {this.state.data.comment_count ? this.state.data.comment_count : 0}</span>
-                                </li>
                                 <li><Speakers>{this.state.speakers}</Speakers></li>
                                 <li><Date showIcon={true}>{this.state.data.lectureDate}</Date></li>
                             </ul>
@@ -168,27 +166,7 @@ export default class ShowTopic extends React.Component {
                             </a>
                         </p>
 
-
-                        <h4><i className="fa fa-comments-o"/> 0 comment(s)</h4>
-
-
-                        <div className="row">
-                            <form role="form" action="/topic/21/comment" method="post"
-                                  className="ng-pristine ng-valid">
-                                        <textarea name="comment" className="form-controll"
-                                                  placeholder="add comment (markdown allowed)"/>
-
-                                <div>
-                                    <label>markdown preview</label>
-                                    <div className="panel"></div>
-                                </div>
-
-                                <div className="right">
-                                    <button className="button tiny radius">comment</button>
-                                </div>
-                            </form>
-                        </div>
-
+                        <Comments id={this.id} topic={this.state.data}/>
                     </div>
 
                     <hr/>

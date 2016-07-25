@@ -158,19 +158,19 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return JsonResponse
      */
     public function commentAction(Request $request)
     {
         $service = $this->getTopicService();
         $topic = $service->getTopic($request->get('id'));
         $user = $this->getUser();
-        $comment = $request->get('comment');
 
-        $service->comment($topic, $user, $comment);
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'comment added');
+        $body = json_decode($request->getContent(), true);
 
-        return $this->redirectToView($topic, $request->get('view', 'show'));
+        $service->comment($topic, $user, $body['comment']);
+
+        return new JsonResponse();
     }
 
     /**

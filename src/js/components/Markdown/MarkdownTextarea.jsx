@@ -30,12 +30,12 @@ export default class MarkdownTextarea extends React.Component {
             <div>
 
                 <ul className={style.tab}>
-                    <li><a href="#" className="tablinks" onClick={() => this.edit()}>Edit</a></li>
-                    <li><a href="#" className="tablinks" onClick={() => this.preview()}>Preview</a></li>
+                    <li><a className="tablinks" onClick={() => this.edit()}>Edit</a></li>
+                    <li><a className="tablinks" onClick={() => this.preview()}>Preview</a></li>
                 </ul>
 
                 <div style={{display: this.state.preview ? 'none' : 'block'}} className={style.edit}>
-                    <textarea rows={6} ref={(node) => this.textarea = node} name={this.props.name}/>
+                    <textarea rows={6} placeholder={this.props.placeholder} ref={(node) => this.textarea = node} name={this.props.name}/>
                 </div>
 
                 <div style={{display: this.state.preview ? 'block' : 'none'}} className={style.markdown}>

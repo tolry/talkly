@@ -89,7 +89,7 @@ export default class Index extends React.Component {
             <div id={id} className="clearfix highlight-target">
                 <div className="row">
                     <div className="large-9 columns">
-                        <h4 className="one-line" data-tooltip title={this.props.data.title }>
+                        <h4 className="one-line" title={this.props.data.title }>
                             <Link to={link}>
                                 {this.props.data.title}
                             </Link>
@@ -107,7 +107,7 @@ export default class Index extends React.Component {
                         <ul className="inline-list">
                             <li><Votes>{this.state.votes}</Votes></li>
                             <li><span><i
-                                className="fa fa-comments-o"/> {this.props.data.comment_count ? this.props.data.comment_count : 0}</span>
+                                className="fa fa-comments-o"/> {this.props.data.comments.length}</span>
                             </li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
                             <li><Date showIcon={true}>{this.props.data.lectureDate}</Date></li>

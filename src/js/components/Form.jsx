@@ -22,6 +22,10 @@ export default class Form extends React.Component {
 
         if (errors.length == 0 && this.props.submit) {
             this.props.submit(data);
+
+            if (this.props.resetAfterSubmit) {
+                this.reset();
+            }
         }
     }
 
@@ -41,6 +45,16 @@ export default class Form extends React.Component {
         }
 
         return data;
+    }
+
+    reset() {
+        for (let el of this.form.elements) {
+            if (!el.name) {
+                continue;
+            }
+
+            el.value = '';
+        }
     }
 
     renderForm() {
