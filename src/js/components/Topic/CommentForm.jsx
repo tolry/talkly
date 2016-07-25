@@ -14,10 +14,21 @@ export default class CommentForm extends Form {
         return errors;
     }
 
+    keyHandler(event) {
+        if (event.ctrlKey && event.key == 'Enter') {
+            this.submit(event);
+        }
+    }
+
     renderForm() {
         return (
             <div>
-                <MarkdownTextarea name="comment" rows={8} placeholder="add comment (markdown allowed)"/>
+                <MarkdownTextarea
+                    keyHandler={this.keyHandler.bind(this)}
+                    name="comment"
+                    rows={8}
+                    placeholder="add comment (markdown allowed)"
+                />
                 <button type="submit" className="button tiny radius right">comment</button>
             </div>
         );

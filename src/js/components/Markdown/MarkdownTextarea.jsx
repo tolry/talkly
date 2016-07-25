@@ -6,6 +6,8 @@ export default class MarkdownTextarea extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log(props);
+
         this.state = {
             preview: false
         };
@@ -35,7 +37,13 @@ export default class MarkdownTextarea extends React.Component {
                 </ul>
 
                 <div style={{display: this.state.preview ? 'none' : 'block'}} className={style.edit}>
-                    <textarea rows={6} placeholder={this.props.placeholder} ref={(node) => this.textarea = node} name={this.props.name}/>
+                    <textarea
+                        rows={6}
+                        placeholder={this.props.placeholder}
+                        ref={(node) => this.textarea = node}
+                        name={this.props.name}
+                        onKeyDown={this.props.keyHandler}
+                    />
                 </div>
 
                 <div style={{display: this.state.preview ? 'block' : 'none'}} className={style.markdown}>

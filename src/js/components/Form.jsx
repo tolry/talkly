@@ -18,8 +18,11 @@ export default class Form extends React.Component {
         }
     }
 
-    submit(event) {
-        event.preventDefault();
+    submit(event = null) {
+
+        if (event) {
+            event.preventDefault();
+        }
 
         let data = this.getData();
         let errors = this.validate(data);
