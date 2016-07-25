@@ -25,7 +25,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     protected $id;
 
@@ -34,7 +34,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", unique=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     protected $username;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     protected $name;
 
@@ -73,7 +73,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", nullable=true)
      *
-     * @JSON\Groups({"topic_list"})
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     protected $email;
 
