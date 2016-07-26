@@ -30,6 +30,7 @@ framework:
     serializer:
         enabled: true
         enable_annotations: true
+    property_info: ~
 
 # Twig Configuration
 twig:

@@ -8,7 +8,7 @@ export default class Gravatar extends React.Component {
 
         let email = this.props.children ? this.props.children.trim().toLowerCase() : '';
         let size = this.props.size || 80;
-        let fallback = this.props.default || "mm";
+        let fallback = this.props.default || "identicon";
 
         let url = URL + crypto.createHash('md5').update(email).digest("hex") + "?s=" + size + "&d=" + fallback;
 

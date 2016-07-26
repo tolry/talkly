@@ -12,7 +12,7 @@ export default ({children}) => {
         votes = children.map((vote) => {
             return (
                 <p className="one-line" key={vote.id}>
-                    <Gravatar size={16} className="th">{vote.email}</Gravatar>
+                    <Gravatar size={16}>{vote.email}</Gravatar>
                     &nbsp;
                     <User>{vote}</User>
                 </p>

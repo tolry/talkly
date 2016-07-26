@@ -14,7 +14,7 @@ export default class Comment extends React.Component {
                 <div className="columns small-12">
                     <blockquote>
                         <div className="one-line">
-                            <Gravatar size={16} className="th">{comment.createdBy.email}</Gravatar>
+                            <Gravatar size={16}>{comment.createdBy.email}</Gravatar>
                             &nbsp;
                             <strong><User>{comment.createdBy}</User></strong>
                             <span className="quiet"><Date withIcon={true}>{comment.createdAt}</Date></span>

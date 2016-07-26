@@ -147,7 +147,7 @@ export default class ShowTopic extends React.Component {
                         <br/>
 
                         <div className="one-line quiet">
-                            <Gravatar className="th" size={16}>{this.state.data.createdBy.email}</Gravatar>
+                            <Gravatar size={16}>{this.state.data.createdBy.email}</Gravatar>
                             &nbsp;
                             <strong><User>{this.state.data.createdBy}</User></strong>
                             &nbsp;

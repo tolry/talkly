@@ -89,6 +89,8 @@ class Topic
     private $lectureNote;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="date", nullable=true)
      *
      * @JSON\Groups({"topic_list", "topic_show"})
