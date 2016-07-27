@@ -1,20 +1,9 @@
 import React from "react";
-import validator from "validator";
-import Form from "../Form";
-import MarkdownTextarea from "../Markdown/MarkdownTextarea";
+import Form from "../Form/Form";
+import MarkdownType from "../Form/MarkdownType";
 
 export default class CommentForm extends Form {
-    validate(data) {
-        let errors = [];
-
-        if (validator.isNull(data.comment)) {
-            errors.push('comment can not be empty!');
-        }
-
-        return errors;
-    }
-
-    keyHandler(event) {
+    onKeyDown(event) {
         if (event.ctrlKey && event.key == 'Enter') {
             this.submit(event);
         }
@@ -23,13 +12,13 @@ export default class CommentForm extends Form {
     renderForm() {
         return (
             <div>
-                <MarkdownTextarea
-                    keyHandler={this.keyHandler.bind(this)}
+                <MarkdownType
+                    onKeyDown={this.onKeyDown.bind(this)}
                     name="comment"
                     rows={8}
                     placeholder="add comment (markdown allowed)"
+                    constraints="notBlank"
                 />
-                <button type="submit" className="button tiny radius right">comment</button>
             </div>
         );
     }

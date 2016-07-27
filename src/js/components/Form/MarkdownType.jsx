@@ -1,16 +1,13 @@
 import React from "react";
-import Markdown from "./Markdown";
-import style from "./MarkdownTextarea.css";
+import Markdown from "../Markdown/Markdown";
+import FormType from "./FormType";
+import style from "./MarkdownType.css";
 
-export default class MarkdownTextarea extends React.Component {
+export default class MarkdownTextarea extends FormType {
     constructor(props) {
         super(props);
 
-        console.log(props);
-
-        this.state = {
-            preview: false
-        };
+        this.state['preview'] = false;
     }
 
     edit() {
@@ -25,9 +22,11 @@ export default class MarkdownTextarea extends React.Component {
         });
     }
 
-    render() {
-        let text = this.textarea ? this.textarea.value : '';
+    shouldDisplayErrors() {
+        return super.shouldDisplayErrors() && this.state.preview == false;
+    }
 
+    renderWidget() {
         return (
             <div>
 
@@ -38,16 +37,20 @@ export default class MarkdownTextarea extends React.Component {
 
                 <div style={{display: this.state.preview ? 'none' : 'block'}} className={style.edit}>
                     <textarea
+                        className={this.shouldDisplayErrors() ? 'error' : null}
                         rows={6}
                         placeholder={this.props.placeholder}
-                        ref={(node) => this.textarea = node}
+                        ref={(node) => this.el = node}
                         name={this.props.name}
-                        onKeyDown={this.props.keyHandler}
+                        onKeyDown={this.props.onKeyDown}
+                        onKeyUp={this.handleKeyUp.bind(this)}
+                        onChange={this.handleChange.bind(this)}
+                        onBlur={this.handleBlur.bind(this)}
                     />
                 </div>
 
                 <div style={{display: this.state.preview ? 'block' : 'none'}} className={style.markdown}>
-                    <Markdown>{text || 'no content'}</Markdown>
+                    <Markdown fallback="nothing to see here">{this.state.preview ? this.el.value : ''}</Markdown>
                 </div>
             </div>
         );

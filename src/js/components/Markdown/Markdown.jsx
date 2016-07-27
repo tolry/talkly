@@ -1,5 +1,5 @@
 import React from "react";
-import Client from '../../services/Client';
+import Client from "../../services/Client";
 import Loading from "../Loading/Loading";
 
 export default class Markdown extends React.Component {
@@ -10,6 +10,8 @@ export default class Markdown extends React.Component {
             loading: true,
             html: null
         };
+
+        this.cache = {};
     }
 
     componentDidMount() {
@@ -23,19 +25,41 @@ export default class Markdown extends React.Component {
     }
 
     parse(markdown) {
+        markdown = markdown.trim();
+
+        if (!markdown) {
+            this.setState({
+                html: this.props.fallback || '',
+                loading: false
+            });
+
+            return;
+        }
+
+        if (this.cache[markdown]) {
+            this.setState({
+                html: this.cache[markdown],
+                loading: false
+            });
+
+            return;
+        }
+
         this.setState({
             html: '',
             loading: true
         });
 
-        Client.post('/api/markdown', {markdown: markdown}).then((response) => {
-            console.log(response.data.html);
+        if (markdown) {
+            Client.post('/api/markdown', {markdown: markdown}).then((response) => {
+                this.cache[markdown] = response.data.html;
 
-            this.setState({
-                html: response.data.html,
-                loading: false
+                this.setState({
+                    html: this.cache[markdown],
+                    loading: false
+                });
             });
-        });
+        }
     }
 
     render() {
@@ -43,6 +67,6 @@ export default class Markdown extends React.Component {
             return <Loading size={0.5}/>
         }
 
-        return <div dangerouslySetInnerHTML={{ __html: this.state.html}} />;
+        return <div dangerouslySetInnerHTML={{__html: this.state.html}}/>;
     }
 }
