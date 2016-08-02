@@ -3,9 +3,7 @@
 namespace TobiasOlry\TalklyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +19,6 @@ class IndexController extends Controller
 
     /**
      * @Route("/archive/", name="archive")
-     * @Template()
      *
      * @return Response
      */
@@ -29,20 +26,11 @@ class IndexController extends Controller
     {
         $topics = $this->getTopicRepository()->findArchivedGroupByMonth();
 
-        $json = $this->get('serializer')->serialize(
-            $topics,
-            'json',
-            ['groups' => ['topic_list']]
-        );
-
-        return new Response($json, 200, [
-            'Content-Type' => 'application/json'
-        ]);
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
     }
 
     /**
      * @Route("/calendar/", name="calendar")
-     * @Template()
      *
      * @return Response
      */
@@ -50,30 +38,21 @@ class IndexController extends Controller
     {
         $topics = $this->getTopicRepository()->findNextGroupByMonth();
 
-        $json = $this->get('serializer')->serialize(
-            $topics,
-            'json',
-            ['groups' => ['topic_list']]
-        );
-
-        return new Response($json, 200, [
-            'Content-Type' => 'application/json'
-        ]);
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
     }
 
     /**
      * @Route("/markdown", name="markdown")
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      */
     public function markdownAction(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-
         $data['html'] = $this->get('talkly.markdown')->convertToHtml($data['markdown']);
 
-        return new JsonResponse($data);
+        return $this->json($data);
     }
 
     /**

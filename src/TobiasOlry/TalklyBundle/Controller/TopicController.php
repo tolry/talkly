@@ -3,15 +3,10 @@
 namespace TobiasOlry\TalklyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TobiasOlry\TalklyBundle\Entity\Topic;
-use TobiasOlry\TalklyBundle\Form\EditTopicType;
-use TobiasOlry\TalklyBundle\Form\LectureTopicType;
 
 /**
  * @Route("/topic")
@@ -66,12 +61,7 @@ class TopicController extends Controller
     {
         $topic = $this->getTopicService()->getTopic($request->get('id'));
 
-        $serializer = $this->get('serializer');
-        $json = $serializer->serialize($topic, 'json', ['groups' => ['topic_show']]);
-
-        return new Response($json, 200, [
-            'Content-Type' => 'application/json'
-        ]);
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
@@ -79,7 +69,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function editAction(Request $request)
     {
@@ -97,7 +87,7 @@ class TopicController extends Controller
         $service->update($topic);
         $service->markAsUpdated($topic);
 
-        return new JsonResponse();
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
@@ -105,7 +95,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function archiveAction(Request $request)
     {
@@ -123,7 +113,7 @@ class TopicController extends Controller
         $service->update($topic);
         $service->markAsHeld($topic);
 
-        return new JsonResponse();
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
 
@@ -132,7 +122,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function castVoteAction(Request $request)
     {
@@ -141,7 +131,7 @@ class TopicController extends Controller
 
         $service->addVote($topic, $this->getUser());
 
-        return new JsonResponse('success');
+        return $this->json('success');
     }
 
     /**
@@ -149,7 +139,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function retractVoteAction(Request $request)
     {
@@ -157,9 +147,8 @@ class TopicController extends Controller
         $topic = $service->getTopic($request->get('id'));
 
         $service->removeVote($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'vote retracted');
 
-        return new JsonResponse('success');
+        return $this->json('success');
     }
 
     /**
@@ -167,7 +156,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function commentAction(Request $request)
     {
@@ -179,7 +168,7 @@ class TopicController extends Controller
 
         $service->comment($topic, $user, $body['comment']);
 
-        return new JsonResponse();
+        return $this->json('success');
     }
 
     /**
@@ -187,7 +176,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function addSpeakerAction(Request $request)
     {
@@ -196,7 +185,7 @@ class TopicController extends Controller
 
         $service->addSpeaker($topic, $this->getUser());
 
-        return new JsonResponse('success');
+        return $this->json('success');
     }
 
     /**
@@ -204,7 +193,7 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function removeSpeakerAction(Request $request)
     {
@@ -213,7 +202,7 @@ class TopicController extends Controller
 
         $service->removeSpeaker($topic, $this->getUser());
 
-        return new JsonResponse('success');
+        return $this->json('success');
     }
 
     /**
