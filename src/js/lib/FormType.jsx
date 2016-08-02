@@ -50,6 +50,7 @@ export default class FormType extends React.Component {
 
     setData(data) {
         this.el.value = data;
+        this.update();
     }
 
     getName() {

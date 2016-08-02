@@ -28,15 +28,7 @@ class TopicController extends Controller
         $repository = $this->get('talkly.repository.topic');
         $topics = $repository->findNonArchivedMostVotesFirst();
 
-        $json = $this->get('serializer')->serialize(
-            $topics,
-            'json',
-            ['groups' => ['topic_list']]
-        );
-
-        return new Response($json, 200, [
-            'Content-Type' => 'application/json'
-        ]);
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
     }
 
     /**
@@ -59,12 +51,7 @@ class TopicController extends Controller
 
         $this->getTopicService()->add($topic);
 
-        $serializer = $this->get('serializer');
-        $json = $serializer->serialize($topic, 'json', ['groups' => ['topic_show']]);
-
-        return new Response($json, 200, [
-            'Content-Type' => 'application/json'
-        ]);
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
@@ -112,6 +99,33 @@ class TopicController extends Controller
 
         return new JsonResponse();
     }
+
+    /**
+     * @Route("/{id}/archive", name="topic-archive")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function archiveAction(Request $request)
+    {
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'), $allowArchived = true);
+
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json',
+            ['object_to_populate' => $topic]
+        );
+
+        $topic->setLectureHeld(true);
+        $service->update($topic);
+        $service->markAsHeld($topic);
+
+        return new JsonResponse();
+    }
+
 
     /**
      * @Route("/{id}/cast-vote", name="topic-cast-vote")
@@ -169,37 +183,6 @@ class TopicController extends Controller
     }
 
     /**
-     * @Route("/{id}/archive", name="topic-archive")
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function archiveAction(Request $request)
-    {
-        $service = $this->getTopicService();
-        $topic = $service->getTopic($request->get('id'), $allowArchived = true);
-        $dateBefore = $topic->getLectureDate();
-
-        $form = $this->createForm(new LectureTopicType(), $topic);
-
-        $form->handleRequest($request);
-        $service->update($topic);
-
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'lecture updated');
-
-        if ($topic->isLectureHeld()) {
-            $service->markAsHeld($topic);
-        } elseif ($dateBefore != $topic->getLectureDate() && null !== $topic->getLectureDate()) {
-            $service->markAsScheduled($topic);
-        } elseif ($dateBefore != $topic->getLectureDate() && null === $topic->getLectureDate()) {
-            $service->markAsUnscheduled($topic);
-        }
-
-        return new JsonResponse();
-    }
-
-    /**
      * @Route("/{id}/add-speaker", name="topic-add-speaker")
      *
      * @param Request $request
@@ -212,7 +195,6 @@ class TopicController extends Controller
         $topic = $service->getTopic($request->get('id'));
 
         $service->addSpeaker($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'add you as a speaker');
 
         return new JsonResponse('success');
     }
@@ -230,7 +212,6 @@ class TopicController extends Controller
         $topic = $service->getTopic($request->get('id'));
 
         $service->removeSpeaker($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
 
         return new JsonResponse('success');
     }

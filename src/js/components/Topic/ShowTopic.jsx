@@ -127,7 +127,17 @@ export default class ShowTopic extends React.Component {
                     <div id="topic-21" className="clearfix highlight-target">
 
                         <div className="right">
-                            <Link className="button tiny radius secondary" to={"/topic/" + this.id + "/edit"}>Edit</Link>
+                            { this.state.data.lectureHeld
+                                ? null
+                                :
+                                <Link className="button tiny radius secondary" to={"/topic/" + this.id + "/archive"}>
+                                    <i className="fa fa-check"/>
+                                </Link>
+                            }
+                            &nbsp;
+                            <Link className="button tiny radius secondary" to={"/topic/" + this.id + "/edit"}>
+                                <i className="fa fa-pencil"/>
+                            </Link>
                             &nbsp;
                             {this.renderVoteButton()}
                             &nbsp;
@@ -144,7 +154,11 @@ export default class ShowTopic extends React.Component {
                             </ul>
                             <br/>
                         </div>
+
                         <br/>
+
+                        <div className="markdown"><Markdown>{this.state.data.description}</Markdown></div>
+
 
                         <div className="one-line quiet">
                             <Gravatar size={16}>{this.state.data.createdBy.email}</Gravatar>
@@ -154,15 +168,9 @@ export default class ShowTopic extends React.Component {
                             <span className="quiet"><Date showIcon={true}>{this.state.data.createdAt}</Date></span>
                         </div>
 
-                        <div className="markdown"><Markdown>{this.state.data.description}</Markdown></div>
-
-                        <p>
-                            <a href="#">
-                                <i className="fa fa-graduation-cap"/> Lecture
-                                <i className="fa fa-angle-double-down data-toggle-open"/>
-                                <i className="fa fa-angle-double-right data-toggle-closed"/>
-                            </a>
-                        </p>
+                        <br/>
+                        {this.state.data.lectureHeld ? this.renderLectureInfo() : null}
+                        <br/>
 
                         <Comments id={this.id} topic={this.state.data}/>
                     </div>
@@ -215,6 +223,14 @@ export default class ShowTopic extends React.Component {
                 <i className="fa fa-microphone"/>
             </a>
         )
+    }
+
+    renderLectureInfo() {
+        return (
+            <div className="panel callout radius">
+                <div className="markdown"><Markdown>{this.state.data.lectureNote}</Markdown></div>
+            </div>
+        );
     }
 }
 

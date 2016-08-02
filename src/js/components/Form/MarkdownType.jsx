@@ -3,7 +3,7 @@ import Markdown from "../Markdown/Markdown";
 import FormType from "./FormType";
 import style from "./MarkdownType.css";
 
-export default class MarkdownTextarea extends FormType {
+export default class MarkdownType extends FormType {
     constructor(props) {
         super(props);
 
