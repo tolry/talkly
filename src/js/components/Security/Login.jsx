@@ -14,7 +14,12 @@ export default class Index extends React.Component {
 
             Client.get('/api/user/current').then(function (response) {
                 AuthorizationStorage.setUser(response.data);
-                History.push('/');
+
+                if (response.data.name && response.data.email) {
+                    History.push('/');
+                } else {
+                    History.push('/user/' + response.data.id + "/edit");
+                }
             }).catch(function () {
                 AuthorizationStorage.clear();
             });

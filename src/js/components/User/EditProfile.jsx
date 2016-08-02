@@ -56,6 +56,7 @@ export default class EditProfile extends React.Component {
                 </div>
 
                 <div className="small-12 large-9 columns">
+                    <h1>Complete your profile</h1>
                     <Form data={this.state.data} submit={this.submit.bind(this)}/>
                 </div>
             </div>
