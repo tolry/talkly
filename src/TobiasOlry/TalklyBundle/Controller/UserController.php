@@ -28,43 +28,60 @@ class UserController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
-        return new JsonResponse(['id' => $user->getId(), 'name' => $user->getUsername()]);
+        return $this->json($user, 200, [], ['groups' => ['user_show']]);
     }
 
     /**
-     * @Route("/user/profile", name="user-profile")
-     * @Template()
+     * @Route("/user/{id}", name="user-profile")
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function profileAction(Request $request)
     {
-        $user = $this->getUser();
-        $form = $this->createForm(new UserProfileType(), $user);
+        $user = $this->get('doctrine')->getRepository(User::class)->find($request->get('id'));
 
-        $form->handleRequest($request);
+        return $this->json($user, 200, [], ['groups' => ['user_show']]);
+    }
 
-        if ($form->isValid()) {
-            $this->getUserService()->update($user);
-            $this->addFlash('success', 'user-profile updated');
+    /**
+     * @Route("/user/{id}/edit")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editProfileAction(Request $request)
+    {
+        $em = $this->get('doctrine')->getManager();
 
-            return $this->redirectToRoute('user-profile');
-        }
+        $user = $em->getRepository(User::class)->find($request->get('id'));
 
-        return ['user' => $user, 'form' => $form->createView()];
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            User::class,
+            'json',
+            ['object_to_populate' => $user]
+        );
+
+        $em->flush();
+
+        return $this->json($user, 200, [], ['groups' => ['user_show']]);
     }
 
     /**
      * @Route("/user/notifications", name="user-notifications")
      * @Template()
      *
-     * @return array
+     * @return Response
      */
     public function notificationsAction()
     {
-        return ['user' => $this->getUser()];
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->json($user->getUnreadNotifications(), 200, [], ['groups' => ['notification']]);
     }
 
     /**

@@ -1,14 +1,14 @@
 import React from "react";
-import { Link } from 'react-router'
 import Loading from "../Loading/Loading";
+import Form from "./ProfileForm";
 import Client from "../../services/Client";
-import Notifications from "./Notifications";
-import Logout from "../Security/Logout";
+import History from "../../services/History";
+import MessageBag from "../../services/MessageBag";
 import Gravatar from "./Gravatar";
 import User from "./User";
 import AuthStorage from "../../services/AuthorizationStorage";
 
-export default class Profile extends React.Component {
+export default class EditProfile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -29,6 +29,15 @@ export default class Profile extends React.Component {
         }.bind(this));
     }
 
+
+    submit(data) {
+        Client.post('/api/user/' + this.id + '/edit', data).then((response) => {
+            MessageBag.success('Success');
+            AuthStorage.setUser(response.data);
+            History.push('/user/' + this.id);
+        });
+    }
+
     render() {
         if (this.state.loading) {
             return <Loading size="0.5"/>;
@@ -47,32 +56,8 @@ export default class Profile extends React.Component {
                 </div>
 
                 <div className="small-12 large-9 columns">
-                    {this.renderContent()}
+                    <Form data={this.state.data} submit={this.submit.bind(this)}/>
                 </div>
-            </div>
-        );
-    }
-
-    renderContent() {
-        if (AuthStorage.getUser().id != this.state.data.id) {
-            return (
-                <div>nothing to see...</div>
-            );
-        }
-
-        return (
-            <div>
-                <div className="text-right">
-                    <Link to={"/user/" + this.state.data.id + "/edit"}>
-                        edit profile
-                    </Link>
-                    &nbsp;|&nbsp;
-                    <Logout>logout</Logout>
-                </div>
-
-                <br/>
-
-                <Notifications/>
             </div>
         );
     }
