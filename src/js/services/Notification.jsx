@@ -10,7 +10,7 @@ class Notification {
 
         let updater = () => {
             if (AuthStorage.getUser()) {
-                this.interval = setInterval(() => this.update(), 5000);
+                this.interval = setInterval(() => this.update(), 10000);
             } else {
                 clearInterval(this.interval);
             }
