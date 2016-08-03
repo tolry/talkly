@@ -1,6 +1,5 @@
 import React from "react";
 import Client from "../../services/Client";
-import Loading from "../Loading/Loading";
 
 export default class Markdown extends React.Component {
     constructor(props) {
@@ -64,7 +63,7 @@ export default class Markdown extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <Loading size={0.5}/>
+            return <span>loading...</span>
         }
 
         return <div dangerouslySetInnerHTML={{__html: this.state.html}}/>;

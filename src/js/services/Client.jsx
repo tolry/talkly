@@ -2,7 +2,6 @@ import axios from 'axios';
 import {history, base} from "./History";
 import AuthorizationStorage from "./AuthorizationStorage";
 import MessageBag from "./MessageBag";
-import NProgress from "nprogress";
 
 var instance = axios.create({
     baseURL: base,
@@ -10,8 +9,6 @@ var instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-    NProgress.start();
-
     let token = AuthorizationStorage.getToken();
 
     if (token) {
@@ -26,8 +23,6 @@ instance.interceptors.request.use(function (config) {
 });
 
 instance.interceptors.response.use(function (response) {
-    NProgress.done();
-
     if (response.headers["content-type"].indexOf('json') === -1) {
         MessageBag.error('server error');
         throw "wrong content, json expected!";
@@ -35,8 +30,6 @@ instance.interceptors.response.use(function (response) {
 
     return response;
 }, function (error) {
-    NProgress.done();
-
     if(error.status == 401) {
         console.log('401 error response');
 

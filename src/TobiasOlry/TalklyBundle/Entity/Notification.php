@@ -7,6 +7,8 @@
 namespace TobiasOlry\TalklyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as JSON;
+
 /**
  * @ORM\Table()
  * @ORM\Entity()
@@ -17,6 +19,8 @@ class Notification
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"notification"})
      */
     private $id;
 
@@ -27,16 +31,22 @@ class Notification
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @JSON\Groups({"notification"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @JSON\Groups({"notification"})
      */
     private $message;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @JSON\Groups({"notification"})
      */
     private $done;
 

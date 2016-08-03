@@ -119,14 +119,14 @@ class User implements UserInterface
     {
         $this->username = $username;
 
-        $this->comments       = new ArrayCollection();
-        $this->topics         = new ArrayCollection();
-        $this->lectures       = new ArrayCollection();
-        $this->votes          = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->topics = new ArrayCollection();
+        $this->lectures = new ArrayCollection();
+        $this->votes = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
-        $this->notifications  = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
 
-        $this->notifyByEmail       = false;
+        $this->notifyByEmail = false;
         $this->notifyInApplication = true;
     }
 
@@ -201,7 +201,7 @@ class User implements UserInterface
      */
     public function addSpeakingTopic(Topic $topic)
     {
-        if (! $this->hasSpeakingTopic($topic)) {
+        if (!$this->hasSpeakingTopic($topic)) {
             $this->speakingTopics->add($topic);
         }
     }
@@ -249,7 +249,7 @@ class User implements UserInterface
      */
     public function addVote(Topic $topic)
     {
-        if (! $this->hasVoted($topic)) {
+        if (!$this->hasVoted($topic)) {
             $this->votes->add($topic);
         }
     }
@@ -267,9 +267,9 @@ class User implements UserInterface
      */
     public function getUnreadNotifications()
     {
-        return $this->notifications->filter(function (Notification $notification) {
-            return ! $notification->isDone();
-        });
+        return array_values($this->notifications->filter(function (Notification $notification) {
+            return !$notification->isDone();
+        })->toArray());
     }
 
     /**
@@ -309,7 +309,7 @@ class User implements UserInterface
      */
     public function setNotifyByEmail($notifyByEmail)
     {
-        $this->notifyByEmail = (bool) $notifyByEmail;
+        $this->notifyByEmail = (bool)$notifyByEmail;
     }
 
     /**
@@ -325,7 +325,7 @@ class User implements UserInterface
      */
     public function setNotifyInApplication($notifyInApplication)
     {
-        $this->notifyInApplication = (bool) $notifyInApplication;
+        $this->notifyInApplication = (bool)$notifyInApplication;
     }
 
     /**
@@ -358,7 +358,7 @@ class User implements UserInterface
      */
     public function __toString()
     {
-        if (! empty($this->name)) {
+        if (!empty($this->name)) {
 
             return $this->name;
         }
