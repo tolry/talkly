@@ -25,7 +25,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
      *
-     * @JSON\Groups({"topic_list", "topic_show", "user_show"})
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $id;
 
@@ -34,7 +34,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", unique=true)
      *
-     * @JSON\Groups({"topic_list", "topic_show", "user_show"})
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $username;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", nullable=true)
      *
-     * @JSON\Groups({"topic_list", "topic_show", "user_show"})
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $name;
 
@@ -58,6 +58,8 @@ class User implements UserInterface
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @JSON\Groups({"user_self"})
      */
     protected $notifyByEmail;
 
@@ -65,6 +67,8 @@ class User implements UserInterface
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @JSON\Groups({"user_self"})
      */
     protected $notifyInApplication;
 
@@ -73,7 +77,7 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", nullable=true)
      *
-     * @JSON\Groups({"topic_list", "topic_show", "user_show"})
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $email;
 

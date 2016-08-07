@@ -24,7 +24,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
-        return $this->json($user, 200, [], ['groups' => ['user_show']]);
+        return $this->json($user, 200, [], ['groups' => ['user_self']]);
     }
 
     /**
@@ -38,7 +38,9 @@ class UserController extends Controller
     {
         $user = $this->get('doctrine')->getRepository(User::class)->find($request->get('id'));
 
-        return $this->json($user, 200, [], ['groups' => ['user_show']]);
+        $group = $user === $this->getUser() ? 'user_self' : 'user_show';
+
+        return $this->json($user, 200, [], ['groups' => [$group]]);
     }
 
     /**
