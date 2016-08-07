@@ -6,8 +6,6 @@ class Notification {
         this.notifications = new Map();
         this.listeners = [];
 
-        this.update();
-
         let updater = () => {
             if (AuthStorage.getUser()) {
                 this.interval = setInterval(() => this.update(), 10000);

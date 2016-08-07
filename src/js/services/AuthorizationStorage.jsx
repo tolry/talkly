@@ -2,6 +2,8 @@ class AuthorizationStorage {
 
     constructor() {
         this.listeners = [];
+        this.user = null;
+        this.token = null;
     }
 
     setToken(token) {

@@ -10,6 +10,7 @@ export default class Index extends React.Component {
 
         this.state = {
             loading: true,
+            search: '',
             data: []
         };
     }
@@ -27,12 +28,29 @@ export default class Index extends React.Component {
         });
     }
 
+    onSearch(event) {
+        let value = event.target.value;
+        clearTimeout(this.timer);
+
+        this.timer = setTimeout(() => {
+            this.setState({
+                search: value
+            });
+
+            console.log('rerender');
+        }, 250);
+    }
+
     render() {
         if (this.state.loading) {
             return <Loading size="0.5"/>;
         }
 
-        let topics = this.state.data.map((topic) => {
+        let data = this.state.data.filter((topic) => {
+            return topic.title.toLowerCase().includes(this.state.search.toLowerCase());
+        });
+
+        let topics = data.map((topic) => {
             return (
                 <Topic key={topic.id} data={topic}/>
             );
@@ -43,7 +61,16 @@ export default class Index extends React.Component {
                 <AddTopic/>
                 <div className="row">
                     <div className="small-12 columns">
-                        <h3>Open Topics</h3>
+                        <h3>Open Topics ({data.length})</h3>
+                        <form>
+                            <div className="row">
+                                <div className="large-6 columns">
+                                    <label>
+                                        <input type="text" onChange={this.onSearch.bind(this)} placeholder="Search"/>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
                         {topics}
                     </div>
                 </div>
