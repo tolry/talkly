@@ -1,12 +1,10 @@
 vendor
 app/config/parameters.yml
+app/config/local.yml
 var/*
 !var/.gitkeep
 web/bundles
-web/css
-web/fonts
-web/js/*
-!web/js/templates
+web/build
 bin/*
 !bin/console
 node_modules

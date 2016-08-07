@@ -1,14 +1,12 @@
 <?php
+
 namespace TobiasOlry\TalklyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TobiasOlry\TalklyBundle\Entity\Notification;
-use TobiasOlry\TalklyBundle\Form\UserProfileType;
+use TobiasOlry\TalklyBundle\Entity\User;
 use TobiasOlry\TalklyBundle\Service\UserService;
 
 /**
@@ -17,90 +15,57 @@ use TobiasOlry\TalklyBundle\Service\UserService;
 class UserController extends Controller
 {
     /**
-     * @Route("/user/profile", name="user-profile")
-     * @Template()
+     * @Route("/user/current")
+     *
+     * @return Response
+     */
+    public function currentAction()
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->json($user, 200, [], ['groups' => ['user_self']]);
+    }
+
+    /**
+     * @Route("/user/{id}", name="user-profile")
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function profileAction(Request $request)
     {
-        $user = $this->getUser();
-        $form = $this->createForm(new UserProfileType(), $user);
+        $user = $this->get('doctrine')->getRepository(User::class)->find($request->get('id'));
 
-        $form->handleRequest($request);
+        $group = $user === $this->getUser() ? 'user_self' : 'user_show';
 
-        if ($form->isValid()) {
-            $this->getUserService()->update($user);
-            $this->addFlash('success', 'user-profile updated');
-
-            return $this->redirectToRoute('user-profile');
-        }
-
-        return ['user' => $user, 'form' => $form->createView()];
+        return $this->json($user, 200, [], ['groups' => [$group]]);
     }
 
     /**
-     * @Route("/user/notifications", name="user-notifications")
-     * @Template()
+     * @Route("/user/{id}/edit")
      *
-     * @return array
-     */
-    public function notificationsAction()
-    {
-        return ['user' => $this->getUser()];
-    }
-
-    /**
-     * @Route("/user/mark-all-notifications-read", name="user-notification-read-all")
-     *
-     * @return RedirectResponse
-     */
-    public function markAllNotificationsReadAction()
-    {
-        $user = $this->getUser();
-        foreach ($user->getUnreadNotifications() as $notification) {
-            $notification->markAsDone();
-        }
-
-        $this->getUserService()->update($user);
-
-        return $this->redirectToRoute('user-notifications');
-    }
-
-    /**
-     * @Route("/user/notification/{id}/mark-read", name="user-notification-read")
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
-    public function markNotificationReadAction(Request $request)
+    public function editProfileAction(Request $request)
     {
-        $notification = $this->getNotification($request->get('id'));
-        $notification->markAsDone();
+        $em = $this->get('doctrine')->getManager();
 
-        $this->getUserService()->update($this->getUser());
+        $user = $em->getRepository(User::class)->find($request->get('id'));
 
-        return $this->redirectToRoute('user-notifications');
-    }
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            User::class,
+            'json',
+            ['object_to_populate' => $user]
+        );
 
-    /**
-     * @param $id
-     *
-     * @return Notification
-     */
-    private function getNotification($id)
-    {
-        $notifications = $this->getUser()->getUnreadNotifications();
-        foreach ($notifications as $notification) {
-            if ($notification->getId() == $id) {
+        $em->flush();
 
-                return $notification;
-            }
-        }
-
-        throw $this->createNotFoundException();
+        return $this->json($user, 200, [], ['groups' => ['user_show']]);
     }
 
     /**

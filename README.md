@@ -4,7 +4,7 @@ This is just a small pet project of mine, aiming for small developer teams who l
 
 what the first version should deliver:
 
-- rudimentary authentication/authorization mechanism (e.g. HTTP BASIC authentication, NTLM, ...)
+- authentication/authorization mechanism (e.g. Datebase, NTLM and LDAP)
 - anyone can
     - add new suggestions
     - vote on suggestions
@@ -17,10 +17,9 @@ As said before: this is not meant for everyone and far from stable. But if you l
 
 technologies used:
 - zurb foundation 5
-- symfony 2
+- symfony
 - doctrine orm
-- jquery
-- angularjs
+- reactjs
 
 ## Setup
 

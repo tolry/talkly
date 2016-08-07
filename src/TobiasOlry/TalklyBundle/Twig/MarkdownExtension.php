@@ -2,52 +2,34 @@
 
 namespace TobiasOlry\TalklyBundle\Twig;
 
-use Ciconia\Ciconia;
+use League\CommonMark\Converter;
 
 /**
- *
- * @author Tobias Olry <tobias.olry@gmail.com>
  * @author David Badura <d.a.badura@gmail.com>
  */
 class MarkdownExtension extends \Twig_Extension
 {
     /**
-     * @var Ciconia
+     * @var Converter
      */
-    protected $engine;
+    private $converter;
 
     /**
-     * @param Ciconia $engine
+     * @param Converter $converter
      */
-    public function __construct(Ciconia $engine)
+    public function __construct(Converter $converter)
     {
-        $this->engine = $engine;
+        $this->converter = $converter;
     }
 
     /**
      * @return array
      */
-    public function getFunctions()
+    public function getFilters()
     {
         return [
-            new \Twig_SimpleFunction('markdown', [$this, 'renderMarkdown'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFilter('markdown', [$this->converter, 'convertToHtml'], ['is_safe' => ['html']])
         ];
-    }
-
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
-    public function renderMarkdown($string, $inline = false)
-    {
-        $html = $this->engine->render($string);
-
-        if ($inline) {
-            $html = str_replace(['<p>', '</p>'], '', $html);
-        }
-
-        return $html;
     }
 
     /**

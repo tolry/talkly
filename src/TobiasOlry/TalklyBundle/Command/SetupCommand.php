@@ -3,10 +3,12 @@
 namespace TobiasOlry\TalklyBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\OutputStyle;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessUtils;
 
@@ -23,8 +25,29 @@ class SetupCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('talkly:setup');
+        $this
+            ->setName('talkly:setup')
+            ->addArgument('environment', InputArgument::OPTIONAL);
     }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        if (!$input->getArgument('environment')) {
+            $env = $io->choice('Environment?', [
+                self::ENV_PROD,
+                self::ENV_DEV
+            ], self::ENV_PROD);
+
+            $input->setArgument('environment', $env);
+        }
+    }
+
 
     /**
      * @param InputInterface $input
@@ -33,13 +56,15 @@ class SetupCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $env = $input->getArgument('environment');
+
         $io = new SymfonyStyle($input, $output);
 
-        $env = $this->askEnvironment($io);
-
         // todo check requirements
+        $this->setupConfig();
         $this->setupDatabase($io, $env);
         $this->setupAssets($io, $env);
+        $this->setupSecurity($io);
 
         if ($env === self::ENV_DEV) {
             $this->setupDevelopment($io);
@@ -56,18 +81,16 @@ class SetupCommand extends ContainerAwareCommand
         $io->success('finish! \o/');
     }
 
-    /**
-     * @param OutputStyle $io
-     * @return string
-     */
-    private function askEnvironment(OutputStyle $io)
+    private function setupConfig()
     {
-        $choices = [
-            self::ENV_PROD,
-            self::ENV_DEV
-        ];
+        $filesystem = new Filesystem();
 
-        return $io->choice('Environment?', $choices, self::ENV_PROD);
+        if (!$filesystem->exists($this->getRoot() . '/app/config/local.yml')) {
+            $filesystem->copy(
+                $this->getRoot() . '/app/config/local.dist.yml',
+                $this->getRoot() . '/app/config/local.yml'
+            );
+        }
     }
 
     /**
@@ -227,6 +250,34 @@ class SetupCommand extends ContainerAwareCommand
 
     /**
      * @param OutputStyle $io
+     */
+    private function setupSecurity(OutputStyle $io)
+    {
+        $io->section('Security');
+
+        $folder = __DIR__ . '/../../../../var/jwt';
+        $filesystem = new Filesystem();
+
+        if (!$filesystem->exists($folder . '/private.pem')) {
+
+            $filesystem->mkdir($folder);
+
+            $this->executeCommand(
+                $io,
+                sprintf('openssl genrsa -passout pass:talkly -out %s/private.pem -aes256 4096', $folder)
+            );
+
+            $this->executeCommand(
+                $io,
+                sprintf('openssl rsa -pubout -in %1$s/private.pem -passin pass:talkly -out %1$s/public.pem', $folder)
+            );
+        }
+
+        $io->success('Security');
+    }
+
+    /**
+     * @param OutputStyle $io
      * @param string $command
      */
     private function executeSymfonyCommand(OutputStyle $io, $command)
@@ -242,7 +293,7 @@ class SetupCommand extends ContainerAwareCommand
     {
         $process = new Process($command);
         $process->setTimeout(300);
-        $process->setWorkingDirectory(realpath(__DIR__ . '/../../../../'));
+        $process->setWorkingDirectory($this->getRoot());
 
         $io->note('Run: ' . $command);
 
@@ -251,5 +302,13 @@ class SetupCommand extends ContainerAwareCommand
         if (!$process->isSuccessful()) {
             throw new \RuntimeException(sprintf('command "%s" failed!', $command));
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getRoot()
+    {
+        return realpath(__DIR__ . '/../../../../');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
@@ -18,12 +19,12 @@ class DbAuthenticator extends AbstractAuthenticator
     private $passwordEncoder;
 
     /**
-     * @param RouterInterface $router
+     * @param JWTManager $manager
      * @param UserPasswordEncoder $passwordEncoder
      */
-    public function __construct(RouterInterface $router, UserPasswordEncoder $passwordEncoder)
+    public function __construct(JWTManager $manager, UserPasswordEncoder $passwordEncoder)
     {
-        parent::__construct($router);
+        parent::__construct($manager);
 
         $this->passwordEncoder = $passwordEncoder;
     }

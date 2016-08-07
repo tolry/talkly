@@ -2,13 +2,13 @@
 
 namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -18,19 +18,17 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
  */
 abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
 {
-    const REDIRECT = 'app.security.redirect';
+    /**
+     * @var JWTManager
+     */
+    private $manager;
 
     /**
-     * @var RouterInterface
+     * @param JWTManager $manager
      */
-    protected $router;
-
-    /**
-     * @param RouterInterface $router
-     */
-    public function __construct(RouterInterface $router)
+    public function __construct(JWTManager $manager)
     {
-        $this->router = $router;
+        $this->manager = $manager;
     }
 
     /**
@@ -40,9 +38,7 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $request->getSession()->set(self::REDIRECT, $request->getPathInfo());
-
-        return new RedirectResponse($this->router->generate('login'));
+        return new JsonResponse(null, Response::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -51,14 +47,11 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if (!$request->request->has('_username') || !$request->request->get('_password')) {
+        if ($request->getPathInfo() !== '/api/login') {
             return null;
         }
 
-        return [
-            'username' => $request->request->get('_username'),
-            'password' => $request->request->get('_password')
-        ];
+        return json_decode($request->getContent(), true);
     }
 
     /**
@@ -78,10 +71,7 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $session = $request->getSession();
-        $session->set(Security::AUTHENTICATION_ERROR, $exception);
-
-        return null;
+        return new JsonResponse(null, Response::HTTP_FORBIDDEN);
     }
 
     /**
@@ -92,14 +82,12 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $path = $request->getSession()->get(self::REDIRECT);
-        $request->getSession()->remove(self::REDIRECT);
+        $user = $token->getUser();
+        $jwt  = $this->manager->create($user);
 
-        if (!$path || $path === $this->router->generate('login') || $path === $this->router->generate('login_check')) {
-            $path = $this->router->generate('homepage');
-        }
-
-        return new RedirectResponse($request->getUriForPath($path));
+        return new JsonResponse([
+            'token' => $jwt
+        ]);
     }
 
     /**
@@ -107,6 +95,6 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function supportsRememberMe()
     {
-        return true;
+        return false;
     }
 }

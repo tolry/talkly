@@ -180,11 +180,6 @@ class TopicService
         return $this->topicRepository->findArchivedGroupByMonth();
     }
 
-    public function findNextTopics($limit = 5)
-    {
-        return $this->topicRepository->findNextTopics($limit);
-    }
-
     public function findNextGroupByMonth()
     {
         return $this->topicRepository->findNextGroupByMonth();

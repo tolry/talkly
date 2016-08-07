@@ -7,6 +7,7 @@
 namespace TobiasOlry\TalklyBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
  * @ORM\Table()
@@ -28,11 +29,15 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $createdBy;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $createdAt;
 
@@ -46,6 +51,8 @@ class Comment
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $commentText;
 
@@ -65,6 +72,14 @@ class Comment
     }
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      *
      * @return \DateTime
      */
@@ -81,7 +96,7 @@ class Comment
         return $this->createdBy;
     }
 
-    /*
+    /**
      * @return string
      */
     public function getCommentText()
@@ -89,16 +104,25 @@ class Comment
         return $this->commentText;
     }
 
+    /**
+     * @return Topic
+     */
     public function getTopic()
     {
         return $this->topic;
     }
 
+    /**
+     * @return bool
+     */
     public function isFeedback()
     {
         return $this->feedback;
     }
 
+    /**
+     *
+     */
     public function markAsFeedback()
     {
         $this->feedback = true;

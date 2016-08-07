@@ -3,16 +3,10 @@
 namespace TobiasOlry\TalklyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use TobiasOlry\TalklyBundle\Entity\Topic;
-use TobiasOlry\TalklyBundle\Form\CreateTopicType;
-use TobiasOlry\TalklyBundle\Form\EditTopicType;
-use TobiasOlry\TalklyBundle\Form\LectureTopicType;
 
 /**
  * @Route("/topic")
@@ -20,125 +14,80 @@ use TobiasOlry\TalklyBundle\Form\LectureTopicType;
 class TopicController extends Controller
 {
     /**
+     * @Route("/", name="topics")
+     *
+     * @return Response
+     */
+    public function listAction()
+    {
+        $repository = $this->get('talkly.repository.topic');
+        $topics = $repository->findNonArchivedMostVotesFirst();
+
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
+    }
+
+    /**
      * @Route("/create", name="topic-create")
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function createAction(Request $request)
     {
-        $topic = new Topic($this->getUser());
-        $form  = $this->createForm(new CreateTopicType(), $topic);
+        /** @var Topic $topic */
+        $topic = $this->get('serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json'
+        );
 
-        $form->handleRequest($request);
+        $topic->setCreatedBy($this->getUser());
+
         $this->getTopicService()->add($topic);
 
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'topic created');
-
-        return $this->redirectToView($topic, 'show');
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
      * @Route("/{id}/", name="topic-show")
      * @Route("/{id}/show", name="topic-show-legacy")
-     * @Template()
      *
      * @param Request $request
      *
-     * @return array
+     * @return Response
      */
     public function showAction(Request $request)
     {
         $topic = $this->getTopicService()->getTopic($request->get('id'));
-        $form  = $this->createForm(new LectureTopicType(), $topic);
 
-        return ['topic' => $topic, 'form' => $form->createView()];
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
      * @Route("/{id}/edit", name="topic-edit")
-     * @Template()
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function editAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
-        $service->checkUserCanEditTopic($topic, $this->getUser());
 
-        $form = $this->createForm(new EditTopicType(), $topic);
+        $topic = $service->getTopic($request->get('id'));
 
-        $form->handleRequest($request);
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json',
+            ['object_to_populate' => $topic]
+        );
 
-        if ($form->isValid()) {
-            $service->update($topic);
-            $service->markAsUpdated($topic);
-            $this->addFlash('topic-' . $topic->getId() . '-success', 'topic data updated');
+        $service->update($topic);
+        $service->markAsUpdated($topic);
 
-            return $this->redirectToView($topic, $request->get('view', 'list'));
-        }
-
-        return ['topic' => $topic, 'form' => $form->createView()];
-    }
-
-    /**
-     * @Route("/{id}/cast-vote", name="topic-cast-vote")
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function castVoteAction(Request $request)
-    {
-        $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
-
-        $service->addVote($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'vote cast');
-
-        return $this->redirectToView($topic, $request->get('view', 'list'));
-    }
-
-    /**
-     * @Route("/{id}/retract-vote", name="topic-retract-vote")
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function retractVoteAction(Request $request)
-    {
-        $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
-
-        $service->removeVote($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'vote retracted');
-
-        return $this->redirectToView($topic, $request->get('view', 'list'));
-    }
-
-    /**
-     * @Route("/{id}/comment", name="topic-comment")
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function commentAction(Request $request)
-    {
-        $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
-        $user    = $this->getUser();
-        $comment = $request->get('comment');
-
-        $service->comment($topic, $user, $comment);
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'comment added');
-
-        return $this->redirectToView($topic, $request->get('view', 'show'));
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
     }
 
     /**
@@ -146,30 +95,80 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function archiveAction(Request $request)
     {
-        $service    = $this->getTopicService();
-        $topic      = $service->getTopic($request->get('id'), $allowArchived = true);
-        $dateBefore = $topic->getLectureDate();
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'), $allowArchived = true);
 
-        $form = $this->createForm(new LectureTopicType(), $topic);
+        $this->get('serializer')->deserialize(
+            $request->getContent(),
+            Topic::class,
+            'json',
+            ['object_to_populate' => $topic]
+        );
 
-        $form->handleRequest($request);
+        $topic->setLectureHeld(true);
         $service->update($topic);
+        $service->markAsHeld($topic);
 
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'lecture updated');
+        return $this->json($topic, 200, [], ['groups' => ['topic_show']]);
+    }
 
-        if ($topic->isLectureHeld()) {
-            $service->markAsHeld($topic);
-        } elseif ($dateBefore != $topic->getLectureDate() && null !== $topic->getLectureDate()) {
-            $service->markAsScheduled($topic);
-        } elseif ($dateBefore != $topic->getLectureDate() && null === $topic->getLectureDate()) {
-            $service->markAsUnscheduled($topic);
-        }
 
-        return $this->redirectToView($topic, 'show');
+    /**
+     * @Route("/{id}/cast-vote", name="topic-cast-vote")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function castVoteAction(Request $request)
+    {
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'));
+
+        $service->addVote($topic, $this->getUser());
+
+        return $this->json('success');
+    }
+
+    /**
+     * @Route("/{id}/retract-vote", name="topic-retract-vote")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function retractVoteAction(Request $request)
+    {
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'));
+
+        $service->removeVote($topic, $this->getUser());
+
+        return $this->json('success');
+    }
+
+    /**
+     * @Route("/{id}/comment", name="topic-comment")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function commentAction(Request $request)
+    {
+        $service = $this->getTopicService();
+        $topic = $service->getTopic($request->get('id'));
+        $user = $this->getUser();
+
+        $body = json_decode($request->getContent(), true);
+
+        $service->comment($topic, $user, $body['comment']);
+
+        return $this->json('success');
     }
 
     /**
@@ -177,17 +176,16 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function addSpeakerAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->addSpeaker($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'add you as a speaker');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
+        return $this->json('success');
     }
 
     /**
@@ -195,40 +193,16 @@ class TopicController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return Response
      */
     public function removeSpeakerAction(Request $request)
     {
         $service = $this->getTopicService();
-        $topic   = $service->getTopic($request->get('id'));
+        $topic = $service->getTopic($request->get('id'));
 
         $service->removeSpeaker($topic, $this->getUser());
-        $this->addFlash('topic-' . $topic->getId() . '-success', 'remove you as a speaker');
 
-        return $this->redirectToView($topic, $request->get('view', 'list'));
-    }
-
-    /**
-     * @param Topic  $topic
-     * @param string $view
-     *
-     * @return RedirectResponse
-     */
-    private function redirectToView(Topic $topic, $view = 'show')
-    {
-        $route = 'homepage';
-        if ($topic->isLectureHeld()) {
-            $route = 'archive';
-        }
-
-        $url = $this->generateUrl($route) . '#topic-' . $topic->getId();
-
-        if ($view == 'show') {
-            $route = 'topic-show';
-            $url   = $this->generateUrl($route, ['id' => $topic->getId()]);
-        }
-
-        return new RedirectResponse($url);
+        return $this->json('success');
     }
 
     /**

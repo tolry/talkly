@@ -11,15 +11,14 @@ security:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
-        login:
-            pattern: ^/login$
-            security: false
-
-        default:
-            pattern: ^/
-            logout:
-                path:   logout
-                target: login
+        api:
+            pattern:   ^/api
+            stateless: true
+            lexik_jwt: ~
             guard:
                 authenticators:
                     - talkly.security.authenticator
+
+        default:
+            pattern:   ^/
+            security: false

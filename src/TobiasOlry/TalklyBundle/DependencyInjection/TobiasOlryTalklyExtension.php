@@ -17,6 +17,7 @@ class TobiasOlryTalklyExtension extends Extension
         );
 
         $loader->load('general.xml');
+        $loader->load('markdown.xml');
         $loader->load('security.xml');
     }
 }

@@ -31,7 +31,7 @@
         </service>
 
         <service id="talkly.security.authenticator.db" class="TobiasOlry\TalklyBundle\Security\Authenticator\DbAuthenticator">
-            <argument type="service" id="router" />
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
             <argument type="service" id="security.password_encoder" />
         </service>
 
@@ -40,11 +40,11 @@
         </service>
 
         <service id="talkly.security.authenticator.demo" class="TobiasOlry\TalklyBundle\Security\Authenticator\DemoAuthenticator">
-            <argument type="service" id="router" />
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
         </service>
 
         <service id="talkly.security.authenticator.ldap" class="TobiasOlry\TalklyBundle\Security\Authenticator\LdapAuthenticator">
-            <argument type="service" id="router" />
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
             <argument type="service" id="talkly.security.ldap" />
             <argument type="string">%security_ldap_dn_string%</argument>
         </service>

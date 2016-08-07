@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: local.yml }
+    - { resource: local.dist.yml }
+    - { resource: local.yml, ignore_errors: true }
     - { resource: security.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
@@ -26,6 +27,10 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    serializer:
+        enabled: true
+        enable_annotations: true
+    property_info: ~
 
 # Twig Configuration
 twig:
@@ -58,6 +63,8 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-gremo_ciconia:
-    renderer: html
-    extensions: ~
+lexik_jwt_authentication:
+    private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path
+    public_key_path:  %kernel.root_dir%/../var/jwt/public.pem    # ssh public key path
+    pass_phrase:      'talkly'                                   # ssh key pass phrase
+    token_ttl:        86400

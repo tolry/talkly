@@ -3,50 +3,56 @@
 namespace TobiasOlry\TalklyBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use TobiasOlry\TalklyBundle\Entity\Topic;
-use TobiasOlry\TalklyBundle\Form\CreateTopicType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
-     * @Template()
-     *
      * @return array
      */
-    public function dashboardAction()
+    public function indexAction()
     {
-        $form = $this->createForm(new CreateTopicType(), new Topic($this->getUser()));
-
-        return ['form' => $form->createView()];
+        return $this->render('@TobiasOlryTalkly/base.html.twig');
     }
 
     /**
      * @Route("/archive/", name="archive")
-     * @Template()
      *
-     * @return array
+     * @return Response
      */
     public function archiveAction()
     {
         $topics = $this->getTopicRepository()->findArchivedGroupByMonth();
 
-        return ['topics' => $topics];
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
     }
 
     /**
      * @Route("/calendar/", name="calendar")
-     * @Template()
      *
-     * @return array
+     * @return Response
      */
     public function calendarAction()
     {
         $topics = $this->getTopicRepository()->findNextGroupByMonth();
 
-        return ['topics' => $topics];
+        return $this->json($topics, 200, [], ['groups' => ['topic_list']]);
+    }
+
+    /**
+     * @Route("/markdown", name="markdown")
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function markdownAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $data['html'] = $this->get('talkly.markdown')->convertToHtml($data['markdown']);
+
+        return $this->json($data);
     }
 
     /**

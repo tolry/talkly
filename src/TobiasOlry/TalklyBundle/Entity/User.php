@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
  *
@@ -23,6 +24,8 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $id;
 
@@ -30,6 +33,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", unique=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $username;
 
@@ -44,6 +49,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $name;
 
@@ -51,6 +58,8 @@ class User implements UserInterface
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @JSON\Groups({"user_self"})
      */
     protected $notifyByEmail;
 
@@ -58,6 +67,8 @@ class User implements UserInterface
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=true)
+     *
+     * @JSON\Groups({"user_self"})
      */
     protected $notifyInApplication;
 
@@ -65,6 +76,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show", "user_show", "user_self"})
      */
     protected $email;
 
@@ -110,14 +123,14 @@ class User implements UserInterface
     {
         $this->username = $username;
 
-        $this->comments       = new ArrayCollection();
-        $this->topics         = new ArrayCollection();
-        $this->lectures       = new ArrayCollection();
-        $this->votes          = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->topics = new ArrayCollection();
+        $this->lectures = new ArrayCollection();
+        $this->votes = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
-        $this->notifications  = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
 
-        $this->notifyByEmail       = false;
+        $this->notifyByEmail = false;
         $this->notifyInApplication = true;
     }
 
@@ -192,7 +205,7 @@ class User implements UserInterface
      */
     public function addSpeakingTopic(Topic $topic)
     {
-        if (! $this->hasSpeakingTopic($topic)) {
+        if (!$this->hasSpeakingTopic($topic)) {
             $this->speakingTopics->add($topic);
         }
     }
@@ -240,7 +253,7 @@ class User implements UserInterface
      */
     public function addVote(Topic $topic)
     {
-        if (! $this->hasVoted($topic)) {
+        if (!$this->hasVoted($topic)) {
             $this->votes->add($topic);
         }
     }
@@ -258,9 +271,9 @@ class User implements UserInterface
      */
     public function getUnreadNotifications()
     {
-        return $this->notifications->filter(function (Notification $notification) {
-            return ! $notification->isDone();
-        });
+        return array_values($this->notifications->filter(function (Notification $notification) {
+            return !$notification->isDone();
+        })->toArray());
     }
 
     /**
@@ -300,7 +313,7 @@ class User implements UserInterface
      */
     public function setNotifyByEmail($notifyByEmail)
     {
-        $this->notifyByEmail = (bool) $notifyByEmail;
+        $this->notifyByEmail = (bool)$notifyByEmail;
     }
 
     /**
@@ -316,7 +329,7 @@ class User implements UserInterface
      */
     public function setNotifyInApplication($notifyInApplication)
     {
-        $this->notifyInApplication = (bool) $notifyInApplication;
+        $this->notifyInApplication = (bool)$notifyInApplication;
     }
 
     /**
@@ -349,7 +362,7 @@ class User implements UserInterface
      */
     public function __toString()
     {
-        if (! empty($this->name)) {
+        if (!empty($this->name)) {
 
             return $this->name;
         }

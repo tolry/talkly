@@ -6,6 +6,7 @@ namespace TobiasOlry\TalklyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
  * @ORM\Entity(repositoryClass="TobiasOlry\TalklyBundle\Repository\TopicRepository")
@@ -17,64 +18,90 @@ class Topic
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="topics")
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $createdBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="votes")
      * @ORM\JoinTable(name="vote")
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $votes;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="topic", cascade="all")
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $comments;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="speakingTopics")
      * @ORM\JoinTable(name="speaker")
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $speakers;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $lectureNote;
 
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(type="date", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $lectureDate;
 
     /**
      *
      * @ORM\Column(type="boolean")
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
      */
     private $lectureHeld;
 
@@ -82,7 +109,7 @@ class Topic
      *
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user = null)
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
@@ -104,6 +131,8 @@ class Topic
     {
         return $this->id;
     }
+
+
 
     /**
      *
@@ -181,7 +210,7 @@ class Topic
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[]|ArrayCollection
      */
     public function getComments()
     {
@@ -191,7 +220,7 @@ class Topic
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[]|ArrayCollection
      */
     public function getFeedbackComments()
     {
@@ -278,6 +307,14 @@ class Topic
     }
 
     /**
+     * @param User $createdBy
+     */
+    public function setCreatedBy(User $createdBy)
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    /**
      *
      * @return \DateTime
      */
@@ -338,5 +375,13 @@ class Topic
     public function isLectureHeld()
     {
         return $this->lectureHeld;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\Ldap\Exception\ConnectionException;
 use Symfony\Component\Ldap\LdapClient;
 use Symfony\Component\Routing\RouterInterface;
@@ -23,13 +24,13 @@ class LdapAuthenticator extends AbstractAuthenticator
     private $dnString;
 
     /**
-     * @param RouterInterface $router
+     * @param JWTManager $manager
      * @param LdapClient $ldap
      * @param string $dnString
      */
-    public function __construct(RouterInterface $router, LdapClient $ldap, $dnString)
+    public function __construct(JWTManager $manager, LdapClient $ldap, $dnString)
     {
-        parent::__construct($router);
+        parent::__construct($manager);
 
         $this->ldap = $ldap;
         $this->dnString = $dnString;
