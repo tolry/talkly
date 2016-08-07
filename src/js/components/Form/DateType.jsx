@@ -15,6 +15,15 @@ export default class DatePicker extends FormType {
         this.flatpickr.setDate(data);
     }
 
+    getData()
+    {
+        if (this.el.value) {
+            return this.el.value
+        }
+
+        return null;
+    }
+
     renderWidget() {
         return (
             <input
