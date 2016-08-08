@@ -1,7 +1,7 @@
 import React from "react";
 import crypto from "crypto";
 
-const URL = 'http://www.gravatar.com/avatar/';
+const URL = '//www.gravatar.com/avatar/';
 
 export default class Gravatar extends React.Component {
     render() {
