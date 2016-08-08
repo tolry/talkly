@@ -61,15 +61,9 @@ export default class ShowTopic extends React.Component {
             .then(function () {
                 var speakers = this.state.speakers;
 
-                let old = speakers;
-
-                console.log(speakers);
-
                 speakers = speakers.filter(function (el) {
                     return el.id != this.user.id;
                 }.bind(this));
-
-                console.log(speakers == old);
 
                 this.setState({
                     speakers: speakers

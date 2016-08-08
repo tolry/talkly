@@ -36,8 +36,6 @@ export default class Index extends React.Component {
             this.setState({
                 search: value
             });
-
-            console.log('rerender');
         }, 250);
     }
 

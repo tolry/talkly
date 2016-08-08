@@ -14,7 +14,9 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('@TobiasOlryTalkly/base.html.twig');
+        return $this->render('@TobiasOlryTalkly/base.html.twig', [
+            'auth' => $this->getParameter('security_type')
+        ]);
     }
 
     /**

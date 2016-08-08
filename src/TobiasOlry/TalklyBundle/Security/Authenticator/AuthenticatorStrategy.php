@@ -68,7 +68,7 @@ class AuthenticatorStrategy extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        return $userProvider->loadUserByUsername($credentials['username']);
+        return $this->getAuthenticator()->getUser($credentials, $userProvider);
     }
 
     /**

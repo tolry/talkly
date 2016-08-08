@@ -3,6 +3,7 @@ import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 import History from "../../services/History";
 import LoginForm from "./LoginForm";
+import {auth} from "../../services/Parameters";
 
 export default class Index extends React.Component {
     submit(data) {
@@ -29,7 +30,20 @@ export default class Index extends React.Component {
         });
     }
 
+    componentDidMount() {
+        if (auth === 'ntlm') {
+            this.submit({
+                username: null,
+                password: null
+            });
+        }
+    }
+
     render() {
+        if (auth === 'ntlm') {
+            return null;
+        }
+
         return (
             <main>
                 <div className="row">

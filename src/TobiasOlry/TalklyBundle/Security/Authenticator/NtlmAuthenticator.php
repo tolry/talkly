@@ -2,18 +2,14 @@
 
 namespace TobiasOlry\TalklyBundle\Security\Authenticator;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class NtlmAuthenticator extends AbstractGuardAuthenticator
+class NtlmAuthenticator extends AbstractAuthenticator
 {
     /**
      * @var string
@@ -21,21 +17,14 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
     private $domain;
 
     /**
+     * @param JWTManager $manager
      * @param string $domain
      */
-    public function __construct($domain)
+    public function __construct(JWTManager $manager, $domain)
     {
-        $this->domain = $domain;
-    }
+        parent::__construct($manager);
 
-    /**
-     * @param Request $request
-     * @param AuthenticationException|null $authException
-     * @return null|Response
-     */
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        return null;
+        $this->domain = $domain;
     }
 
     /**
@@ -44,21 +33,16 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
+        if ($request->getPathInfo() !== '/api/login') {
+            return null;
+        }
+
+        list($domain, $username) = explode('\\', $request->server->get('REMOTE_USER'));
+
         return [
-            'username' => $request->server->get('REMOTE_USER')
+            'username' => $username,
+            'domain' => $domain
         ];
-    }
-
-    /**
-     * @param mixed $credentials
-     * @param UserProviderInterface $userProvider
-     * @return UserInterface
-     */
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
-        $username = str_replace($this->domain . '\\', '', $credentials['username']);
-
-        return $userProvider->loadUserByUsername($username);
     }
 
     /**
@@ -72,39 +56,10 @@ class NtlmAuthenticator extends AbstractGuardAuthenticator
             return false;
         }
 
-        if (strpos($credentials['username'], $this->domain . '\\') !== 0) {
+        if ($credentials['domain'] !== $this->domain) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param Request $request
-     * @param AuthenticationException $exception
-     * @return null
-     */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
-    {
-        return null;
-    }
-
-    /**
-     * @param Request $request
-     * @param TokenInterface $token
-     * @param string $providerKey
-     * @return null
-     */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        return null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function supportsRememberMe()
-    {
-        return false;
     }
 }

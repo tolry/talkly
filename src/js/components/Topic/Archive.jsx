@@ -15,7 +15,6 @@ export default class Archive extends React.Component {
 
     componentDidMount() {
         Client.get('/api/archive/').then((response) => {
-            console.log(response.data);
             this.setState({
                 loading: false,
                 data: response.data

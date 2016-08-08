@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {history, base} from "./History";
+import history from "./History";
+import {base} from "./Parameters";
 import AuthorizationStorage from "./AuthorizationStorage";
 import MessageBag from "./MessageBag";
 

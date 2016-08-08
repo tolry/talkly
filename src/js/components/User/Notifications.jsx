@@ -33,8 +33,6 @@ export default class Notifications extends React.Component {
     }
 
     doneAll() {
-        console.log('all');
-
         for (let notification of this.state.data) {
             this.done(notification);
         }

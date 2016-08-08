@@ -36,6 +36,7 @@
         </service>
 
         <service id="talkly.security.authenticator.ntlm" class="TobiasOlry\TalklyBundle\Security\Authenticator\NtlmAuthenticator">
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
             <argument type="string">%security_ntlm_domain%</argument>
         </service>
 
