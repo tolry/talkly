@@ -1,7 +1,0 @@
-TobiasOlry\TalklyBundle\Entity\User:
-  user_{1..20}:
-    __construct: ["<username()>"]
-    name (unique): "<firstname()> <lastname()>"
-    email (unique): "<email()>"
-    notifyByEmail: "50%? true : false"
-    notifyInApplication: "50%? true : false"

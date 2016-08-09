@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="talkly.security.user_provider" class="AppBundle\Security\TalklyUserProvider">
+            <argument type="service" id="talkly.repository.user"/>
+            <argument type="string">%security_type%</argument>
+        </service>
+
+        <service id="talkly.security.authenticator" class="AppBundle\Security\Authenticator\AuthenticatorStrategy">
+            <argument type="string">%security_type%</argument>
+            <call method="addAuthenticator">
+                <argument type="string">db</argument>
+                <argument type="service" id="talkly.security.authenticator.db" />
+            </call>
+            <call method="addAuthenticator">
+                <argument type="string">ntlm</argument>
+                <argument type="service" id="talkly.security.authenticator.ntlm" />
+            </call>
+            <call method="addAuthenticator">
+                <argument type="string">demo</argument>
+                <argument type="service" id="talkly.security.authenticator.demo" />
+            </call>
+            <call method="addAuthenticator">
+                <argument type="string">ldap</argument>
+                <argument type="service" id="talkly.security.authenticator.ldap" />
+            </call>
+        </service>
+
+        <service id="talkly.security.authenticator.db" class="AppBundle\Security\Authenticator\DbAuthenticator">
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+            <argument type="service" id="security.password_encoder" />
+        </service>
+
+        <service id="talkly.security.authenticator.ntlm" class="AppBundle\Security\Authenticator\NtlmAuthenticator">
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+            <argument type="string">%security_ntlm_domain%</argument>
+        </service>
+
+        <service id="talkly.security.authenticator.demo" class="AppBundle\Security\Authenticator\DemoAuthenticator">
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+        </service>
+
+        <service id="talkly.security.authenticator.ldap" class="AppBundle\Security\Authenticator\LdapAuthenticator">
+            <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+            <argument type="service" id="talkly.security.ldap" />
+            <argument type="string">%security_ldap_dn_string%</argument>
+        </service>
+
+        <service id="talkly.security.ldap"
+                 class="Symfony\Component\Ldap\LdapClient" public="true">
+            <argument type="string">%security_ldap_url%</argument>
+        </service>
+    </services>
+
+</container>

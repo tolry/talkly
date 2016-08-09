@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="talkly.repository.topic" class="AppBundle\Repository\TopicRepository">
+            <factory service="doctrine.orm.default_entity_manager" method="getRepository"/>
+            <argument type="string">AppBundle\Entity\Topic</argument>
+        </service>
+
+        <service id="talkly.repository.user" class="AppBundle\Repository\UserRepository">
+            <factory service="doctrine.orm.default_entity_manager" method="getRepository"/>
+            <argument type="string">AppBundle\Entity\User</argument>
+        </service>
+
+        <service id="talkly.service.topic" class="AppBundle\Service\TopicService">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="talkly.service.user" class="AppBundle\Service\UserService">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+        </service>
+
+        <service id="talkly.event.email_transport"
+                 class="AppBundle\Event\NotificationTransport\EmailTransport">
+            <argument type="service" id="swiftmailer.mailer.default"/>
+            <argument type="service" id="twig"/>
+            <argument type="string">%notification_email_sender%</argument>
+        </service>
+
+        <service id="talkly.event.database_transport"
+                 class="AppBundle\Event\NotificationTransport\DatabaseTransport">
+            <argument type="service" id="talkly.service.user"/>
+        </service>
+
+        <service id="talkly.event.notification_subscriber"
+                 class="AppBundle\Event\Subscriber\NotificationSubscriber">
+            <tag name="kernel.event_subscriber"/>
+            <argument type="service" id="talkly.service.user"/>
+            <argument type="service" id="talkly.service.topic"/>
+            <argument type="service" id="security.token_storage"/>
+
+            <call method="addTransport">
+                <argument type="service" id="talkly.event.email_transport"/>
+            </call>
+            <call method="addTransport">
+                <argument type="service" id="talkly.event.database_transport"/>
+            </call>
+        </service>
+
+
+    </services>
+
+</container>
