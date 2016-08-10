@@ -1,3 +1,0 @@
-TobiasOlry\TalklyBundle\Entity\Comment:
-  comment_{1..200}:
-    __construct: ["@user*", "@topic*", "<text()>"]

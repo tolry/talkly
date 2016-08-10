@@ -1,5 +1,5 @@
 app:
-    resource: "@TobiasOlryTalklyBundle/Controller/"
+    resource: "@AppBundle/Controller/"
     type:     annotation
     prefix: /api
 
@@ -9,7 +9,7 @@ login:
 catch_all:
     path:     /{catchall}
     defaults:
-        _controller: TobiasOlryTalklyBundle:Index:index
+        _controller: AppBundle:Index:index
     requirements:
         #catchall: "^(?!api|_)"
         catchall: ".*"
