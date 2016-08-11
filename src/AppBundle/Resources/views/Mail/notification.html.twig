@@ -1,7 +1,7 @@
 {% extends 'AppBundle:Mail:layout.html.twig' %}
 
 {% block content %}
-<h3>{{ message.subject }}</h3>
+<h3>{{ message.subject|markdown }}</h3>
 <h3>Details</h3>
 <p>{{ message.details|markdown }}</p>
 <p>kind regards,<br />&nbsp;&nbsp;&nbsp;talkly mailrobot</p>

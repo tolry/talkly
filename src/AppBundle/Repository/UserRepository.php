@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Notification;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\User;
 
@@ -17,6 +18,7 @@ class UserRepository extends EntityRepository
      */
     public function findOrCreate($username)
     {
+        /** @var User $user */
         if ($user = $this->findOneBy(['username' => $username])) {
             return $user;
         }
@@ -27,5 +29,23 @@ class UserRepository extends EntityRepository
         $this->getEntityManager()->flush($user);
 
         return $user;
+    }
+
+    /**
+     * @param User $user
+     * @param $message
+     */
+    public function addNotification(User $user, $message)
+    {
+        $user->getNotifications()->add(new Notification($user, $message));
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param User $user
+     */
+    public function save(User $user)
+    {
+        $this->getEntityManager()->flush();
     }
 }

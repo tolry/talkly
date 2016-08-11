@@ -1,20 +1,27 @@
 <?php
+
+namespace AppBundle\Notification;
+
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
-
-namespace AppBundle\Event;
-
-class NotificationMessage
+class Message
 {
+    /**
+     * @var string
+     */
     public $subject;
+
+    /**
+     * @var string
+     */
     public $details;
 
     /**
      * @param string $subject markdown string
      * @param string $details markdown string
      *
-     * @return NotificationMessage
+     * @return self
      */
     public static function create($subject, $details)
     {
@@ -24,6 +31,5 @@ class NotificationMessage
 
         return $message;
     }
-
 }
 

@@ -1,13 +1,13 @@
 <?php
+
+namespace AppBundle\Notification\Transport;
+
+use AppBundle\Entity\User;
+use AppBundle\Notification\Message;
+
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>
  */
-
-namespace AppBundle\Event\NotificationTransport;
-
-use AppBundle\Entity\User;
-use AppBundle\Event\NotificationMessage;
-
 class EmailTransport implements TransportInterface
 {
     /**
@@ -16,15 +16,21 @@ class EmailTransport implements TransportInterface
     private $mailer;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $twig;
+
+    /**
      * @var string
      */
     private $emailSender;
 
     /**
-     * @var \Twig_Environment
+     * EmailTransport constructor.
+     * @param \Swift_Mailer $mailer
+     * @param \Twig_Environment $twig
+     * @param $emailSender
      */
-    private $twig;
-
     public function __construct(
         \Swift_Mailer $mailer,
         \Twig_Environment $twig,
@@ -35,7 +41,11 @@ class EmailTransport implements TransportInterface
         $this->emailSender = $emailSender;
     }
 
-    public function addNotification(User $user, NotificationMessage $message)
+    /**
+     * @param User $user
+     * @param Message $message
+     */
+    public function addNotification(User $user, Message $message)
     {
         if (! $user->getNotifyByEmail()) {
             return;

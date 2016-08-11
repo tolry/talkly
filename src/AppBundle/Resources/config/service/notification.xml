@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="talkly.notification.transport.email"
+                 class="AppBundle\Notification\Transport\EmailTransport">
+            <argument type="service" id="swiftmailer.mailer.default"/>
+            <argument type="service" id="twig"/>
+            <argument type="string">%notification_email_sender%</argument>
+        </service>
+
+        <service id="talkly.notification.transport.database"
+                 class="AppBundle\Notification\Transport\DatabaseTransport">
+            <argument type="service" id="talkly.repository.user"/>
+        </service>
+
+        <service id="talkly.event.notification_subscriber"
+                 class="AppBundle\Event\Subscriber\NotificationSubscriber">
+            <tag name="kernel.event_subscriber"/>
+            <argument type="service" id="talkly.repository.user"/>
+            <argument type="service" id="talkly.service.topic"/>
+            <argument type="service" id="security.token_storage"/>
+
+            <call method="addTransport">
+                <argument type="service" id="talkly.notification.transport.email"/>
+            </call>
+            <call method="addTransport">
+                <argument type="service" id="talkly.notification.transport.database"/>
+            </call>
+        </service>
+    </services>
+
+</container>
