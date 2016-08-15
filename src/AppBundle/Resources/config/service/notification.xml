@@ -20,6 +20,12 @@
         <service id="talkly.event.notification_subscriber"
                  class="AppBundle\Event\Subscriber\NotificationSubscriber">
             <tag name="kernel.event_subscriber"/>
+            <argument type="service" id="talkly.notification.manager"/>
+            <argument type="service" id="security.token_storage"/>
+        </service>
+
+        <service id="talkly.notification.manager"
+                 class="AppBundle\Notification\NotificationManager">
             <argument type="service" id="talkly.repository.user"/>
             <argument type="service" id="talkly.service.topic"/>
             <argument type="service" id="security.token_storage"/>
