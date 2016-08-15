@@ -17,6 +17,7 @@ class AppExtension extends Extension
         );
 
         $loader->load('general.xml');
+        $loader->load('notification.xml');
         $loader->load('markdown.xml');
         $loader->load('security.xml');
     }

@@ -1,14 +1,15 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Notification;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityManager;
 
+/**
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ *
+ * @deprecated use UserRepository
+ */
 class UserService
 {
     private $em;
@@ -22,7 +23,7 @@ class UserService
 
     public function update(User $user)
     {
-        $this->em->flush();
+        $this->repository->save($user);
     }
 
     public function findAll()
@@ -32,8 +33,7 @@ class UserService
 
     public function addNotification(User $user, $message)
     {
-        $user->getNotifications()->add(new Notification($user, $message));
-        $this->em->flush();
+        $this->repository->addNotification($user, $message);
     }
 }
 
