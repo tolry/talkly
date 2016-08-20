@@ -5,13 +5,12 @@ namespace AppBundle\Security\Authenticator;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\Ldap\Exception\ConnectionException;
 use Symfony\Component\Ldap\LdapClient;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class LdapAuthenticator extends AbstractAuthenticator
+class LdapAuthenticator extends AbstractLoginAuthenticator
 {
     /**
      * @var LdapClient

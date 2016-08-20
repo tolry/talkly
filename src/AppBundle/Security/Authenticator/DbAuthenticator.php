@@ -3,15 +3,13 @@
 namespace AppBundle\Security\Authenticator;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
-use Symfony\Component\Routing\Router;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class DbAuthenticator extends AbstractAuthenticator
+class DbAuthenticator extends AbstractLoginAuthenticator
 {
     /**
      * @var UserPasswordEncoder

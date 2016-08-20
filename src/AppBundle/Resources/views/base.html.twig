@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>talkly</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>talkly</title>
 
-    <meta name="description" content=""/>
-    <meta name="author" content="Tobias Olry <tobias.olry@gmail.com>"/>
+  <meta name="description" content=""/>
+  <meta name="author" content="Tobias Olry <tobias.olry@gmail.com>"/>
 
-    <link rel="stylesheet" href="{{ asset('build/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('build/style.css') }}">
 </head>
 
 <body>
 
-<div id="app" data-base="{{ app.request.baseUrl }}" data-auth="{{ auth }}">Loading...</div>
+<div id="app" data-base="{{ app.request.baseUrl }}" data-token="{{ token }}">Loading...</div>
 
 <script src="{{ asset('build/app.js') }}"></script>
 </body>

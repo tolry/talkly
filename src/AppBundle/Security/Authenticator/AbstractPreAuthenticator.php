@@ -2,8 +2,6 @@
 
 namespace AppBundle\Security\Authenticator;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,19 +14,19 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
+abstract class AbstractPreAuthenticator extends AbstractGuardAuthenticator
 {
     /**
-     * @var JWTManager
+     * @var RouterInterface
      */
-    private $manager;
+    private $router;
 
     /**
-     * @param JWTManager $manager
+     * @param RouterInterface $router
      */
-    public function __construct(JWTManager $manager)
+    public function __construct(RouterInterface $router)
     {
-        $this->manager = $manager;
+        $this->router = $router;
     }
 
     /**
@@ -38,20 +36,7 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new JsonResponse(null, Response::HTTP_UNAUTHORIZED);
-    }
-
-    /**
-     * @param Request $request
-     * @return array|null
-     */
-    public function getCredentials(Request $request)
-    {
-        if ($request->getPathInfo() !== '/api/login') {
-            return null;
-        }
-
-        return json_decode($request->getContent(), true);
+        return null;
     }
 
     /**
@@ -67,27 +52,24 @@ abstract class AbstractAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param Request $request
      * @param AuthenticationException $exception
-     * @return null
+     *
+     * @return Response|null
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        return new JsonResponse(null, Response::HTTP_FORBIDDEN);
+        return null;
     }
 
     /**
      * @param Request $request
      * @param TokenInterface $token
-     * @param string $providerKey
-     * @return null
+     * @param string $providerKey The provider (i.e. firewall) key
+     *
+     * @return Response|null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $user = $token->getUser();
-        $jwt  = $this->manager->create($user);
-
-        return new JsonResponse([
-            'token' => $jwt
-        ]);
+        return null;
     }
 
     /**

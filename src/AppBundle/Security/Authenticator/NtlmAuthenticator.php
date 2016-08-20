@@ -2,14 +2,14 @@
 
 namespace AppBundle\Security\Authenticator;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class NtlmAuthenticator extends AbstractAuthenticator
+class NtlmAuthenticator extends AbstractPreAuthenticator
 {
     /**
      * @var string
@@ -17,12 +17,12 @@ class NtlmAuthenticator extends AbstractAuthenticator
     private $domain;
 
     /**
-     * @param JWTManager $manager
+     * @param RouterInterface $router
      * @param string $domain
      */
-    public function __construct(JWTManager $manager, $domain)
+    public function __construct(RouterInterface $router, $domain)
     {
-        parent::__construct($manager);
+        parent::__construct($router);
 
         $this->domain = $domain;
     }
@@ -33,15 +33,19 @@ class NtlmAuthenticator extends AbstractAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() !== '/api/login') {
+        if (strpos($request->getPathInfo(), '/api/') === 0) {
             return null;
         }
 
-        list($domain, $username) = explode('\\', $request->server->get('REMOTE_USER'));
+        $parts = explode('\\', $request->server->get('REMOTE_USER'));
+
+        if (count($parts) !== 2) {
+            return null;
+        }
 
         return [
-            'username' => $username,
-            'domain' => $domain
+            'domain' => $parts[0],
+            'username' => $parts[1]
         ];
     }
 
