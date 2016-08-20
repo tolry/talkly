@@ -34,6 +34,6 @@ class DatabaseTransport implements TransportInterface
             return;
         }
 
-        $this->userRepository->addNotification($user, $message);
+        $this->userRepository->addNotification($user, $message->subject);
     }
 }

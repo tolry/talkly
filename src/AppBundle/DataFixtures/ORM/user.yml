@@ -3,5 +3,5 @@ AppBundle\Entity\User:
     __construct: ["<username()>"]
     name (unique): "<firstname()> <lastname()>"
     email (unique): "<email()>"
-    notifyByEmail: "50%? true : false"
+    notifyByEmail: false
     notifyInApplication: "50%? true : false"
