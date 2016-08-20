@@ -3,14 +3,16 @@ import Client from "../../services/Client";
 import Topic from "./Topic";
 import AddTopic from "./AddTopic";
 import Loading from "../Loading/Loading";
+import History from "../../services/History";
 
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
 
+        var search = this.props.location.query.search;
+
         this.state = {
             loading: true,
-            search: '',
             data: []
         };
     }
@@ -33,19 +35,32 @@ export default class Index extends React.Component {
         clearTimeout(this.timer);
 
         this.timer = setTimeout(() => {
-            this.setState({
-                search: value
-            });
+            this.props.location.query.search = value;
+            History.push(this.props.location);
         }, 250);
     }
 
+    //componentWillReceiveProps(nextProps) {
+        //this.setState({
+            //search: nextProps.location.query.search
+        //});
+    //}
+
     render() {
+        console.log('render', this.state);
+
         if (this.state.loading) {
             return <Loading size="0.5"/>;
         }
 
         let data = this.state.data.filter((topic) => {
-            return topic.title.toLowerCase().includes(this.state.search.toLowerCase());
+            var search = this.props.location.query.search;
+
+            if (search == undefined) {
+                return true;
+            }
+
+            return topic.title.toLowerCase().includes(search.toLowerCase());
         });
 
         let topics = data.map((topic) => {
@@ -64,7 +79,7 @@ export default class Index extends React.Component {
                             <div className="row">
                                 <div className="large-6 columns">
                                     <label>
-                                        <input type="text" onChange={this.onSearch.bind(this)} placeholder="Search"/>
+                                        <input type="text" value={this.props.location.query.search} onChange={this.onSearch.bind(this)} placeholder="Search"/>
                                     </label>
                                 </div>
                             </div>
