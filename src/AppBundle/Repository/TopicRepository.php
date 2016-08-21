@@ -36,7 +36,7 @@ class TopicRepository extends EntityRepository
             ->select('t, v, c')
             ->leftJoin('t.votes', 'v')
             ->leftJoin('t.comments', 'c')
-            ->orderBy('t.lectureDate', 'DESC')
+            ->orderBy('t.lectureFrom', 'DESC')
             ->andWhere('t.lectureHeld = true')
             ->getQuery()
             ->getResult();
@@ -44,7 +44,7 @@ class TopicRepository extends EntityRepository
         $result = [];
 
         foreach ($topics as $topic) {
-            $key = $topic->getLectureDate() ? $topic->getLectureDate()->format('Y-m') : 'unknown';
+            $key = $topic->getLectureFrom() ? $topic->getLectureFrom()->format('Y-m') : 'unknown';
 
             $result[$key][] = $topic;
         }
@@ -62,15 +62,15 @@ class TopicRepository extends EntityRepository
             ->select('t, v, c')
             ->leftJoin('t.votes', 'v')
             ->leftJoin('t.comments', 'c')
-            ->orderBy('t.lectureDate', 'ASC')
+            ->orderBy('t.lectureFrom', 'ASC')
             ->andWhere('t.lectureHeld = false')
-            ->andWhere('t.lectureDate IS NOT NULL')
+            ->andWhere('t.lectureFrom IS NOT NULL')
             ->getQuery()
             ->getResult();
 
         $result = [];
         foreach ($topics as $topic) {
-            $result[$topic->getLectureDate()->format('Y-m')][] = $topic;
+            $result[$topic->getLectureFrom()->format('Y-m')][] = $topic;
         }
 
         return $result;
