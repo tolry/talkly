@@ -2,6 +2,8 @@
 @import "../../node_modules/zurb-foundation-5/scss/foundation";
 @import "../../node_modules/font-awesome/css/font-awesome.css";
 @import "../../node_modules/flatpickr/dist/flatpickr.min.css";
+@import "../../node_modules/prismjs/themes/prism-tomorrow.css";
+
 @import "mixins";
 
 body {
@@ -121,10 +123,6 @@ textarea {
     display: none;
 }
 
-.markdown pre {
-    margin-bottom: 1em;
-}
-
 .text-highlight {
     color: $warning-color;
     font-weight: bold;
@@ -224,3 +222,7 @@ textarea {
     100% { transform: rotate(360deg); }
 }
 
+code {
+    border: 0;
+    padding: 0;
+}

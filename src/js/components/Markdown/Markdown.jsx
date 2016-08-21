@@ -1,5 +1,7 @@
 import React from "react";
 import Client from "../../services/Client";
+import prismjs from "prismjs";
+import $ from "jquery";
 
 export default class Markdown extends React.Component {
     constructor(props) {
@@ -15,6 +17,12 @@ export default class Markdown extends React.Component {
 
     componentDidMount() {
         this.parse(this.props.children);
+    }
+
+    componentDidUpdate() {
+        $(this.el).find('code').each(function() {
+            prismjs.highlightElement(this);
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,6 +74,6 @@ export default class Markdown extends React.Component {
             return <span>loading...</span>
         }
 
-        return <div dangerouslySetInnerHTML={{__html: this.state.html}}/>;
+        return <div ref={el => this.el = el} dangerouslySetInnerHTML={{__html: this.state.html}}/>;
     }
 }
