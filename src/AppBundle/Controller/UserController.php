@@ -38,6 +38,10 @@ class UserController extends Controller
     {
         $user = $this->get('doctrine')->getRepository(User::class)->find($request->get('id'));
 
+        if (!$user) {
+            throw $this->createNotFoundException();
+        }
+
         $group = $user === $this->getUser() ? 'user_self' : 'user_show';
 
         return $this->json($user, 200, [], ['groups' => [$group]]);
