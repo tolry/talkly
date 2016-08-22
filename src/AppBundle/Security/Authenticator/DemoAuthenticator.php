@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class DemoAuthenticator extends AbstractAuthenticator
+class DemoAuthenticator extends AbstractLoginAuthenticator
 {
     /**
      * @param mixed $credentials

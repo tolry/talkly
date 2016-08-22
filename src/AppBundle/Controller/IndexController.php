@@ -14,8 +14,14 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
+        $token = null;
+
+        if ($this->getUser()) {
+            $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($this->getUser());
+        }
+
         return $this->render('@App/base.html.twig', [
-            'auth' => $this->getParameter('security_type')
+            'token' => $token
         ]);
     }
 
