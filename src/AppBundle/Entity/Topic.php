@@ -223,9 +223,7 @@ class Topic
      */
     public function getComments()
     {
-        return $this->comments->filter(function (Comment $comment) {
-            return ! $comment->isFeedback();
-        });
+        return $this->comments;
     }
 
     /**

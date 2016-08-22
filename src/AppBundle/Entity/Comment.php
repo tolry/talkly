@@ -45,7 +45,7 @@ class Comment
      * true, if comment was written after
      * the lecture was already held
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean")
      */
     private $feedback;
 
