@@ -110,7 +110,7 @@ export default class Index extends React.Component {
                                 className="fa fa-comments-o"/> {this.props.data.comments.length}</span>
                             </li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
-                            <li><Date showIcon={true}>{this.props.data.lectureDate}</Date></li>
+                            <li><Date showIcon={true}>{this.props.data.lectureFrom}</Date></li>
                         </ul>
                     </div>
                     <div className="large-3 columns text-right">

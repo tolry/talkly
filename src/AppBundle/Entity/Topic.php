@@ -91,11 +91,20 @@ class Topic
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      *
      * @JSON\Groups({"topic_list", "topic_show"})
      */
-    private $lectureDate;
+    private $lectureFrom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @JSON\Groups({"topic_list", "topic_show"})
+     */
+    private $lectureUntil;
 
     /**
      *
@@ -327,18 +336,37 @@ class Topic
      *
      * @param \DateTime $date
      */
-    public function setLectureDate(\DateTime $date = null)
+    public function setLectureFrom(\DateTime $date = null)
     {
-        $this->lectureDate = $date;
+        $this->lectureFrom = $date;
     }
 
     /**
      *
      * @return \DateTime
      */
-    public function getLectureDate()
+    public function getLectureFrom()
     {
-        return $this->lectureDate;
+        return $this->lectureFrom;
+    }
+
+
+    /**
+     *
+     * @param \DateTime $date
+     */
+    public function setLectureUntil(\DateTime $date = null)
+    {
+        $this->lectureUntil = $date;
+    }
+
+    /**
+     *
+     * @return \DateTime
+     */
+    public function getLectureUntil()
+    {
+        return $this->lectureUntil;
     }
 
     /**

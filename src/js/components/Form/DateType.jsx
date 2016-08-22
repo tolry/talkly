@@ -1,18 +1,33 @@
 import React from "react";
 import FormType from "./FormType";
 import flatpickr from "flatpickr";
+import moment from "moment";
 
 export default class DatePicker extends FormType {
     componentDidMount() {
         let options = {
-            enabletime: this.props.enableTime || false
+            time_24hr: true,
+            enableTime: this.props.enableTime || false
         };
 
         this.flatpickr = flatpickr(this.el, options);
     }
 
     setData(data) {
-        this.flatpickr.setDate(data);
+        if (!data) {
+            return;
+        }
+
+        let date = moment(data);
+
+        let firstParts = data.split("T");
+        let lastParts = firstParts[1].split("+");
+        let timeParts = lastParts[0].split(":");
+        let hours = timeParts[0];
+        let minutes = timeParts[1];
+
+        this.flatpickr.setDate(date.format('YYYY-MM-DD'));
+        this.flatpickr.setTime(hours, minutes);
     }
 
     getData()

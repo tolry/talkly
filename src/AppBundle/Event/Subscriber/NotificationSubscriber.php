@@ -115,7 +115,7 @@ class NotificationSubscriber implements EventSubscriberInterface
     {
         $message = Message::create(
             sprintf("Topic #%d got scheduled for %s.", $event->getTopic()->getId(),
-                $event->getTopic()->getLectureDate()->format('Y-m-d')),
+                $event->getTopic()->getLectureFrom()->format('Y-m-d')),
             "Talk was scheduled by " . $this->security->getToken()->getUser()
         );
 
