@@ -3,6 +3,7 @@ import Form from "../Form/Form";
 import FormType from "../Form/FormType";
 import MarkdownType from "../Form/MarkdownType";
 import DateType from "../Form/DateType";
+import DurationType from "../Form/DurationType";
 
 export default class TopicForm extends Form {
   renderForm() {
@@ -14,12 +15,11 @@ export default class TopicForm extends Form {
                         constraints="notBlank"/>
         </div>
         <div className="medium-6 columns">
-          <DateType enableTime={true} label="Lecture From:" name="lectureFrom"/>
+          <DateType enableTime={true} label="Lecture From:" name="lectureDate"/>
         </div>
         <div className="medium-6 columns">
-          <DateType enableTime={true} label="Lecture Until:" name="lectureUntil"/>
+          <DurationType label="Lecture Duration:" name="lectureDuration"/>
         </div>
-
       </div>
     );
   }

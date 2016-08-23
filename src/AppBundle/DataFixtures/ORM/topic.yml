@@ -5,7 +5,8 @@ AppBundle\Entity\Topic:
     description: "<markdown()>"
     votes: "<numberBetween(0, 15)>x @user*"
     speakers: "<numberBetween(0, 3)>x @user*"
-    lectureFrom: "50%? <dateTimeBetween('now', '+2years')>"
+    lectureDate: "50%? <dateTimeBetween('now', '+2years')>"
+    lectureDuration: "50%? <randomElement(array(15, 30, 45, 60, 90, 120, 360, 480))>"
 
   topic_{51..100}:
     __construct: ["@user*"]
@@ -13,6 +14,7 @@ AppBundle\Entity\Topic:
     description: "<markdown()>"
     votes: "<numberBetween(0, 15)>x @user*"
     speakers: "<numberBetween(0, 3)>x @user*"
-    lectureFrom: "<dateTimeBetween('-2years', 'now')>"
+    lectureDate: "<dateTimeBetween('-2years', 'now')>"
+    lectureDuration: "50%? <randomElement(array(15, 30, 45, 60, 90, 120, 360, 480))>"
     lectureHeld: true
     lectureNote: "<text()>"

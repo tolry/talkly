@@ -11,7 +11,7 @@ import VotesList from "./VotesList";
 import Votes from "./Votes";
 import Comments from "./Comments";
 import Date from "../Date";
-import DateDiff from "../DateDiff";
+import Duration from "../Duration";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 import MessageBag from "../../services/MessageBag";
 
@@ -145,8 +145,8 @@ export default class ShowTopic extends React.Component {
                             <ul className="inline-list">
                                 <li><Votes>{this.state.votes}</Votes></li>
                                 <li><Speakers>{this.state.speakers}</Speakers></li>
-                                <li><Date showIcon={true}>{this.state.data.lectureFrom}</Date></li>
-                                <li><DateDiff showIcon={true} from={this.state.data.lectureFrom} until={this.state.data.lectureUntil} /></li>
+                                <li><Date showIcon={true}>{this.state.data.lectureDate}</Date></li>
+                                <li><Duration showIcon={true}>{this.state.data.lectureDuration}</Duration></li>
                             </ul>
                             <br/>
                         </div>

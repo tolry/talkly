@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import Speakers from "./Speakers";
 import Votes from "./Votes";
 import Date from "../Date";
+import Duration from "../Duration";
 import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 import MessageBag from "../../services/MessageBag";
@@ -110,7 +111,8 @@ export default class Index extends React.Component {
                                 className="fa fa-comments-o"/> {this.props.data.comments.length}</span>
                             </li>
                             <li><Speakers>{this.state.speakers}</Speakers></li>
-                            <li><Date showIcon={true}>{this.props.data.lectureFrom}</Date></li>
+                            <li><Date showIcon={true}>{this.props.data.lectureDate}</Date></li>
+                            <li><Duration showIcon={true}>{this.props.data.lectureDuration}</Duration></li>
                         </ul>
                     </div>
                     <div className="large-3 columns text-right">
