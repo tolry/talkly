@@ -29,11 +29,17 @@ export default class Index extends React.Component {
         Client.get('/api/user/current').then(function (response) {
             AuthorizationStorage.setUser(response.data);
 
-            if (response.data.name && response.data.email) {
-                History.push('/');
-            } else {
+            let redirect = localStorage.getItem('redirect');
+            localStorage.removeItem('redirect');
+
+            if (!response.data.name || !response.data.email) {
                 History.push('/user/' + response.data.id + "/edit");
+            } else if (redirect) {
+                History.push(redirect);
+            } else {
+                History.push('/');
             }
+
         }).catch(function () {
             AuthorizationStorage.clear();
         });

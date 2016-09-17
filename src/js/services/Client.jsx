@@ -35,6 +35,7 @@ instance.interceptors.response.use(function (response) {
         console.log('401 error response');
 
         AuthorizationStorage.clear();
+        localStorage.setItem('redirect', location.pathname.replace(base, ''));
         history.push('/login');
     } else if(error.status == 403) {
         console.log('403 error response');
