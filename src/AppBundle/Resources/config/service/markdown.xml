@@ -10,6 +10,9 @@
             <call method="addInlineParser">
                 <argument type="service" id="talkly.markdown.topic_parser"/>
             </call>
+            <call method="addInlineParser">
+                <argument type="service" id="talkly.markdown.url_parser"/>
+            </call>
         </service>
 
         <service id="talkly.markdown" class="League\CommonMark\CommonMarkConverter">
@@ -21,8 +24,12 @@
                  class="AppBundle\Markdown\TopicParser">
             <argument type="service" id="talkly.repository.topic"/>
             <argument type="service" id="router"/>
-            <tag name="webuni_commonmark.extension"/>
         </service>
+
+        <service id="talkly.markdown.url_parser"
+                 class="AppBundle\Markdown\UrlParser">
+        </service>
+
 
         <service id="talkly.twig.extension.markdown"
                  class="AppBundle\Twig\MarkdownExtension">
