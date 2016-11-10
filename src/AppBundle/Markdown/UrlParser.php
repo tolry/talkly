@@ -18,7 +18,7 @@ class UrlParser extends AbstractInlineParser
      */
     public function getCharacters()
     {
-        return ['h', 'f'];
+        return ['h', 'f', 'w'];
     }
 
     /**
@@ -38,7 +38,13 @@ class UrlParser extends AbstractInlineParser
             return false;
         }
 
-        $inlineContext->getContainer()->appendChild(new Link($url, $url));
+        $label = $url;
+
+        if (strpos($url, 'www.') === 0) {
+            $url = 'http://' . $url;
+        }
+
+        $inlineContext->getContainer()->appendChild(new Link($url, $label));
 
         return true;
     }
