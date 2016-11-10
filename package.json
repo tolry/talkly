@@ -3,7 +3,7 @@
   "scripts": {
     "postinstall": "npm run build",
     "start": "node server.js",
-    "build": "./node_modules/.bin/webpack --progress -p --config webpack.prod.config.js"
+    "build": "webpack --progress -p --config webpack.prod.config.js"
   },
   "dependencies": {
     "autoprefixer": "^6.0.2",
