@@ -33,12 +33,9 @@ export default class Index extends React.Component {
         let value = event.target.value;
         let location = this.props.location;
 
-        console.log('typing ' + value);
         clearTimeout(this.timer);
 
         this.timer = setTimeout(() => {
-            console.log('executing search: ' + value);
-
             location.query.search = value;
             History.push(location);
         }, 500);
@@ -81,7 +78,6 @@ export default class Index extends React.Component {
             <h4>Filter</h4>
             <hr/>
             <TopicListSortOrder />
-            <p>sort by: foo | bar | baz</p>
 
             <label>
                 <input
