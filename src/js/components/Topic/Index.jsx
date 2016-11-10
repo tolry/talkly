@@ -87,7 +87,7 @@ export default class Index extends React.Component {
                 <input
                     type="text"
                     defaultValue={this.props.location.query.search}
-                    onChange={this.search.bind(this)}
+                    onChange={(e) => { this.search(e); }}
                     placeholder="Search"/>
             </label>
             </div>
