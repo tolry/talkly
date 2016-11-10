@@ -1,10 +1,10 @@
 <?php
-/**
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
 
 namespace AppBundle\Event;
 
+/**
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ */
 class Events
 {
     const TOPIC_CREATED          = 'talkly.topic.created';

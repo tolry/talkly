@@ -1,7 +1,5 @@
 <?php
-/*
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
+
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TopicRepository")
  * @ORM\Table()
  */

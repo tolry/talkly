@@ -2,12 +2,12 @@
 
 namespace AppBundle\Markdown;
 
+use AppBundle\Entity\Topic;
+use AppBundle\Repository\TopicRepository;
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
 use Symfony\Component\Routing\Router;
-use AppBundle\Entity\Topic;
-use AppBundle\Repository\TopicRepository;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>

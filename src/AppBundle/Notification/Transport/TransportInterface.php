@@ -16,4 +16,3 @@ interface TransportInterface
      */
     public function addNotification(User $user, Message $message);
 }
-

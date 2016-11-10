@@ -1,13 +1,13 @@
 <?php
-/**
- * @author Tobias Olry <tobias.olry@gmail.com>
- */
 
 namespace AppBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use AppBundle\Entity\Comment;
+use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * @author Tobias Olry <tobias.olry@gmail.com>
+ */
 class CommentEvent extends Event
 {
     private $comment;

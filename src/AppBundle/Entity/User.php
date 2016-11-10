@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation as JSON;
 
 /**
- *
  * @author David Badura <d.a.badura@gmail.com>
  * @author Tobias Olry <tobias.olry@gmail.com>
  *
@@ -363,7 +362,6 @@ class User implements UserInterface
     public function __toString()
     {
         if (!empty($this->name)) {
-
             return $this->name;
         }
 
