@@ -14,7 +14,7 @@ export default class Index extends React.Component {
         const columns = [
             {key: 'title_asc', label: 'A-Z'},
             {key: 'title_desc', label: 'Z-A'},
-            {key: 'votes', label: 'Votes'},
+            {key: 'votes', label: 'Most Voted'},
             {key: 'newest', label: 'Newest'},
             {key: 'oldest', label: 'Oldest'}
         ];
