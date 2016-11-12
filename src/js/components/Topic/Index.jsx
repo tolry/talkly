@@ -41,6 +41,13 @@ export default class Index extends React.Component {
         }, 500);
     }
 
+    setFilter(key, value) {
+        let location = this.props.location;
+
+        location.query[key] = value;
+        History.push(location);
+    }
+
     //componentWillReceiveProps(nextProps) {
     //this.setState({
     //search: nextProps.location.query.search
@@ -54,15 +61,16 @@ export default class Index extends React.Component {
             return <Loading size="0.5"/>;
         }
 
-        let data = this.state.data.filter((topic) => {
-            var search = this.props.location.query.search;
+        let filterCriteria = {
+            search: this.props.location.query.search,
+            order: this.props.location.query.order
+                ? this.props.location.query.order
+                : 'newest'
+        };
 
-            if (search == undefined) {
-                return true;
-            }
-
-            return topic.title.toLowerCase().includes(search.toLowerCase());
-        });
+        let data = this.state.data;
+        data = this.filterTopics(data, filterCriteria);
+        data = this.sortTopics(data, filterCriteria.order);
 
         let topics = data.map((topic) => {
             return (
@@ -72,48 +80,97 @@ export default class Index extends React.Component {
 
         return (
             <div>
-            <AddTopic/>
-            <div className="row">
-            <div className="small-3 columns">
-            <h4>Filter</h4>
-            <hr/>
-            <TopicListSortOrder />
+                <AddTopic/>
+                <div className="row">
+                    <div className="small-3 columns">
+                    <h4>Filter</h4>
+                    <hr/>
+                    <label>
+                        <input
+                            type="text"
+                            defaultValue={filterCriteria.search}
+                            onChange={(e) => { this.search(e); }}
+                            placeholder="Search"/>
+                    </label>
+                </div>
+                <div className="small-9 columns">
+                <h4>{data.length} topic(s)</h4>
+                <hr/>
 
-            <label>
-                <input
-                    type="text"
-                    defaultValue={this.props.location.query.search}
-                    onChange={(e) => { this.search(e); }}
-                    placeholder="Search"/>
-            </label>
-            </div>
-            <div className="small-9 columns">
-            <h4>{data.length} topic(s)</h4>
-            <hr/>
+                <TopicListSortOrder
+                    filter={(key, value) => this.setFilter(key, value)}
+                    activeSortOrder={filterCriteria.order} />
 
-
-            <form>
-            <div className="row">
-            <div className="large-6 columns">
+                {topics}
+                </div>
             </div>
-            </div>
-            </form>
-            {topics}
-            </div>
-            </div>
-            </div>
+        </div>
         );
     }
-}
 
-function debounce(fn, delay) {
-    var timer = null;
-    return function () {
-        var context = this, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            fn.apply(context, args);
-        }, delay);
-    };
-}
+    filterTopics(topics, criteria) {
+        return topics.filter((topic) => {
+            var search = criteria.search;
 
+            if (search != undefined && search.length > 0 && ! topic.title.toLowerCase().includes(search.toLowerCase())) {
+                return false;
+            }
+
+            return true;
+        });
+    }
+
+    sortTopics(topics, sortOrder) {
+        let column = 'title';
+        let direction = 'asc';
+        let length = false;
+
+        switch (sortOrder) {
+            case 'title_asc':
+                column = 'title';
+                break;
+            case 'title_desc':
+                column = 'title';
+                direction = 'desc';
+                break;
+            case 'votes':
+                column = 'votes';
+                direction = 'desc';
+                length = true;
+                break;
+            case 'newest':
+                column = 'createdAt';
+                direction = 'desc';
+                break;
+            case 'oldest':
+                column = 'createdAt';
+                direction = 'asc';
+                break;
+        }
+
+        console.log('topic', topics[0]);
+        return topics.sort((topicA, topicB) => {
+            let valueA = topicA[column];
+            let valueB = topicB[column];
+
+            if (length) {
+                valueA = valueA.length;
+                valueB = valueB.length;
+            }
+
+            if (valueA > valueB) {
+                return direction == 'asc'
+                    ? 1
+                    : -1;
+            }
+
+            if (valueA < valueB) {
+                return direction == 'asc'
+                    ? -1
+                    : 1;
+            }
+
+            return 0;
+        });
+    }
+}
