@@ -2,8 +2,8 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Topic;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>

@@ -2,10 +2,10 @@
 
 namespace AppBundle\Security;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @author Tobias Olry <tobias.olry@gmail.com>

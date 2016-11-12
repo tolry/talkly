@@ -46,12 +46,10 @@ class LdapAuthenticator extends AbstractLoginAuthenticator
         $password = $credentials['password'];
 
         try {
-
             $username = $this->ldap->escape($username, '', LDAP_ESCAPE_DN);
             $dn = str_replace('{username}', $username, $this->dnString);
 
             $this->ldap->bind($dn, $password);
-
         } catch (ConnectionException $e) {
             return false;
         }

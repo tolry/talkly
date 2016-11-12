@@ -36,4 +36,3 @@ class UserService
         $this->repository->addNotification($user, $message);
     }
 }
-

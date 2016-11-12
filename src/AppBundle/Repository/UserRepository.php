@@ -3,8 +3,8 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Notification;
-use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>

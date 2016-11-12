@@ -2,11 +2,10 @@ vendor
 app/config/parameters.yml
 app/config/local.yml
 var/*
-!var/.gitkeep
 web/bundles
 web/build
 bin/*
 !bin/console
 node_modules
 npm-debug*.log
-bower_components
+.php_cs.cache

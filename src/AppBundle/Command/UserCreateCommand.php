@@ -2,11 +2,11 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use AppBundle\Entity\User;
 
 /**
  * @author David Badura <d.a.badura@gmail.com>

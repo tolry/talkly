@@ -2,16 +2,16 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use AppBundle\Entity\Topic;
 use AppBundle\Entity\User;
 use AppBundle\Event\CommentEvent;
 use AppBundle\Event\Events;
 use AppBundle\Event\TopicEvent;
 use AppBundle\Repository\TopicRepository;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  *

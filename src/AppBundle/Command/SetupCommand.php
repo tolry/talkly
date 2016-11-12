@@ -259,7 +259,6 @@ class SetupCommand extends ContainerAwareCommand
         $filesystem = new Filesystem();
 
         if (!$filesystem->exists($folder . '/private.pem')) {
-
             $filesystem->mkdir($folder);
 
             $this->executeCommand(
