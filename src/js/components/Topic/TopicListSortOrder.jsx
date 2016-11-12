@@ -20,14 +20,13 @@ export default class Index extends React.Component {
         ];
 
         let columnMarkup = columns.map((column) => {
+            let className = '';
             if (this.props.activeSortOrder == column.key) {
-                return (
-                    <dd className="active"> <a key={column.key} onClick={e => this.sort(e, column.key)}>{column.label}</a></dd>
-                );
+                className = 'active';
             }
 
             return (
-                <dd> <a key={column.key} onClick={e => this.sort(e, column.key)}>{column.label}</a></dd>
+                <dd className={className}> <a key={column.key} onClick={e => this.sort(e, column.key)}>{column.label}</a></dd>
             );
         });
 
