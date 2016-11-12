@@ -17,5 +17,4 @@ bin/console talkly:setup
 echo "setting file permissions"
 sudo chown -R $webserver_user:$webserver_group var/logs var/cache
 
-rm -f web/index_dev.php
 rm -f web/app_dev.php
