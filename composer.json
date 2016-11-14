@@ -23,7 +23,7 @@
         "doctrine/data-fixtures": "^1.2",
         "davidbadura/faker-markdown-generator": "^1.0",
         "phpunit/phpunit": "^5.6",
-        "fabpot/php-cs-fixer": "^1.12"
+        "friendsofphp/php-cs-fixer": "^1.12"
     },
     "autoload": {
         "psr-4": { "": "src/" },
@@ -33,7 +33,10 @@
         "psr-4": { "": "tests/" }
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "platform": {
+            "php": "5.6"
+        }
     },
     "scripts": {
         "post-install-cmd": [

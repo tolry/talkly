@@ -162,7 +162,7 @@ class SetupCommand extends ContainerAwareCommand
         // todo check node version & use nvm
         // todo node env
 
-        $command = 'npm install';
+        $command = 'yarn install';
 
         $io->note('Run: ' . $command);
 

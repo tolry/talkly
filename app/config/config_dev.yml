@@ -50,9 +50,19 @@ hautelook_alice:
     persist_once: false # Only persist objects once if multiple files are passed
 
 services:
+    faker:
+        class: Faker\Generator
+        lazy: true
+        arguments:
+            - %hautelook_alice.locale%
+        call:
+            - method: seed
+              arguments: [ %hautelook_alice.seed% ]
+            - %hautelook_alice.seed%
+
     faker.provider.markdown:
         class: DavidBadura\FakerMarkdownGenerator\FakerProvider
         arguments:
-          - "@hautelook_alice.faker"
+          - "@faker"
         tags:
           - { name: hautelook_alice.faker.provider }
