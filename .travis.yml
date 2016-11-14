@@ -12,14 +12,10 @@ php:
   - 7.0
   - 7.1
 
-env:
-    matrix:
-      - PREFER_LOWEST="--prefer-lowest"
-      - PREFER_LOWEST=""
-
 before_script:
     - composer self-update
-    - composer update $PREFER_LOWEST
+    - composer self-update # to use a stable version
+    - composer install --no-scripts
 
 script:
   - vendor/bin/phpunit
