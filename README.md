@@ -1,5 +1,7 @@
 # talkly
 
+[![Build Status](https://travis-ci.org/tolry/talkly.svg?branch=master)](https://travis-ci.org/tolry/talkly)
+
 This is just a small pet project of mine, aiming for small developer teams who like to gather talk suggestions, rate on them, comment on them and add slides to them once the talk has been held.
 
 what the first version should deliver:
