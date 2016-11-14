@@ -11,7 +11,7 @@ use League\CommonMark\InlineParserContext;
  */
 class UrlParser extends AbstractInlineParser
 {
-    const PATTERN = '#(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))#iS';
+    const PATTERN = '#^(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))#iS';
 
     /**
      * @return string[]
@@ -29,6 +29,12 @@ class UrlParser extends AbstractInlineParser
     public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
+
+        $previousChar = $cursor->peek(-1);
+        if ($previousChar !== null && $previousChar !== ' ') {
+            return false;
+        }
+
         $previousState = $cursor->saveState();
         $url = $cursor->match(self::PATTERN);
 
