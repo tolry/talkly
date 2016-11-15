@@ -29,7 +29,7 @@ export default class TopicListFacette extends React.Component {
         let facetteVariations = variations.map((variation) => {
             if (variation.value === this.props.activeValue) {
                 return (
-                    <li><a key={variation.value} onClick={e => this.filter(e, '')}>x {variation.label}</a></li>
+                    <li><a className="label" key={variation.value} onClick={e => this.filter(e, '')}>x {variation.label}</a></li>
                 );
             }
 
@@ -42,8 +42,8 @@ export default class TopicListFacette extends React.Component {
 
         return (
             <div>
-                <h4>{this.props.label}</h4>
-                <ul>
+                <h6>{this.props.label}</h6>
+                <ul className="no-bullet">
                     {facetteVariations}
                 </ul>
             </div>
