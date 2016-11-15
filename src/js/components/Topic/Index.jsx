@@ -2,6 +2,7 @@ import React from "react";
 import Client from "../../services/Client";
 import Topic from "./Topic";
 import TopicListSortOrder from "./TopicListSortOrder";
+import TopicListFacette from "./TopicListFacette";
 import AddTopic from "./AddTopic";
 import Loading from "../Loading/Loading";
 import History from "../../services/History";
@@ -63,9 +64,8 @@ export default class Index extends React.Component {
 
         let filterCriteria = {
             search: this.props.location.query.search,
-            order: this.props.location.query.order
-                ? this.props.location.query.order
-                : 'newest'
+            speaker: this.props.location.query.speaker,
+            order: this.props.location.query.order || 'newest'
         };
 
         let data = this.state.data;
@@ -92,6 +92,26 @@ export default class Index extends React.Component {
                             onChange={(e) => { this.search(e); }}
                             placeholder="Search"/>
                     </label>
+                    <TopicListFacette
+                        topics={data}
+                        name="speaker"
+                        label="Speaker"
+                        filter={(key, value) => this.setFilter(key, value)}
+                        activeValue={filterCriteria.speaker}
+                        callback={ (topic) => {
+                            if (topic.speakers.length > 0) {
+                                return {
+                                    value: 'yes',
+                                    label: 'speaker already found'
+                                };
+                            }
+
+                            return {
+                                value: 'no',
+                                label: 'looking for speaker'
+                            };
+                        }}
+                    />
                 </div>
                 <div className="small-9 columns">
                 <h4>{data.length} topic(s)</h4>
@@ -113,6 +133,14 @@ export default class Index extends React.Component {
             var search = criteria.search;
 
             if (search != undefined && search.length > 0 && ! topic.title.toLowerCase().includes(search.toLowerCase())) {
+                return false;
+            }
+
+            if (criteria.speaker === 'yes' && topic.speakers.length === 0) {
+                return false;
+            }
+
+            if (criteria.speaker === 'no' && topic.speakers.length > 0) {
                 return false;
             }
 
@@ -148,7 +176,6 @@ export default class Index extends React.Component {
                 break;
         }
 
-        console.log('topic', topics[0]);
         return topics.sort((topicA, topicB) => {
             let valueA = topicA[column];
             let valueB = topicB[column];

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Index extends React.Component {
+export default class TopicListSortOrder extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -26,7 +26,7 @@ export default class Index extends React.Component {
             }
 
             return (
-                <dd className={className}> <a key={column.key} onClick={e => this.sort(e, column.key)}>{column.label}</a></dd>
+                <dd key={column.key} className={className}> <a onClick={e => this.sort(e, column.key)}>{column.label}</a></dd>
             );
         });
 
