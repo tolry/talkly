@@ -6,6 +6,7 @@ import TopicListFacette from "./TopicListFacette";
 import AddTopic from "./AddTopic";
 import Loading from "../Loading/Loading";
 import History from "../../services/History";
+import _ from "lodash";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -49,12 +50,6 @@ export default class Index extends React.Component {
         History.push(location);
     }
 
-    //componentWillReceiveProps(nextProps) {
-    //this.setState({
-    //search: nextProps.location.query.search
-    //});
-    //}
-
     render() {
         console.log('render', this.state);
 
@@ -78,6 +73,21 @@ export default class Index extends React.Component {
             );
         });
 
+        let facettes = [];
+        _.forOwn(this.getFacettes(), (value, key) => {
+            facettes.push((
+                <TopicListFacette
+                    topics={data}
+                    name={key}
+                    label={value.label}
+                    filter={(key, value) => this.setFilter(key, value)}
+                    activeValue={filterCriteria[key]}
+                    callback={value.callback}
+                />
+            ));
+        });
+        console.log('facettes', facettes);
+
         return (
             <div>
                 <AddTopic/>
@@ -92,26 +102,7 @@ export default class Index extends React.Component {
                             onChange={(e) => { this.search(e); }}
                             placeholder="Search"/>
                     </label>
-                    <TopicListFacette
-                        topics={data}
-                        name="speaker"
-                        label="Speaker"
-                        filter={(key, value) => this.setFilter(key, value)}
-                        activeValue={filterCriteria.speaker}
-                        callback={ (topic) => {
-                            if (topic.speakers.length > 0) {
-                                return {
-                                    value: 'yes',
-                                    label: 'speaker already found'
-                                };
-                            }
-
-                            return {
-                                value: 'no',
-                                label: 'looking for speaker'
-                            };
-                        }}
-                    />
+                    {facettes}
                 </div>
                 <div className="small-9 columns">
                 <h4>{data.length} topic(s)</h4>
@@ -199,5 +190,20 @@ export default class Index extends React.Component {
 
             return 0;
         });
+    }
+
+    getFacettes() {
+        return {
+            speaker: {
+                label: "Speaker",
+                callback: (topic) => {
+                    if (topic.speakers.length > 0) {
+                        return { value: 'yes', label: 'speaker already found' };
+                    }
+
+                    return { value: 'no', label: 'looking for speaker' };
+                }
+            }
+        };
     }
 }
