@@ -121,18 +121,26 @@ export default class Index extends React.Component {
 
     filterTopics(topics, criteria) {
         return topics.filter((topic) => {
-            var search = criteria.search;
+            const search = criteria.search;
+            const facettes = this.getFacettes();
 
             if (search != undefined && search.length > 0 && ! topic.title.toLowerCase().includes(search.toLowerCase())) {
                 return false;
             }
 
-            if (criteria.speaker === 'yes' && topic.speakers.length === 0) {
-                return false;
-            }
+            for (let key in facettes) {
+                if (! facettes.hasOwnProperty(key)) {
+                    continue;
+                }
 
-            if (criteria.speaker === 'no' && topic.speakers.length > 0) {
-                return false;
+                if (! criteria[key]) {
+                    continue;
+                }
+
+                let tupel = facettes[key].callback(topic);
+                if (tupel.value !== criteria[key]) {
+                    return false;
+                }
             }
 
             return true;
