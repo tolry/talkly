@@ -2,6 +2,7 @@ import React from "react";
 import Client from "../../services/Client";
 import Topic from "./Topic";
 import TopicListSortOrder from "./TopicListSortOrder";
+import TopicListSearchTemplates from "./TopicListSearchTemplates";
 import TopicListFacette from "./TopicListFacette";
 import AddTopic from "./AddTopic";
 import Loading from "../Loading/Loading";
@@ -50,16 +51,27 @@ export default class Index extends React.Component {
         History.push(location);
     }
 
+    activateTemplate(queryParameters) {
+        let location = this.props.location;
+
+        location.query = queryParameters;
+        History.push(location);
+    }
+
     render() {
         console.log('render', this.state);
+        console.log('render:query', this.props.location.query);
 
         if (this.state.loading) {
             return <Loading size="0.5"/>;
         }
 
+        // @todo generate partially automatic using this.getFacettes()
         let filterCriteria = {
             search: this.props.location.query.search,
-            speaker: this.props.location.query.speaker,
+            speaker_found: this.props.location.query.speaker_found,
+            author: this.props.location.query.author,
+            scheduled: this.props.location.query.scheduled,
             order: this.props.location.query.order || 'newest'
         };
 
@@ -93,7 +105,14 @@ export default class Index extends React.Component {
                 <AddTopic />
                 <div className="row">
                     <div className="small-3 columns">
-                        <h4>Filter</h4><hr/>
+                        <h4>Filter <small>{data.length} topic(s)</small></h4>
+
+                        <TopicListSearchTemplates
+                            activate={(queryParameters) => this.activateTemplate(queryParameters) }
+                        />
+
+                        <hr />
+
                         <label>
                             <input
                                 type="text"
@@ -104,11 +123,11 @@ export default class Index extends React.Component {
                         {facettes}
                     </div>
                     <div className="small-9 columns">
-                        <h4>{data.length} topic(s)</h4><hr/>
-
                         <TopicListSortOrder
                             filter={(key, value) => this.setFilter(key, value)}
                             activeSortOrder={filterCriteria.order} />
+
+                        <div className="float-right"></div>
 
                         {topics}
                     </div>
@@ -171,6 +190,10 @@ export default class Index extends React.Component {
                 column = 'createdAt';
                 direction = 'asc';
                 break;
+            case 'schedule_date':
+                column = 'lectureDate';
+                direction = 'asc';
+                break;
         }
 
         return topics.sort((topicA, topicB) => {
@@ -200,14 +223,35 @@ export default class Index extends React.Component {
 
     getFacettes() {
         return {
-            speaker: {
-                label: "Speaker",
+            speaker_found: {
+                label: "Speaker?",
                 callback: (topic) => {
                     if (topic.speakers.length > 0) {
                         return { value: 'yes', label: 'speaker found' };
                     }
 
                     return { value: 'no', label: 'looking for speaker' };
+                }
+            },
+            scheduled: {
+                label: "Scheduled?",
+                callback: (topic) => {
+                    if (topic.lectureDate) {
+                        return { value: 'yes', label: 'already scheduled' };
+                    }
+
+                    return { value: 'no', label: 'not yet scheduled' };
+                }
+            },
+            author: {
+                label: "Author",
+                callback: (topic) => {
+                    const author = topic.createdBy;
+                    if (author) {
+                        return { value: author.id.toString(), label: author.name };
+                    }
+
+                    return { value: '-1', label: 'unknown' };
                 }
             }
         };

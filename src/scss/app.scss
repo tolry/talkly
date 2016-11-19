@@ -230,10 +230,15 @@ code {
 .sub-nav {
     background-color: #f2f2f2;
     padding: 10px 10px 10px 0;
+
+    dd > a, dd.active > a {
+        padding: 0.2rem 0.5rem;
+    }
 }
 
 .search-facette {
     border:1px solid $smoke;
+    margin-bottom: 1em;
 
     .search-facette-title {
         padding: 0.2em 0.5em;
@@ -246,13 +251,18 @@ code {
         margin:0;
 
         li>a {
-            color: $primary-color;
+            color: $steel;
             display: block;
             padding: 0.2em 0.5em;
 
             &:hover {
                 background: $smoke;
+                color: $charcoal;
             }
+        }
+
+        li.active>a {
+            color: $charcoal;
         }
     }
 }

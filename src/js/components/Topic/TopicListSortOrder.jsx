@@ -16,7 +16,8 @@ export default class TopicListSortOrder extends React.Component {
             {key: 'title_desc', label: 'Z-A'},
             {key: 'votes', label: 'Most Voted'},
             {key: 'newest', label: 'Newest'},
-            {key: 'oldest', label: 'Oldest'}
+            {key: 'oldest', label: 'Oldest'},
+            {key: 'schedule_date', label: 'Schedule-Date'}
         ];
 
         let columnMarkup = columns.map((column) => {

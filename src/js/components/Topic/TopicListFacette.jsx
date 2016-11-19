@@ -22,12 +22,20 @@ export default class TopicListFacette extends React.Component {
             variations[tupel.value].count++;
         }
         variations = Object.keys(variations).map(key => variations[key]);
+        variations = variations.sort((first, second) => {
+            return second.count - first.count;
+        });
 
-        let facetteVariations = variations.map((variation) => {
+        let facetteVariations = variations.slice(0, 10).map((variation) => {
             let active = (variation.value === this.props.activeValue);
 
             return (
-                <li className={ active ? "active" : ""} key={variation.value}><a onClick={e => this.filter(e, active ? '' : variation.value)}><i className={"fa " + (active ? "fa-check-circle-o" : "fa-circle-o")}></i> {variation.label} [{variation.count}]</a></li>
+                <li className={ active ? "active" : ""} key={variation.value}>
+                    <a className="one-line" onClick={e => this.filter(e, active ? '' : variation.value)}>
+                        <i className={"fa " + (active ? "fa-check-circle-o" : "fa-circle-o")}></i>&nbsp;
+                        {variation.label} {active ? "" : ("[" + variation.count + "]")}
+                    </a>
+                </li>
             );
         });
 
