@@ -231,3 +231,28 @@ code {
     background-color: #f2f2f2;
     padding: 10px 10px 10px 0;
 }
+
+.search-facette {
+    border:1px solid $aluminum;
+
+    .search-facette-title {
+        padding: 0.2em 0.5em;
+        background: $aluminum;
+        color: white;
+        font-weight: bold;
+    }
+
+    ul {
+        margin:0;
+
+        li>a {
+            color: $primary-color;
+            display: block;
+            padding: 0.2em 0.5em;
+
+            &:hover {
+                background: $smoke;
+            }
+        }
+    }
+}

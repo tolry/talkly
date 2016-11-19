@@ -24,20 +24,16 @@ export default class TopicListFacette extends React.Component {
         variations = Object.keys(variations).map(key => variations[key]);
 
         let facetteVariations = variations.map((variation) => {
-            if (variation.value === this.props.activeValue) {
-                return (
-                    <li key={variation.value}><a className="label" onClick={e => this.filter(e, '')}>x {variation.label}</a></li>
-                );
-            }
+            let active = (variation.value === this.props.activeValue);
 
             return (
-                <li key={variation.value}><a onClick={e => this.filter(e, variation.value)}>{variation.label} [{variation.count}]</a></li>
+                <li className={ active ? "active" : ""} key={variation.value}><a onClick={e => this.filter(e, active ? '' : variation.value)}>{variation.label} [{variation.count}]</a></li>
             );
         });
 
         return (
-            <div>
-                <h6>{this.props.label}</h6>
+            <div className="search-facette">
+                <div className="search-facette-title">{this.props.label}</div>
                 <ul className="no-bullet">
                     {facetteVariations}
                 </ul>
