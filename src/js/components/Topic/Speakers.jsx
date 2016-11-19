@@ -11,7 +11,7 @@ export default ({children}) => {
     });
 
     if (users.length == 0) {
-        users.push(<li>no speaker yet</li>);
+        users.push(<li key="no-speaker">no speaker yet</li>);
     }
 
     return (

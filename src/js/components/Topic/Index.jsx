@@ -77,6 +77,7 @@ export default class Index extends React.Component {
         _.forOwn(this.getFacettes(), (value, key) => {
             facettes.push((
                 <TopicListFacette
+                    key={key}
                     topics={data}
                     name={key}
                     label={value.label}
@@ -86,36 +87,33 @@ export default class Index extends React.Component {
                 />
             ));
         });
-        console.log('facettes', facettes);
 
         return (
             <div>
-                <AddTopic/>
+                <AddTopic />
                 <div className="row">
                     <div className="small-3 columns">
-                    <h4>Filter</h4>
-                    <hr/>
-                    <label>
-                        <input
-                            type="text"
-                            defaultValue={filterCriteria.search}
-                            onChange={(e) => { this.search(e); }}
-                            placeholder="Search"/>
-                    </label>
-                    {facettes}
-                </div>
-                <div className="small-9 columns">
-                <h4>{data.length} topic(s)</h4>
-                <hr/>
+                        <h4>Filter</h4><hr/>
+                        <label>
+                            <input
+                                type="text"
+                                defaultValue={filterCriteria.search}
+                                onChange={(e) => { this.search(e); }}
+                                placeholder="Search"/>
+                        </label>
+                        {facettes}
+                    </div>
+                    <div className="small-9 columns">
+                        <h4>{data.length} topic(s)</h4><hr/>
 
-                <TopicListSortOrder
-                    filter={(key, value) => this.setFilter(key, value)}
-                    activeSortOrder={filterCriteria.order} />
+                        <TopicListSortOrder
+                            filter={(key, value) => this.setFilter(key, value)}
+                            activeSortOrder={filterCriteria.order} />
 
-                {topics}
+                        {topics}
+                    </div>
                 </div>
             </div>
-        </div>
         );
     }
 

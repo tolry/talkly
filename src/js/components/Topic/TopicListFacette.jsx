@@ -11,11 +11,9 @@ export default class TopicListFacette extends React.Component {
     }
 
     render() {
-        console.log('props', this.props);
-
         let variations = {};
         for (let i=0; i < this.props.topics.length; i++) {
-            let tupel = this.props.callback(this.props.topics[i]);
+            const tupel = this.props.callback(this.props.topics[i]);
             if (variations[tupel.value] === undefined) {
                 variations[tupel.value] = tupel;
                 variations[tupel.value].count = 0;
@@ -24,21 +22,18 @@ export default class TopicListFacette extends React.Component {
             variations[tupel.value].count++;
         }
         variations = Object.keys(variations).map(key => variations[key]);
-        console.log('variations', variations);
 
         let facetteVariations = variations.map((variation) => {
             if (variation.value === this.props.activeValue) {
                 return (
-                    <li><a className="label" key={variation.value} onClick={e => this.filter(e, '')}>x {variation.label}</a></li>
+                    <li key={variation.value}><a className="label" onClick={e => this.filter(e, '')}>x {variation.label}</a></li>
                 );
             }
 
             return (
-                <li><a key={variation.value} onClick={e => this.filter(e, variation.value)}>{variation.label} [{variation.count}]</a></li>
+                <li key={variation.value}><a onClick={e => this.filter(e, variation.value)}>{variation.label} [{variation.count}]</a></li>
             );
         });
-
-        console.log('facetteVariations', facetteVariations);
 
         return (
             <div>
