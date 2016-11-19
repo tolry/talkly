@@ -204,7 +204,7 @@ export default class Index extends React.Component {
                 label: "Speaker",
                 callback: (topic) => {
                     if (topic.speakers.length > 0) {
-                        return { value: 'yes', label: 'speaker already found' };
+                        return { value: 'yes', label: 'speaker found' };
                     }
 
                     return { value: 'no', label: 'looking for speaker' };

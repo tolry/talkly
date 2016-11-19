@@ -27,7 +27,7 @@ export default class TopicListFacette extends React.Component {
             let active = (variation.value === this.props.activeValue);
 
             return (
-                <li className={ active ? "active" : ""} key={variation.value}><a onClick={e => this.filter(e, active ? '' : variation.value)}>{variation.label} [{variation.count}]</a></li>
+                <li className={ active ? "active" : ""} key={variation.value}><a onClick={e => this.filter(e, active ? '' : variation.value)}><i className={"fa " + (active ? "fa-check-circle-o" : "fa-circle-o")}></i> {variation.label} [{variation.count}]</a></li>
             );
         });
 
