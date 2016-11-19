@@ -25,7 +25,7 @@ export default class TopicListSearchTemplates extends React.Component {
         });
 
         return (
-            <select onChange={ (e) => this.onChange(e) }>
+            <select onChange={ (e) => this.onChange(e) } style={{marginBottom: 0}}>
                 {templateList}
             </select>
         );
