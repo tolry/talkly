@@ -3,7 +3,6 @@ import Client from "../../services/Client";
 import AuthorizationStorage from "../../services/AuthorizationStorage";
 import History from "../../services/History";
 import LoginForm from "./LoginForm";
-import {token} from "../../services/Parameters";
 
 export default class Index extends React.Component {
   constructor(props) {
@@ -25,12 +24,6 @@ export default class Index extends React.Component {
 
       AuthorizationStorage.clear();
     });
-  }
-
-  componentDidMount() {
-    if (token) {
-      this.authenticate(token);
-    }
   }
 
   authenticate(token) {
@@ -58,12 +51,6 @@ export default class Index extends React.Component {
   }
 
   render() {
-    if (token) {
-      return null;
-    }
-
-    console.log(this.state.error);
-
     return (
       <main>
         <div className="row">

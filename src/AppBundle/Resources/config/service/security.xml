@@ -17,10 +17,6 @@
                 <argument type="service" id="talkly.security.authenticator.db" />
             </call>
             <call method="addAuthenticator">
-                <argument type="string">ntlm</argument>
-                <argument type="service" id="talkly.security.authenticator.ntlm" />
-            </call>
-            <call method="addAuthenticator">
                 <argument type="string">demo</argument>
                 <argument type="service" id="talkly.security.authenticator.demo" />
             </call>
@@ -33,11 +29,6 @@
         <service id="talkly.security.authenticator.db" class="AppBundle\Security\Authenticator\DbAuthenticator">
             <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
             <argument type="service" id="security.password_encoder" />
-        </service>
-
-        <service id="talkly.security.authenticator.ntlm" class="AppBundle\Security\Authenticator\NtlmAuthenticator">
-            <argument type="service" id="router" />
-            <argument type="string">%security_ntlm_domain%</argument>
         </service>
 
         <service id="talkly.security.authenticator.demo" class="AppBundle\Security\Authenticator\DemoAuthenticator">

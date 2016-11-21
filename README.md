@@ -6,7 +6,7 @@ This is just a small pet project of mine, aiming for small developer teams who l
 
 what the first version should deliver:
 
-- authentication/authorization mechanism (e.g. Datebase, NTLM and LDAP)
+- authentication/authorization mechanism (e.g. Datebase and LDAP)
 - anyone can
     - add new suggestions
     - vote on suggestions
