@@ -4,7 +4,7 @@ import {base} from "./Parameters";
 import AuthorizationStorage from "./AuthorizationStorage";
 import MessageBag from "./MessageBag";
 
-var instance = axios.create({
+const instance = axios.create({
     baseURL: base,
     timeout: 5000
 });

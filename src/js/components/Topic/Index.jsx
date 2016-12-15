@@ -59,9 +59,6 @@ export default class Index extends React.Component {
     }
 
     render() {
-        console.log('render', this.state);
-        console.log('render:query', this.props.location.query);
-
         if (this.state.loading) {
             return <Loading size="0.5"/>;
         }
