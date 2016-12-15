@@ -7,7 +7,7 @@ import Login from "../Security/Login";
 import Index from "../Topic/Index";
 import Calendar from "../Topic/Calendar";
 import Archive from "../Topic/Archive";
-import ShowTopic from "../Topic/ShowTopic";
+import ShowTopicController from "../Topic/ShowTopicController";
 import EditTopic from "../Topic/EditTopic";
 import ArchiveTopic from "../Topic/ArchiveTopic";
 import Profile from "../User/Profile";
@@ -22,7 +22,7 @@ export default () => {
                 <IndexRoute component={Index}/>
                 <Route name="calendar" path="calendar" component={Calendar}/>
                 <Route name="archive" path="archive" component={Archive}/>
-                <Route name="show" path="topic/:id" component={ShowTopic}/>
+                <Route name="show" path="topic/:id" component={ShowTopicController}/>
                 <Route name="topic_edit" path="topic/:id/edit" component={EditTopic}/>
                 <Route name="topic_archive" path="topic/:id/archive" component={ArchiveTopic}/>
                 <Route name="profile" path="user/:id" component={Profile}/>

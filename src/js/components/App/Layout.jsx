@@ -4,23 +4,24 @@ import Navigation from "./Navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import MessageList from "../Message/MessageList";
+import InternalLinkCatcher from "./InternalLinkCatcher";
 import "../../../scss/app.scss";
 
 export default ({children}) => {
-    return (
-        <div>
-            <Fork/>
-            <Navigation />
-            <Header />
+  return (
+    <InternalLinkCatcher>
+      <Fork/>
+      <Navigation />
+      <Header />
 
-            <MessageList/>
+      <MessageList/>
 
-            <main>
-                <div id="flash"></div>
-                {children}
-            </main>
+      <main>
+        <div id="flash"></div>
+        {children}
+      </main>
 
-            <Footer />
-        </div>
-    );
+      <Footer />
+    </InternalLinkCatcher>
+  );
 }
