@@ -37,38 +37,38 @@ export default class ShowTopicController extends React.Component {
 
   registerSpeaker() {
     Client.post('/api/topic/' + this.props.params.id + '/add-speaker')
-      .then(function () {
-        this.load(props.params.id);
+      .then(() => {
+        this.load(this.props.params.id);
 
         MessageBag.success('Success');
-      }.bind(this));
+      });
   }
 
   unregisterSpeaker() {
     Client.post('/api/topic/' + this.props.params.id + '/remove-speaker')
-      .then(function () {
-        this.load(props.params.id);
+      .then(() => {
+        this.load(this.props.params.id);
 
         MessageBag.success('Success');
-      }.bind(this));
+      });
   }
 
   vote() {
     Client.post('/api/topic/' + this.props.params.id + '/cast-vote')
-      .then(function () {
-        this.load(props.params.id);
+      .then(() => {
+        this.load(this.props.params.id);
 
         MessageBag.success('Success');
-      }.bind(this));
+      });
   }
 
   unvote() {
     Client.post('/api/topic/' + this.props.params.id + '/retract-vote')
-      .then(function () {
-        this.load(props.params.id);
+      .then(() => {
+        this.load(this.props.params.id);
 
         MessageBag.success('Success');
-      }.bind(this));
+      });
   }
 
   render() {
