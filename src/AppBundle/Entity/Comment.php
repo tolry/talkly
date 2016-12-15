@@ -17,6 +17,8 @@ class Comment
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue()
+     *
+     * @JSON\Groups({"topic_show"})
      */
     private $id;
 

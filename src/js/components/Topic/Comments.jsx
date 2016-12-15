@@ -11,7 +11,7 @@ export default class Comments extends React.Component {
         super(props);
 
         this.state = {
-            loading: props.topic ? false : true,
+            loading: !props.topic,
             comments: props.topic.comments || []
         };
 
@@ -67,7 +67,7 @@ export default class Comments extends React.Component {
 
     renderComments() {
         return this.state.comments.map((comment) => {
-            return <Comment>{comment}</Comment>;
+            return <Comment key={comment.id}>{comment}</Comment>;
         });
     }
 }
