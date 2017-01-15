@@ -280,6 +280,16 @@ class User implements UserInterface
         return $this->active;
     }
 
+    public function activate()
+    {
+        $this->active = true;
+    }
+
+    public function deactivate()
+    {
+        $this->active = false;
+    }
+
     /**
      * @return Notification[]
      */
