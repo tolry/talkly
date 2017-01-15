@@ -56,6 +56,15 @@ class User implements UserInterface
     /**
      * @var bool
      *
+     * @ORM\Column(type="boolean", nullable=false)
+     *
+     * @JSON\Groups({"user_self"})
+     */
+    protected $active;
+
+    /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=true)
      *
      * @JSON\Groups({"user_self"})
@@ -128,6 +137,7 @@ class User implements UserInterface
         $this->votes = new ArrayCollection();
         $this->speakingTopics = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->active = true;
 
         $this->notifyByEmail = false;
         $this->notifyInApplication = true;
@@ -263,6 +273,21 @@ class User implements UserInterface
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    public function activate()
+    {
+        $this->active = true;
+    }
+
+    public function deactivate()
+    {
+        $this->active = false;
     }
 
     /**
