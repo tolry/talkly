@@ -185,12 +185,11 @@ class Topic
      */
     public function getVotes()
     {
-        return array_values(array_filter(
-            $this->votes->toArray(),
+        return $this->votes->filter(
             function ($user) {
                 return $user->isActive();
             }
-        ));
+        )->getValues();
     }
 
     /**
@@ -257,12 +256,11 @@ class Topic
      */
     public function getSpeakers()
     {
-        return array_values(array_filter(
-            $this->speakers->toArray(),
+        return $this->speakers->filter(
             function ($user) {
                 return $user->isActive();
             }
-        ));
+        )->getValues();
     }
 
     /**

@@ -32,7 +32,7 @@ class UserDeactivateCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (!$username = $input->getArgument('username')) {
+        if (! $input->getArgument('username')) {
             $input->setArgument('username', $io->ask('username'));
         }
     }
