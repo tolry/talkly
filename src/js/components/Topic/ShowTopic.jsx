@@ -29,12 +29,12 @@ export default class ShowTopic extends React.Component {
               { this.props.topic.lectureHeld
                 ? null
                 :
-                <Link className="button tiny radius secondary" to={"/topic/" + this.props.topic.id + "/archive"}>
+                <Link title="finalize talk" className="button tiny radius secondary" to={"/topic/" + this.props.topic.id + "/archive"}>
                   <i className="fa fa-check"/>
                 </Link>
               }
               &nbsp;
-              <Link className="button tiny radius secondary" to={"/topic/" + this.props.topic.id + "/edit"}>
+              <Link title="edit talk" className="button tiny radius secondary" to={"/topic/" + this.props.topic.id + "/edit"}>
                 <i className="fa fa-pencil"/>
               </Link>
               &nbsp;
