@@ -9,7 +9,7 @@ framework:
 
     assets:
         base_urls:
-            - '//localhost:8080'
+            - '//localhost:3000'
 
 web_profiler:
     toolbar: true

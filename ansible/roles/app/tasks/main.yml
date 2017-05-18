@@ -1,0 +1,69 @@
+---
+- name: ensure hosts entry
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127.0.0.1'
+    line: '127.0.0.1 localhost {{ app_hostname }}'
+
+- name: ensure make is installed
+  apt:
+    name: make
+    state: present
+
+- name: ensure cache and logs directory
+  file:
+    dest: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ app_cache_path }}'
+    - '{{ app_log_path }}'
+
+- name: ensure cache and log is writable by console user
+  become: true
+  acl:
+    path: '{{ item[0] }}'
+    entity: '{{ item[1] }}'
+    etype: user
+    permissions: 'rwx'
+    state: present
+    recursive: true
+    default: '{{ item[2] }}'
+  with_nested:
+    -
+      - '{{ app_cache_path }}'
+      - '{{ app_log_path }}'
+      - '/var/lib/php/sessions'
+    - ['{{ ansible_user_id }}', '{{ fpm_user }}']
+    - [false, true]
+
+- name: ensure nginx configuration file.
+  template:
+    src: nginx.vhost.j2
+    dest: /etc/nginx/vhosts.d/app.conf
+  notify:
+    - restart nginx
+    - restart php-fpm
+
+- name: ensure cache and log env vars in fpm config
+  lineinfile:
+    dest: /etc/php/7.0/fpm/pool.d/www.conf
+    regexp: '^env\[{{ item.var }}\].?='
+    line: 'env[{{ item.var }}] = {{ item.val }}'
+  with_items:
+    - { var: SYMFONY__CACHE_DIR, val: '{{ app_cache_path }}' }
+    - { var: SYMFONY__LOG_DIR, val: '{{ app_log_path }}' }
+  notify:
+    - restart nginx
+    - restart php-fpm
+
+- name: ensure cache and log dir are defined in global environment variables
+  lineinfile:
+    dest: /etc/environment
+    regexp: '^{{ item.var }}='
+    line: '{{ item.var }}={{ item.val }}'
+  with_items:
+    - { var: SYMFONY__CACHE_DIR, val: '{{ app_cache_path }}' }
+    - { var: SYMFONY__LOG_DIR, val: '{{ app_log_path }}' }
+  notify:
+    - restart nginx
+    - restart php-fpm

@@ -1,0 +1,9 @@
+---
+mysql_users:
+  -
+    name: talkly
+    password: geheim
+    host: '%'
+    priv: '*.*:ALL'
+mysql_databases:
+  - talkly

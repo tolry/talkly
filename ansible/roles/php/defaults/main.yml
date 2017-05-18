@@ -1,0 +1,10 @@
+---
+fpm_user: www-data
+fpm_group: www-data
+fpm_listen: 127.0.0.1:9000
+fpm_log_path: /var/log/php
+
+php_ini:
+  'date.timezone': "Europe/Berlin"
+  'memory_limit': 512M
+  'max_execution_time': 300

@@ -1,0 +1,15 @@
+---
+app_hostname: talkly.foo
+app_nginx_port: 80
+app_project_path: /var/www/talkly
+app_relative_webroot: current/web
+app_cache_path: /dev/shm/symfony/cache
+app_log_path: /var/log/symfony
+app_front_controller: app.php
+app_max_body_size: 512M
+app_fpm_timeout: 300
+app_parameters_database_host: 10.0.0.10
+app_parameters_database_port: 3306
+app_parameters_database_name: talkly
+app_parameters_database_user: talkly
+app_parameters_database_password: "{{ lookup('env','APP_MYSQL_PASSWORD')|default('') }}"

@@ -1,0 +1,29 @@
+---
+- name: Install nginx packages.
+  apt:
+    name: nginx
+    state: present
+
+- name: Uninstall apache packages.
+  apt:
+    name: httpd
+    state: absent
+
+- name: ensure vhost conf dir
+  file:
+    path: /etc/nginx/vhosts.d
+    state: directory
+
+- name: ensure nginx configuration file.
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - restart nginx
+    - restart php-fpm
+
+- name: start and enable nginx service.
+  service:
+    name: nginx
+    state: started
+    enabled: true

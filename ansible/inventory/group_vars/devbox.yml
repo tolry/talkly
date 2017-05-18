@@ -1,0 +1,7 @@
+---
+xdebug_install: false
+
+app_nginx_port: 80
+app_project_path: /srv/share
+app_relative_webroot: web
+app_front_controller: app_dev.php

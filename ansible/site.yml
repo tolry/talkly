@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - debug: var=hostvars
+
+- hosts: devbox
+  roles:
+    - role: mysql
+      become: true
+    - role: nginx
+      become: true
+    - role: app
+      become: true
+    - role: tools
+      become: true
+    - role: js
+      become: true

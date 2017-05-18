@@ -37,13 +37,8 @@
 
         <service id="talkly.security.authenticator.ldap" class="AppBundle\Security\Authenticator\LdapAuthenticator">
             <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
-            <argument type="service" id="talkly.security.ldap" />
-            <argument type="string">%security_ldap_dn_string%</argument>
-        </service>
-
-        <service id="talkly.security.ldap"
-                 class="Symfony\Component\Ldap\LdapClient" public="true">
             <argument type="string">%security_ldap_url%</argument>
+            <argument type="string">%security_ldap_dn_string%</argument>
         </service>
     </services>
 

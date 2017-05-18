@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'eval',
 
     entry: [
-        'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/only-dev-server',
         './src/js/index'
     ],
@@ -14,7 +14,7 @@ module.exports = {
     output: {
         filename: 'app.js',
         path: path.join(__dirname, 'web/build'),
-        publicPath: 'http://localhost:8080/build/'
+        publicPath: 'http://localhost:3000/build/'
     },
 
     plugins: [

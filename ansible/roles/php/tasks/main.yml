@@ -1,0 +1,61 @@
+---
+- name: Install php packages.
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - acl
+    - php7.0
+    - php7.0-cli
+    - php7.0-fpm
+    - php7.0-intl
+    - php7.0-pdo
+    - php7.0-zip
+    #- php7.0-xdebug
+    - php7.0-xml
+    - php7.0-gd
+    - php7.0-json
+    - php7.0-mysqlnd
+    - php7.0-mbstring
+    - php7.0-curl
+    - curl
+  notify:
+    - restart php-fpm
+
+- name: ensure php.ini settings.
+  lineinfile: 
+    dest: '/etc/php/7.0/cli/php.ini'
+    line: "{{ item.key }}='{{ item.value }}'"
+    regexp: "^{{ item.key }}.*$"
+  with_dict: "{{ php_ini }}"
+  notify:
+    - restart php-fpm
+
+- name: ensure php.ini fpm settings.
+  lineinfile:
+    dest: '/etc/php/7.0/fpm/php.ini'
+    line: "{{ item.key }}='{{ item.value }}'"
+    regexp: "^{{ item.key }}.*$"
+  with_dict: "{{ php_ini }}"
+  notify:
+    - restart php-fpm
+
+- name: ensure php log dir exists
+  file:
+    path: "{{ fpm_log_path }}"
+    state: directory
+    owner: "{{ fpm_user }}"
+    group: "{{ fpm_group }}"
+    recurse: true
+
+- name: place php-fpm configuration file.
+  template:
+    src: fpm-www.conf.j2
+    dest: /etc/php/7.0/fpm/pool.d/www.conf
+  notify:
+    - restart php-fpm
+
+- name: start and enable php-fpm service.
+  service:
+    name: php7.0-fpm
+    enabled: true

@@ -1,0 +1,64 @@
+---
+- name: Install php packages.
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - graphviz
+
+- name: check if composer is installed
+  stat: 
+    path: /usr/local/bin/composer
+  register: composer_state
+
+- block:
+  - name: get composer signature
+    uri:
+      url: https://composer.github.io/installer.sig
+      return_content: true
+    register: composer_sig
+
+  - name: download installer
+    become: true
+    get_url:
+      url: https://getcomposer.org/installer
+      dest: /tmp/composer-setup.php
+      checksum: "sha384:{{ composer_sig.content }}"
+
+  - name: install composer
+    become: true
+    command: php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+  when: composer_state.stat.exists == false
+
+- name: install php phar qa tools
+  become: true
+  get_url: 
+    url: "{{ item.value }}"
+    force: true
+    dest: "/usr/local/bin/{{ item.key }}"
+    mode: 0755
+  with_dict:
+    phpcs: https://github.com/squizlabs/PHP_CodeSniffer/releases/download/2.8.1/phpcs.phar
+    phpcbf: https://github.com/squizlabs/PHP_CodeSniffer/releases/download/2.8.1/phpcbf.phar
+    security-checker: http://get.sensiolabs.org/security-checker.phar
+    deptrac: http://get.sensiolabs.de/deptrac.phar
+
+- block:
+  - name: copy xdebug script
+    become: true
+    copy:
+      src: xdebug.sh
+      dest: /usr/local/bin/xdebug
+      mode: 0755
+
+  - name: ensure php.ini settings for xdebug.
+    lineinfile: 
+      dest: '/etc/opt/remi/php70/php.ini'
+      line: "{{ item.key }}='{{ item.value }}'"
+      regexp: "^{{ item.key }}.*$"
+    with_dict: "{{ xdebug_php_ini }}"
+    notify:
+      - restart php-fpm
+
+  when: xdebug_install

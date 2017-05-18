@@ -1,0 +1,37 @@
+---
+- name: Install MySQL
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python-mysqldb
+    - mysql-server
+
+- name: ensure mysql started and enabled
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: ensure mysql user
+  mysql_user: 
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    host: "{{ item.host }}"
+    priv: "{{ item.priv }}"
+    state: present
+  with_items: "{{ mysql_users }}"
+
+- name: ensure databases
+  mysql_db: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ mysql_databases }}"
+
+- name: ensure bind-address is set
+  ini_file:
+    dest: /etc/my.cnf
+    section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+    mode: 0644
+  notify: restart mysql

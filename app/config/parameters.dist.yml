@@ -3,7 +3,7 @@ parameters:
     database_port:       ~
     database_name:       talkly
     database_user:       talkly
-    database_password:
+    database_password:   geheim
 
     secret:              secure
 
