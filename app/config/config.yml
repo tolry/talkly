@@ -1,5 +1,4 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: local.dist.yml }
     - { resource: local.yml, ignore_errors: true }
     - { resource: security.yml }
@@ -11,7 +10,7 @@ parameters:
 
 framework:
     translator:      { fallbacks: ["%locale%"] }
-    secret:          "%secret%"
+    secret:         '%env(APP_SECRET)%'
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -43,13 +42,14 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "pdo_mysql"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -57,11 +57,8 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
+    url: '%env(MAILER_URL)%'
+    spool: { type: 'memory' }
 
 lexik_jwt_authentication:
     private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path
