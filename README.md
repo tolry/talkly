@@ -23,11 +23,14 @@ technologies used:
 - doctrine orm
 - reactjs
 
-## Setup
+## Development Setup
 
 ```
 git clone https://github.com/tolry/talkly.git
 cd talkly
-composer install
-bin/console talkly:setup
+cp .env.dist .env
+docker-compose up -d
+./container make init
+yarn install
+yarn start
 ```

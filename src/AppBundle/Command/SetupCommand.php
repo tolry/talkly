@@ -157,7 +157,7 @@ class SetupCommand extends ContainerAwareCommand
     {
         $io->section('Install assets');
 
-        if (!$io->confirm('Install assets (run yarn & webpack)?')) {
+        if (!$io->confirm('Install assets (run yarn & webpack)?', $env === self::ENV_PROD)) {
             return;
         }
 

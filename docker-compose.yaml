@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+    app:
+        shm_size: '2gb'
+        build:
+            context: docker/dev
+            args:
+                - TIMEZONE=${TIMEZONE:-Europe/Berlin}
+                - UIDWWWDATA=${UIDWWWDATA:-1000}
+        depends_on:
+            - db
+        ports:
+            - ${NGINX_HTTP_PORT:-80}:80
+        volumes:
+            - .:/srv/share:rw,cached
+            - /srv/share/node_modules
+        networks:
+            default:
+                aliases:
+                - talkly.development
+    db:
+        image: mysql:5.6
+        command: mysqld --innodb-buffer-pool-size=20M
+        environment:
+            MYSQL_ROOT_PASSWORD: geheim
+            MYSQL_DATABASE: talkly
+            MYSQL_USER: talkly
+            MYSQL_PASSWORD: talkly
+        ports:
+            - ${DATABASE_PORT:-3306}:3306
