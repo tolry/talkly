@@ -13,7 +13,7 @@ module.exports = {
 
     output: {
         filename: 'app.js',
-        path: path.join(__dirname, 'web/build'),
+        path: path.join(__dirname, 'public/build'),
         publicPath: 'http://localhost:8080/build/'
     },
 

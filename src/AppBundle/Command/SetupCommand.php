@@ -157,6 +157,10 @@ class SetupCommand extends ContainerAwareCommand
     {
         $io->section('Install assets');
 
+        if (!$io->confirm('Install assets (run yarn & webpack)?')) {
+            return;
+        }
+
         $io->caution('this may take few minutes...');
 
         // todo check node version & use nvm

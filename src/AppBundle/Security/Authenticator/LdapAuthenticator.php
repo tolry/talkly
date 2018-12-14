@@ -13,9 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class LdapAuthenticator extends AbstractLoginAuthenticator
 {
     /**
-     * @var LdapClient
+     * @var string
      */
-    private $ldap;
+    private $url;
 
     /**
      * @var string
@@ -24,14 +24,14 @@ class LdapAuthenticator extends AbstractLoginAuthenticator
 
     /**
      * @param JWTManager $manager
-     * @param LdapClient $ldap
+     * @param string $url
      * @param string $dnString
      */
-    public function __construct(JWTManager $manager, LdapClient $ldap, $dnString)
+    public function __construct(JWTManager $manager, $url, $dnString)
     {
         parent::__construct($manager);
 
-        $this->ldap = $ldap;
+        $this->url = $url;
         $this->dnString = $dnString;
     }
 
@@ -46,10 +46,12 @@ class LdapAuthenticator extends AbstractLoginAuthenticator
         $password = $credentials['password'];
 
         try {
-            $username = $this->ldap->escape($username, '', LDAP_ESCAPE_DN);
+            $ldap = new LdapClient($this->url);
+
+            $username = $ldap->escape($username, '', LDAP_ESCAPE_DN);
             $dn = str_replace('{username}', $username, $this->dnString);
 
-            $this->ldap->bind($dn, $password);
+            $ldap->bind($dn, $password);
         } catch (ConnectionException $e) {
             return false;
         }
