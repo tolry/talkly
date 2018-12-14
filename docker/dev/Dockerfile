@@ -60,6 +60,17 @@ RUN wget https://github.com/phpstan/phpstan/releases/download/0.10.3/phpstan.pha
 RUN wget https://github.com/sensiolabs-de/deptrac/releases/download/0.3.0/deptrac.phar -O /usr/local/bin/deptrac \
     && chmod +x /usr/local/bin/deptrac
 
+# install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+    && apt-get install --no-install-recommends -y nodejs \
+    && rm -r /var/lib/apt/lists/*
+
+# install yarn
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update && apt-get install yarn \
+    && rm -r /var/lib/apt/lists/*
+
 # setup php-fpm
 RUN mkdir /etc/service/php-fpm
 ADD php-fpm.sh /etc/service/php-fpm/run
