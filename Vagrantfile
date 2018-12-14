@@ -12,7 +12,7 @@ Vagrant.configure('2') do |config|
     config.vm.synced_folder '.', '/vagrant', disabled: true
 
     config.vm.provider :virtualbox do |virtualbox|
-        virtualbox.customize ['modifyvm', :id, '--memory', 2048]
+        virtualbox.customize ['modifyvm', :id, '--memory', 4096]
     end
 
     config.vm.provision 'ansible_local' do |ansible|
