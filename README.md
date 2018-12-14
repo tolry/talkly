@@ -34,3 +34,9 @@ docker-compose up -d
 yarn install
 yarn start
 ```
+
+## Build Image
+
+```
+docker build -t talkly:nightly -f docker/prod/Dockerfile .
+```
