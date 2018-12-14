@@ -2,10 +2,11 @@ vendor
 app/config/parameters.yml
 app/config/local.yml
 var/*
-web/bundles
-web/build
+public/bundles
+public/build
 bin/*
 !bin/console
 node_modules
 npm-debug*.log
 .php_cs.cache
+.env
