@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ $# = 0 ]; then
+    echo "try './container make'"
+else
+    docker-compose exec app $@
+fi

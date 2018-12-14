@@ -28,6 +28,6 @@ technologies used:
 ```
 git clone https://github.com/tolry/talkly.git
 cd talkly
-composer install
-bin/console talkly:setup
+docker-compose up -d
+./container make init
 ```
