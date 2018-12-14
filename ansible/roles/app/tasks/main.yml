@@ -46,7 +46,7 @@
 
 - name: ensure cache and log env vars in fpm config
   lineinfile:
-    dest: /etc/php/7.0/fpm/pool.d/www.conf
+    dest: /etc/php/7.2/fpm/pool.d/www.conf
     regexp: '^env\[{{ item.var }}\].?='
     line: 'env[{{ item.var }}] = {{ item.val }}'
   with_items:

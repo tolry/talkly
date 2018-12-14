@@ -1,30 +1,29 @@
 ---
 - name: Install php packages.
   apt:
-    name: "{{ item }}"
+    name:
+      - acl
+      - php7.2
+      - php7.2-cli
+      - php7.2-fpm
+      - php7.2-intl
+      - php7.2-pdo
+      - php7.2-zip
+      #- php7.2-xdebug
+      - php7.2-xml
+      - php7.2-gd
+      - php7.2-json
+      - php7.2-mysqlnd
+      - php7.2-mbstring
+      - php7.2-curl
+      - curl
     state: present
-  with_items:
-    - acl
-    - php7.0
-    - php7.0-cli
-    - php7.0-fpm
-    - php7.0-intl
-    - php7.0-pdo
-    - php7.0-zip
-    #- php7.0-xdebug
-    - php7.0-xml
-    - php7.0-gd
-    - php7.0-json
-    - php7.0-mysqlnd
-    - php7.0-mbstring
-    - php7.0-curl
-    - curl
   notify:
     - restart php-fpm
 
 - name: ensure php.ini settings.
   lineinfile: 
-    dest: '/etc/php/7.0/cli/php.ini'
+    dest: '/etc/php/7.2/cli/php.ini'
     line: "{{ item.key }}='{{ item.value }}'"
     regexp: "^{{ item.key }}.*$"
   with_dict: "{{ php_ini }}"
@@ -33,7 +32,7 @@
 
 - name: ensure php.ini fpm settings.
   lineinfile:
-    dest: '/etc/php/7.0/fpm/php.ini'
+    dest: '/etc/php/7.2/fpm/php.ini'
     line: "{{ item.key }}='{{ item.value }}'"
     regexp: "^{{ item.key }}.*$"
   with_dict: "{{ php_ini }}"
@@ -51,11 +50,11 @@
 - name: place php-fpm configuration file.
   template:
     src: fpm-www.conf.j2
-    dest: /etc/php/7.0/fpm/pool.d/www.conf
+    dest: /etc/php/7.2/fpm/pool.d/www.conf
   notify:
     - restart php-fpm
 
 - name: start and enable php-fpm service.
   service:
-    name: php7.0-fpm
+    name: php7.2-fpm
     enabled: true

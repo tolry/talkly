@@ -1,10 +1,12 @@
 ---
 - name: install node sources
-  shell: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  shell: curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
 - name: install nodejs
   apt:
-    name: nodejs
+    name:
+      - nodejs
+      - npm
     state: present
 
 - name: install yarn
