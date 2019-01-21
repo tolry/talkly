@@ -25,7 +25,7 @@ technologies used:
 
 ## Development Setup
 
-```
+``` bash
 git clone https://github.com/tolry/talkly.git
 cd talkly
 cp .env.dist .env
