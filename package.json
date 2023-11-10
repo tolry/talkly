@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "autoprefixer": "^6.0.2",
-    "axios": "^0.21.2",
+    "axios": "^1.6.0",
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-runtime": "^6.5.2",
